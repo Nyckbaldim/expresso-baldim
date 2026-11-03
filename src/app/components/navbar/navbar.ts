@@ -10,10 +10,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Navbar {
   navLinks = [
-    { label: 'Início', path: '' },
-    { label: 'Frota e Serviços', path: 'frota-e-servicos' },
-    { label: 'Sobre Nós', path: 'sobre-nos' },
-    { label: 'Orçamento', path: 'orcamento' },
-    { label: 'Avaliações', path: 'avaliacoes' }
+    { label: 'Início', path: '/' },
+    { label: 'Frota e Serviços', path: '/frota-e-servicos' },
+    { label: 'Sobre Nós', path: '/sobre-nos' },
+    { label: 'Orçamento', path: '/orcamento' },
+    { label: 'Avaliações', path: '/avaliacoes' }
   ];
 }
