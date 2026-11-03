@@ -1,3 +1,5 @@
+:host { display: block; }
+
 .navegacao {
   display: flex;
   width: 100%;
@@ -5,15 +7,13 @@
   padding: 0 80px;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #2B302E;
-  background-color: #000000;
-  box-sizing: border-box;
+  border-bottom: 1px solid var(--borda);
+  background-color: var(--preto);
 }
 
 .logo-link {
   display: flex;
   align-items: center;
-  text-decoration: none;
 }
 
 .logo-img {
@@ -32,18 +32,17 @@
   position: relative;
   padding-top: 12px;
   padding-bottom: 10px;
-  color: #A0A0A0;
-  text-decoration: none;
+  color: var(--cinza);
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .item-navegacao:hover {
-  color: #FFFFFF;
+  color: var(--branco);
 }
 
 .item-navegacao.active {
-  color: #FFFFFF;
+  color: var(--branco);
   font-weight: 700;
 }
 
@@ -54,44 +53,14 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: #25D47D;
+  background-color: var(--verde);
   border-radius: 2px 2px 0 0;
 }
 
-/* ============ Botão de orçamento ============ */
-.acao {
-  display: flex;
-  height: 52px;
-  padding: 0 20px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 8px;
-  background: #25D47D;
-  color: #000000;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
 
-.acao::after {
-  content: '↗';
-  font-size: 1.2rem;
-  font-weight: 900;
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
+.botao .icone { transition: transform 0.2s ease; }
+.botao:hover .icone { transform: translate(3px, -3px); }
 
-.acao:hover {
-  background-color: #5CE69B;
-}
-
-.acao:hover::after {
-  transform: translate(3px, -3px);
-}
-
-/* ============ Responsividade ============ */
 @media (max-width: 992px) {
   .navegacao { padding: 0 32px; height: 88px; }
   .logo-img { width: 100px; height: 75px; }
@@ -113,5 +82,5 @@
     gap: 6px 16px;
     font-size: 0.85rem;
   }
-  .acao { height: 40px; padding: 0 14px; font-size: 0.85rem; }
+  .navegacao .botao { height: 40px; padding: 0 14px; font-size: 0.85rem; }
 }
