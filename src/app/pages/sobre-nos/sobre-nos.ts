@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [],
   selector: 'app-sobre-nos',
-  styleUrl: './sobre-nos.css',
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './sobre-nos.html',
+  styleUrl: './sobre-nos.css'
 })
 export class SobreNos {}

@@ -58,6 +58,7 @@
   border-radius: 2px 2px 0 0;
 }
 
+/* ============ Botão de orçamento ============ */
 .acao {
   display: flex;
   height: 52px;
@@ -73,6 +74,7 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+
 .acao::after {
   content: '↗';
   font-size: 1.2rem;
@@ -80,15 +82,36 @@
   display: inline-block;
   transition: transform 0.2s ease;
 }
+
 .acao:hover {
-  background-color: #1FB96D;
+  background-color: #5CE69B;
 }
-.seta {
-  font-size: 1.25rem;
-  font-weight: 900;
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
+
 .acao:hover::after {
   transform: translate(3px, -3px);
+}
+
+/* ============ Responsividade ============ */
+@media (max-width: 992px) {
+  .navegacao { padding: 0 32px; height: 88px; }
+  .logo-img { width: 100px; height: 75px; }
+}
+
+@media (max-width: 640px) {
+  .navegacao {
+    height: auto;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .logo-img { width: 72px; height: 54px; }
+  .menu-principal {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    font-size: 0.85rem;
+  }
+  .acao { height: 40px; padding: 0 14px; font-size: 0.85rem; }
 }
