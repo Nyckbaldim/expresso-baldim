@@ -14,6 +14,6 @@ export class Navbar {
     { label: 'Frota e Serviços', path: '/frota-e-servicos' },
     { label: 'Sobre Nós', path: '/sobre-nos' },
     { label: 'Orçamento', path: '/orcamento' },
-    { label: 'Avaliações', path: '/avaliacoes' }
+    { label: 'Avaliar', path: '/avaliar' }
   ];
 }
