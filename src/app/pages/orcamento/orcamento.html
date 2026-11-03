@@ -1,0 +1,102 @@
+<section class="orcamento">
+  <div class="container">
+
+    <header class="orcamento__cabecalho">
+      <span class="tricolor" aria-hidden="true"></span>
+      <span class="etiqueta">Orçamento / Escolha do serviço</span>
+      <h1>O que vamos levar para você?</h1>
+      <p class="orcamento__lead">Escolha o serviço que mais combina com sua necessidade. O orçamento começa pelos detalhes.</p>
+    </header>
+
+    <div class="opcoes">
+
+      <article class="opcao">
+        <div class="opcao__topo">
+          <span class="opcao__icone" aria-hidden="true">
+            <svg class="icone" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          </span>
+          <span class="opcao__rotulo">Para uma carga pontual</span>
+        </div>
+
+        <h2>Frete avulso</h2>
+        <p class="opcao__descricao">Itens, mercadorias ou uma carga específica. Descreva o que será transportado e informe as medidas.</p>
+
+        <ul class="opcao__lista">
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Tipo, descrição e fotos da carga
+          </li>
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Dimensões e peso aproximado
+          </li>
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Endereços de coleta e entrega
+          </li>
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Data desejada e necessidades especiais
+          </li>
+        </ul>
+
+        <a routerLink="/orcamento/frete" class="botao botao--primario">
+          Solicitar frete avulso
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </article>
+
+      <article class="opcao">
+        <div class="opcao__topo">
+          <span class="opcao__icone" aria-hidden="true">
+            <svg class="icone" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </span>
+          <span class="opcao__rotulo">Para sua nova casa</span>
+        </div>
+
+        <h2>Mudança residencial</h2>
+        <p class="opcao__descricao">Uma casa inteira ou parte dela. Organize móveis e pertences por cômodo para planejar a sua mudança.</p>
+
+        <ul class="opcao__lista">
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Móveis e quantidades por cômodo
+          </li>
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Volume estimado em m³, sem cálculo de preço
+          </li>
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Acessos, andares e elevadores
+          </li>
+          <li>
+            <svg class="icone icone--pequeno" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Serviços extras e fotos dos ambientes
+          </li>
+        </ul>
+
+        <a routerLink="/orcamento/mudanca" class="botao botao--primario">
+          Solicitar mudança residencial
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </article>
+
+    </div>
+
+    <aside class="duvida">
+      <svg class="icone icone--duvida" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>
+      <div class="duvida__texto">
+        <h2>Ainda está em dúvida?</h2>
+        <p>Um item ou uma carga pontual? Escolha frete avulso. Vai trocar de casa e levar vários móveis? Escolha mudança residencial.</p>
+      </div>
+      <a href="#" class="botao botao--secundario botao--pequeno">
+        Pedir ajuda no WhatsApp
+        <svg class="icone icone--verde" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </a>
+    </aside>
+
+    <p class="orcamento__nota">Nos dois serviços, você pode solicitar uma vistoria virtual ou física para alinhar os detalhes com a equipe.</p>
+
+  </div>
+</section>
