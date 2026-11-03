@@ -1,0 +1,122 @@
+<section class="avaliar">
+  <div class="container">
+
+    <header class="avaliar__cabecalho">
+      <span class="tricolor" aria-hidden="true"></span>
+      <span class="etiqueta">Pós-serviço / Sua avaliação</span>
+      <h1>Como foi o seu transporte?</h1>
+      <p class="avaliar__lead">Sua experiência ajuda a melhorar nosso atendimento. Identifique o serviço e escolha uma nota de 1 a 5.</p>
+    </header>
+
+    <div class="seletor">
+      <div class="campo">
+        <label for="tipo-review" class="campo__rotulo">Tipo de Review <span class="obrigatorio">*</span></label>
+        <select id="tipo-review" name="tipo-review" class="campo__controle" required>
+          <option value="" selected disabled>Selecione</option>
+          <option value="feedback">Feedback reservado</option>
+          <option value="google">Google Review</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="codigo" class="campo__rotulo">Código de acompanhamento <span class="obrigatorio">*</span></label>
+        <input type="text" id="codigo" name="codigo" class="campo__controle" placeholder="Digite o código do seu pedido" autocomplete="off" required>
+        <p class="campo__ajuda">Use o código recebido durante o atendimento.</p>
+      </div>
+
+      <fieldset class="nota">
+        <legend class="nota__titulo">Qual nota você dá à sua experiência?</legend>
+        <div class="nota__estrelas">
+        <input type="radio" name="nota" id="nota-1" value="1" class="nota__radio">
+        <label for="nota-1" class="nota__estrela">
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nota__sr">1 estrela</span>
+          <span class="nota__numero" aria-hidden="true">1</span>
+        </label>
+        <input type="radio" name="nota" id="nota-2" value="2" class="nota__radio">
+        <label for="nota-2" class="nota__estrela">
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nota__sr">2 estrelas</span>
+          <span class="nota__numero" aria-hidden="true">2</span>
+        </label>
+        <input type="radio" name="nota" id="nota-3" value="3" class="nota__radio">
+        <label for="nota-3" class="nota__estrela">
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nota__sr">3 estrelas</span>
+          <span class="nota__numero" aria-hidden="true">3</span>
+        </label>
+        <input type="radio" name="nota" id="nota-4" value="4" class="nota__radio">
+        <label for="nota-4" class="nota__estrela">
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nota__sr">4 estrelas</span>
+          <span class="nota__numero" aria-hidden="true">4</span>
+        </label>
+        <input type="radio" name="nota" id="nota-5" value="5" class="nota__radio">
+        <label for="nota-5" class="nota__estrela">
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nota__sr">5 estrelas</span>
+          <span class="nota__numero" aria-hidden="true">5</span>
+        </label>
+        </div>
+        <div class="nota__legenda" aria-hidden="true">
+          <span>1 - Precisa melhorar</span>
+          <span>5 - Excelente</span>
+        </div>
+      </fieldset>
+    </div>
+
+    <p class="avaliar__dica">Escolha o tipo de review para continuar.</p>
+
+    <div class="paineis">
+
+      <form class="painel painel--feedback" novalidate>
+        <p class="painel__rotulo">Feedback reservado</p>
+        <h2>Queremos entender melhor.</h2>
+        <div class="espelho" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="painel__texto">Se algo não saiu como você esperava, conte para a equipe. Seu feedback será reservado e não será publicado como avaliação.</p>
+
+        <div class="campo campo--painel">
+          <label for="motivo" class="campo__rotulo">Principal motivo <span class="obrigatorio">*</span></label>
+          <select id="motivo" name="motivo" class="campo__controle" required>
+            <option value="" selected disabled>Selecione um motivo</option>
+            <option>Atraso na coleta ou na entrega</option>
+            <option>Cuidado com os itens</option>
+            <option>Atendimento e comunicação</option>
+            <option>Outro</option>
+          </select>
+        </div>
+
+        <div class="campo campo--painel">
+          <label for="comentario" class="campo__rotulo">Comentário <span class="obrigatorio">*</span></label>
+          <textarea id="comentario" name="comentario" class="campo__controle campo__controle--area" placeholder="Descreva o que aconteceu e como podemos melhorar." required></textarea>
+        </div>
+
+        <button type="submit" class="botao botao--primario">
+          Enviar feedback reservado
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </button>
+        <p class="painel__nota">Envio interno vinculado ao código do serviço. Campos com <span class="obrigatorio">*</span> são obrigatórios.</p>
+      </form>
+
+      <section class="painel painel--google">
+        <p class="painel__rotulo">Google review</p>
+        <h2>Que bom fazer parte do seu caminho.</h2>
+        <div class="espelho" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="painel__texto">Gostou do serviço? Compartilhe sua experiência no Google e ajude outras pessoas a conhecer a Expresso Baldim.</p>
+
+        <div class="confianca">
+          <svg class="icone icone--verde" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+          <h3>Sua opinião pode inspirar confiança.</h3>
+          <p>O próximo passo previsto é avaliar. A publicação acontece no ambiente do Google Reviews.</p>
+        </div>
+
+        <a href="#" class="botao botao--primario" target="_blank" rel="noopener">
+          Avaliar no Google
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </section>
+
+    </div>
+
+  </div>
+</section>
