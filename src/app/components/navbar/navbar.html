@@ -3,19 +3,20 @@
     <img src="images/Logo.jpeg" alt="Logo Expresso Baldim" class="logo-img">
   </a>
 
-  <nav class="menu-principal">
+  <nav class="menu-principal" aria-label="Menu principal">
     @for (item of navLinks; track item.path) {
       <a
         [routerLink]="item.path"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: item.path === '' }"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' }"
         class="item-navegacao">
         {{ item.label }}
       </a>
     }
   </nav>
 
-  <a routerLink="/orcamento" class="acao">
-    <span>Solicitar orçamento</span>
+  <a routerLink="/orcamento" class="botao botao--primario">
+    Solicitar orçamento
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
   </a>
 </header>
