@@ -1,0 +1,22 @@
+<header class="navegacao">
+  <a routerLink="/" class="logo-link">
+    <img src="images/Logo.jpeg" alt="Logo Expresso Baldim" class="logo-img">
+  </a>
+  
+  <nav class="menu-principal">
+    @for (item of navLinks; track item.path) {
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.path === '' }"
+        class="item-navegacao">
+        {{ item.label }}
+      </a>
+    }
+  </nav>
+
+  <a routerLink="orcamento" class="acao">
+    <span>Solicitar orçamento</span>
+    <span class="seta"></span>
+  </a>
+</header>

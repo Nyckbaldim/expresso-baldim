@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #000000;
+}
+.sobre-nos-container {
+    display: flex;
+    width: 1440px;
+    flex-direction: column;
+    align-items: flex-start;   
+    background: #000000;
+}
