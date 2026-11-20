@@ -1,0 +1,42 @@
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.login {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 48px var(--eb-page-pad);
+}
+
+.card {
+  width: 100%; max-width: 480px; padding: 40px;
+  display: flex; flex-direction: column; gap: 24px;
+}
+
+.title { --eb-title-size: 28px; }
+
+.lead { margin: 0; color: var(--eb-muted); font-size: 14px; line-height: 1.55; }
+
+form { display: flex; flex-direction: column; gap: 24px; }
+
+.password { position: relative; display: flex; }
+.password input { padding-right: 88px; }
+.toggle {
+  position: absolute; top: 0; right: 14px; bottom: 0;
+  background: none; border: 0; cursor: pointer;
+  color: var(--eb-text); font: 600 13px var(--eb-font);
+}
+
+.alert {
+  padding: 12px 14px; border-radius: 8px;
+  border: 1px solid var(--eb-red); background: rgba(219, 69, 61, 0.1);
+  color: var(--eb-text); font-size: 14px; line-height: 1.45;
+}
+.field-error { margin: 0; color: #ff8a82; font-size: 13px; }
+
+.note { margin: 0; text-align: center; color: var(--eb-muted); font-size: 14px; line-height: 1.55; }
+
+@media (max-width: 767.98px) {
+  .login { padding: 24px 20px; }
+  .card { padding: 24px; gap: 20px; }
+  .title { --eb-title-size: 26px; }
+  form { gap: 20px; }
+  .note { font-size: 13px; }
+}
