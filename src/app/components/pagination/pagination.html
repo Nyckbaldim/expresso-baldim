@@ -1,0 +1,53 @@
+<nav class="pager" aria-label="Paginação de {{ noun() }}">
+  <p class="pager__summary" role="status" aria-live="polite">
+    Mostrando <strong>{{ from() }}</strong> a <strong>{{ to() }}</strong> de <strong>{{ total() }}</strong> {{ noun() }}
+  </p>
+
+  <div class="pager__size">
+    <label for="eb-page-size">Por página</label>
+    <select id="eb-page-size" [value]="pageSize()" (change)="onSize($event)">
+      @for (s of sizes(); track s) {
+        <option [value]="s" [selected]="s === pageSize()">{{ s }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Desktop: páginas numeradas -->
+  <ul class="pager__pages">
+    <li>
+      <button type="button" class="pg pg--arrow" aria-label="Página anterior" [disabled]="page() <= 1" (click)="pageChange.emit(page() - 1)">‹</button>
+    </li>
+    @for (item of items(); track item) {
+      <li>
+        @if (item === 'gap-start' || item === 'gap-end') {
+          <span class="pg pg--gap" aria-hidden="true">…</span>
+        } @else {
+          <button
+            type="button"
+            class="pg"
+            [class.is-current]="item === page()"
+            [attr.aria-current]="item === page() ? 'page' : null"
+            [attr.aria-label]="'Página ' + item"
+            (click)="pageChange.emit(item)"
+          >
+            {{ item }}
+          </button>
+        }
+      </li>
+    }
+    <li>
+      <button type="button" class="pg pg--arrow" aria-label="Próxima página" [disabled]="page() >= totalPages()" (click)="pageChange.emit(page() + 1)">›</button>
+    </li>
+  </ul>
+
+  <!-- Mobile: Anterior / Página N de M / Próxima -->
+  <div class="pager__bar">
+    <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact" [disabled]="page() <= 1" (click)="pageChange.emit(page() - 1)">
+      <span aria-hidden="true">‹</span> Anterior
+    </button>
+    <span class="pager__of">Página {{ page() }} de {{ totalPages() }}</span>
+    <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact" [disabled]="page() >= totalPages()" (click)="pageChange.emit(page() + 1)">
+      Próxima <span aria-hidden="true">›</span>
+    </button>
+  </div>
+</nav>

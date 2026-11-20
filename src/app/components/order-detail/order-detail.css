@@ -1,0 +1,63 @@
+:host { display: block; min-width: 0; }
+
+.back { display: none; }
+
+.panel {
+  display: flex; flex-direction: column; gap: 20px; padding: 24px;
+}
+
+.head { display: flex; flex-direction: column; gap: 12px; }
+.head .eb-tricolor { display: none; }
+.head__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.head__tag { display: none; }
+.code { margin: 0; font: 800 24px/1.12 var(--eb-font); letter-spacing: -0.054em; }
+
+.info { margin: 0; display: flex; flex-direction: column; gap: 20px; }
+.info__item { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.info__item dt { font-size: 13px; color: var(--eb-muted); }
+.info__item dd { margin: 0; font: 600 16px/1.3 var(--eb-font); overflow-wrap: anywhere; }
+.info__duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.divider { width: 100%; margin: 0; border: 0; border-top: 1px solid var(--eb-border); }
+
+.note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--eb-muted); }
+.note--ok { color: var(--eb-green); }
+.note--error { color: #ff8a82; }
+
+.empty__text { margin: 0; font-size: 14px; line-height: 1.55; color: var(--eb-muted); }
+
+/* ---------- Mobile: tela própria, com barra de ação fixa na base ---------- */
+@media (max-width: 767.98px) {
+  :host { display: flex; flex-direction: column; flex: 1; }
+
+  .back {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+    margin-bottom: 20px; color: var(--eb-green);
+    font: 700 14px var(--eb-font); text-decoration: none;
+  }
+  .back span { font-size: 18px; }
+
+  .panel { flex: 1; padding: 0; background: none; border: 0; border-radius: 0; }
+  .empty {
+    flex: none; padding: 20px;
+    background: var(--eb-surface); border: 1px solid var(--eb-border); border-radius: 16px;
+  }
+
+  .head .eb-tricolor { display: block; }
+  .head__tag { display: inline-flex; }
+  .code { font-size: 28px; letter-spacing: -0.043em; }
+
+  .info {
+    gap: 16px; padding: 20px;
+    background: var(--eb-surface); border: 1px solid var(--eb-border); border-radius: 16px;
+  }
+  .divider { display: none; }
+
+  .note { order: 1; }
+  .actions {
+    order: 2; margin-top: auto; position: sticky; bottom: 0;
+    margin-inline: calc(var(--eb-page-pad) * -1);
+    padding: 16px var(--eb-page-pad);
+    background: var(--eb-surface); border-top: 1px solid var(--eb-border);
+  }
+}

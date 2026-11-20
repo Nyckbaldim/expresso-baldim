@@ -1,0 +1,71 @@
+<a class="back" routerLink="/admin/pedidos" queryParamsHandling="preserve"><span aria-hidden="true">←</span> Voltar aos pedidos</a>
+
+@if (order(); as o) {
+  <div class="panel eb-card">
+    <div class="head">
+      <div class="eb-tricolor" aria-hidden="true"></div>
+      <p class="eb-eyebrow">Detalhes do pedido</p>
+      <div class="head__row">
+        <h2 class="code">{{ o.code }}</h2>
+        <eb-status-tag class="head__tag" [status]="o.status" />
+      </div>
+    </div>
+
+    <dl class="info">
+      <div class="info__item"><dt>Cliente</dt><dd>{{ o.customerName }}</dd></div>
+      <div class="info__item"><dt>Serviço</dt><dd>{{ serviceLabel[o.service] }}</dd></div>
+      <div class="info__item"><dt>Rota</dt><dd>{{ o.origin }} → {{ o.destination }}</dd></div>
+      <div class="info__duo">
+        <div class="info__item"><dt>Volume estimado</dt><dd>{{ o.volumeM3 === null ? '—' : o.volumeM3 + ' m³' }}</dd></div>
+        <div class="info__item"><dt>Data desejada</dt><dd>{{ o.desiredDate | brDate }}</dd></div>
+      </div>
+    </dl>
+
+    <hr class="divider" />
+
+    <div class="eb-field">
+      <label for="status">Alterar status</label>
+      <select id="status" class="eb-select" [formControl]="statusCtrl">
+        @for (s of statuses; track s.value) {
+          <option [value]="s.value">{{ s.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="actions">
+      <button
+        type="button"
+        class="eb-btn eb-btn--primary eb-btn--block"
+        [disabled]="store.saveState() === 'saving' || statusCtrl.value === o.status"
+        (click)="save()"
+      >
+        @if (store.saveState() === 'saving') {
+          Salvando…
+        } @else {
+          Atualizar status <span aria-hidden="true">↗</span>
+        }
+      </button>
+    </div>
+
+    <p
+      class="note"
+      role="status"
+      [class.note--ok]="store.saveState() === 'saved'"
+      [class.note--error]="store.saveState() === 'error'"
+    >
+      @switch (store.saveState()) {
+        @case ('saved') { Status atualizado. O cliente já vê a mudança no rastreio. }
+        @case ('error') { Não foi possível atualizar o status. Tente de novo. }
+        @default { O cliente verá o novo status na tela de rastreio. }
+      }
+    </p>
+  </div>
+} @else if (notFound()) {
+  <div class="panel eb-card empty" role="status">
+    <p class="empty__text">Não encontramos esse pedido. Ele pode ter sido removido ou o código está incorreto.</p>
+  </div>
+} @else {
+  <div class="panel eb-card empty">
+    <p class="empty__text">Selecione um pedido para ver os detalhes e alterar o status.</p>
+  </div>
+}

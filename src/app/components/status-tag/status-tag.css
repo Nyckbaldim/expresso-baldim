@@ -1,0 +1,22 @@
+:host { display: inline-flex; }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 100px;
+  font: 600 12px/1.2 var(--eb-font);
+  white-space: nowrap;
+  background: var(--eb-surface-2);
+  border: 1px solid var(--eb-border);
+  color: var(--eb-text);
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.tag[data-status='RECEBIDO'] { color: var(--eb-muted); }
+.tag[data-status='EM_ANALISE'] { color: var(--eb-text); }
+.tag[data-status='EM_TRANSPORTE'] {
+  color: var(--eb-green);
+  background: rgba(37, 212, 125, 0.12);
+  border-color: rgba(37, 212, 125, 0.5);
+}
+.tag[data-status='CONCLUIDO'] { background: var(--eb-green); border-color: var(--eb-green); color: #000; }
+.tag[data-status='CONCLUIDO'] .dot { display: none; }
