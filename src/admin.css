@@ -1,0 +1,118 @@
+/* Estilos globais do /admin. Tokens do Figma (página "Admin"); prefixo eb- para não colidir com o styles.css do site público. */
+:root {
+  --eb-bg: #000000;
+  --eb-surface: #111313;
+  --eb-surface-2: #191c1b;   /* botão secundário, linha selecionada */
+  --eb-input: #090b0b;
+  --eb-border: #2b302e;
+  --eb-text: #ffffff;
+  --eb-muted: #a9b2ad;
+  --eb-green: #25d47d;
+  --eb-red: #db453d;         /* faixa da assinatura tricolor e erros */
+  --eb-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --eb-page-pad: 80px;
+  --eb-header-h: 112px;
+  --eb-footer-h: 64px;
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --eb-page-pad: 20px;
+    --eb-header-h: 72px;
+    --eb-footer-h: 56px;
+  }
+}
+
+.eb-visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--eb-green);
+  outline-offset: 2px;
+}
+
+.eb-card {
+  background: var(--eb-surface);
+  border: 1px solid var(--eb-border);
+  border-radius: 16px;
+}
+
+.eb-tricolor {
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    var(--eb-green) 0 33.333%,
+    #ffffff 33.333% 66.666%,
+    var(--eb-red) 66.666% 100%
+  );
+}
+
+.eb-eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0;
+  font: 700 12px/1.2 var(--eb-font);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--eb-green);
+}
+.eb-eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--eb-green); }
+
+.eb-title {
+  margin: 0;
+  font: 800 var(--eb-title-size, 40px) / 1.12 var(--eb-font);
+  letter-spacing: -0.045em;
+  color: var(--eb-text);
+}
+.eb-title span { color: var(--eb-green); }
+
+.eb-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+  height: 52px; padding: 0 20px;
+  border: 1px solid transparent; border-radius: 8px;
+  font: 700 14px/1 var(--eb-font);
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: filter 0.15s, border-color 0.15s;
+}
+.eb-btn span[aria-hidden='true'] { font-size: 18px; line-height: 1; }
+
+.eb-btn--primary { background: var(--eb-green); border-color: var(--eb-green); color: #000; }
+.eb-btn--primary:hover:not(:disabled) { filter: brightness(1.08); }
+.eb-btn--secondary { background: var(--eb-surface-2); border-color: var(--eb-border); color: var(--eb-text); }
+.eb-btn--secondary:hover:not(:disabled) { border-color: var(--eb-muted); }
+.eb-btn--compact { height: 40px; padding: 0 14px; font-size: 13px; gap: 10px; }
+.eb-btn--block { width: 100%; }
+.eb-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.eb-field { display: flex; flex-direction: column; gap: 8px; }
+
+.eb-field label { font: 600 14px/1.3 var(--eb-font); color: var(--eb-text); }
+
+.eb-field input,
+.eb-field select {
+  width: 100%; height: 50px; padding: 0 14px;
+  background-color: var(--eb-input); /* só a cor, para não apagar a seta do .eb-select */
+  border: 1px solid var(--eb-border); border-radius: 8px;
+  color: var(--eb-text);
+  font: 400 14px/1.4 var(--eb-font);
+}
+.eb-field input::placeholder { color: var(--eb-muted); }
+.eb-field input:focus,
+.eb-field select:focus { border-color: var(--eb-green); outline: none; }
+.eb-field input[aria-invalid='true'],
+.eb-field select[aria-invalid='true'] { border-color: var(--eb-red); }
+
+.eb-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23a9b2ad' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eb-btn { transition: none; }
+}

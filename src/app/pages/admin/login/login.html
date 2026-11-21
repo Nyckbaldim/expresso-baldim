@@ -1,0 +1,67 @@
+<section class="login">
+  <div class="card eb-card">
+    <div class="eb-tricolor" aria-hidden="true"></div>
+    <p class="eb-eyebrow">Área restrita</p>
+    <h1 class="eb-title title">Acesso <span>administrativo</span></h1>
+    <p class="lead">Entre com seu usuário e senha para acompanhar os pedidos e atualizar o status do rastreio.</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      @if (error()) {
+        <div class="alert" role="alert">{{ error() }}</div>
+      }
+
+      <div class="eb-field">
+        <label for="username">Usuário</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          autocomplete="username"
+          placeholder="Digite seu usuário"
+          [attr.aria-invalid]="invalid('username')"
+          [attr.aria-describedby]="invalid('username') ? 'username-error' : null"
+        />
+        @if (invalid('username')) {
+          <p class="field-error" id="username-error">Informe o usuário.</p>
+        }
+      </div>
+
+      <div class="eb-field">
+        <label for="password">Senha</label>
+        <div class="password">
+          <input
+            id="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            formControlName="password"
+            autocomplete="current-password"
+            placeholder="Digite sua senha"
+            [attr.aria-invalid]="invalid('password')"
+            [attr.aria-describedby]="invalid('password') ? 'password-error' : null"
+          />
+          <button
+            type="button"
+            class="toggle"
+            (click)="showPassword.set(!showPassword())"
+            [attr.aria-pressed]="showPassword()"
+            [attr.aria-label]="showPassword() ? 'Ocultar senha' : 'Mostrar senha'"
+          >
+            {{ showPassword() ? 'Ocultar' : 'Mostrar' }}
+          </button>
+        </div>
+        @if (invalid('password')) {
+          <p class="field-error" id="password-error">Informe a senha.</p>
+        }
+      </div>
+
+      <button type="submit" class="eb-btn eb-btn--primary eb-btn--block" [disabled]="loading()">
+        @if (loading()) {
+          Entrando…
+        } @else {
+          Entrar <span aria-hidden="true">↗</span>
+        }
+      </button>
+    </form>
+
+    <p class="note">Acesso exclusivo para os gestores da Expresso Baldim.</p>
+  </div>
+</section>

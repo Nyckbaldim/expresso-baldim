@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router'; 
-import { Navbar } from './components/navbar/navbar';
-import { Footer } from './components/footer/footer';
+import { RouterOutlet } from '@angular/router';
 
+/* Cabeçalho e rodapé ficam nos layouts (PublicLayout e AdminLayout), escolhidos pela rota */
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, Navbar, Footer], 
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

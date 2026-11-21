@@ -1,0 +1,112 @@
+<div class="page" [class.has-selection]="!!code()">
+  <header class="hero">
+    <div class="eb-tricolor" aria-hidden="true"></div>
+    <p class="eb-eyebrow">Painel de controle</p>
+    <h1 class="eb-title hero__title">Painel de <span>pedidos</span></h1>
+    <p class="hero__lead">Veja as solicitações recebidas e atualize o status para o cliente acompanhar pelo rastreio.</p>
+    <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact hero__logout" (click)="logout()">
+      Sair <span aria-hidden="true">↗</span>
+    </button>
+  </header>
+
+  <section class="stats" aria-label="Resumo dos pedidos">
+    <div class="stat">
+      <span class="stat__label">Novos pedidos</span>
+      <strong class="stat__value">{{ store.summary().novos }}</strong>
+      <span class="stat__hint">Aguardando análise</span>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Em andamento</span>
+      <strong class="stat__value">{{ store.summary().andamento }}</strong>
+      <span class="stat__hint">Em análise ou em transporte</span>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Concluídos</span>
+      <strong class="stat__value stat__value--accent">{{ store.summary().concluidos }}</strong>
+      <span class="stat__hint">Serviços finalizados</span>
+    </div>
+  </section>
+
+  <div class="content">
+    <section class="list eb-card" aria-labelledby="lista-titulo">
+      <div class="list__head">
+        <h2 class="list__title" id="lista-titulo">Pedidos</h2>
+        <div class="search">
+          <label class="eb-visually-hidden" for="busca">Buscar por código ou cliente</label>
+          <input
+            id="busca"
+            type="search"
+            placeholder="Buscar por código ou cliente"
+            autocomplete="off"
+            [value]="store.query()"
+            (input)="onSearch($event)"
+          />
+        </div>
+      </div>
+
+      <div class="chips" role="group" aria-label="Filtrar por status">
+        @for (f of filters; track f.value) {
+          <button
+            type="button"
+            class="chip"
+            [class.is-active]="store.statusFilter() === f.value"
+            [attr.aria-pressed]="store.statusFilter() === f.value"
+            (click)="store.setStatus(f.value)"
+          >
+            {{ f.label }}
+          </button>
+        }
+      </div>
+
+      @if (store.loading() && !store.orders().length) {
+        <p class="state" role="status">Carregando pedidos…</p>
+      } @else if (store.loadError()) {
+        <p class="state state--error" role="alert">
+          {{ store.loadError() }}
+          <button type="button" class="link" (click)="store.reload()">Tentar de novo</button>
+        </p>
+      } @else if (!store.orders().length) {
+        <p class="state">Nenhum pedido encontrado. Limpe a busca ou escolha outro status.</p>
+      } @else {
+        <div class="table__head" aria-hidden="true">
+          <span>Código</span><span>Cliente</span><span>Serviço</span><span>Rota</span><span>Data desejada</span><span>Status</span>
+        </div>
+        <ul class="rows" [class.is-loading]="store.loading()" [attr.aria-busy]="store.loading()">
+          @for (o of store.orders(); track o.code) {
+            <li>
+              <a
+                class="row"
+                [routerLink]="['/admin/pedidos', o.code]"
+                queryParamsHandling="preserve"
+                [class.is-selected]="o.code === code()"
+                [class.is-default]="!code() && o.code === panelOrder()?.code"
+                [class.is-last]="!code() && o.code === store.lastOpened()"
+              >
+                <span class="code">{{ o.code }}</span>
+                <span class="customer">{{ o.customerName }}</span>
+                <span class="service">{{ serviceLabel[o.service] }}</span>
+                <span class="route">{{ o.origin }} → {{ o.destination }}</span>
+                <span class="date">
+                  <span class="date__label">Data desejada</span>
+                  <span class="date__value">{{ o.desiredDate | brDate }}</span>
+                </span>
+                <span class="status"><eb-status-tag [status]="o.status" /></span>
+                <span class="chevron" aria-hidden="true">›</span>
+              </a>
+            </li>
+          }
+        </ul>
+        <eb-pagination
+          [page]="store.page()"
+          [pageSize]="store.pageSize()"
+          [total]="store.total()"
+          [sizes]="pageSizes"
+          (pageChange)="store.setPage($event)"
+          (sizeChange)="store.setPageSize($event)"
+        />
+      }
+    </section>
+
+    <eb-order-detail class="detail" [order]="panelOrder()" [notFound]="notFound()" />
+  </div>
+</div>

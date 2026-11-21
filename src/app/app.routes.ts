@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { PublicLayout } from './components/public-layout/public-layout';
 import { SobreNos } from './pages/sobre-nos/sobre-nos';
 import { Homepage } from './pages/homepage/homepage';
 import { FrotaEServicos } from './pages/frota-e-servicos/frota-e-servicos';

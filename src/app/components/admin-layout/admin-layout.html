@@ -1,0 +1,15 @@
+<header class="header">
+  <a routerLink="/" class="logo" aria-label="Expresso Baldim — ir para o site">
+    <!-- 127 × 96 mantém a proporção do arquivo (2376 × 1792) -->
+    <img [ngSrc]="logo" width="127" height="96" priority alt="Expresso Baldim Transportes e Mudanças" />
+  </a>
+  <a routerLink="/" class="eb-btn eb-btn--secondary eb-btn--compact">
+    Voltar ao site <span aria-hidden="true">↗</span>
+  </a>
+</header>
+
+<main id="conteudo"><router-outlet /></main>
+
+<footer class="footer">
+  <small>© {{ year }} Expresso Baldim Transportes e Mudanças</small>
+</footer>
