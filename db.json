@@ -1,0 +1,146 @@
+{
+  "pedidos": [
+    {
+      "id": "1",
+      "codigo": "EB-4F7K2",
+      "tipo": "frete",
+      "status": "recebido",
+      "criadoEm": "2026-11-17T14:00:00.000Z",
+      "contato": {
+        "nome": "Ana Souza",
+        "whatsapp": "(31) 99999-9999",
+        "email": "ana@example.com"
+      },
+      "carga": {
+        "tipo": "Móveis e eletrodomésticos",
+        "descricao": "Carga para transporte",
+        "comprimento": 1,
+        "largura": 1,
+        "altura": 1,
+        "peso": 1
+      },
+      "origem": {
+        "cep": "30110-000",
+        "rua": "Avenida Afonso Pena",
+        "numero": "100",
+        "complemento": "",
+        "bairro": "Centro",
+        "cidade": "Belo Horizonte",
+        "uf": "MG"
+      },
+      "destino": {
+        "cep": "32010-000",
+        "rua": "Avenida João César de Oliveira",
+        "numero": "200",
+        "complemento": "",
+        "bairro": "Centro",
+        "cidade": "Contagem",
+        "uf": "MG"
+      },
+      "planejamento": {
+        "data": "",
+        "vistoria": false,
+        "observacoes": ""
+      },
+      "fotos": []
+    },
+    {
+      "codigo": "EB-TG6P3",
+      "tipo": "frete",
+      "status": "concluido",
+      "criadoEm": "2026-11-21T19:20:23.836Z",
+      "contato": {
+        "nome": "Fah",
+        "whatsapp": "(31) 91010-1010",
+        "email": "exemplo@exemplo.com"
+      },
+      "carga": {
+        "tipo": "Móveis e eletrodomésticos",
+        "descricao": "afsasf",
+        "comprimento": 15,
+        "largura": 15,
+        "altura": 15,
+        "peso": 15
+      },
+      "origem": {
+        "cep": "11111-111",
+        "rua": "asd",
+        "numero": "123",
+        "complemento": "asdas",
+        "bairro": "asdasd",
+        "cidade": "asdas",
+        "uf": "SC"
+      },
+      "destino": {
+        "cep": "11111-111",
+        "rua": "dadasd",
+        "numero": "11",
+        "complemento": "asd",
+        "bairro": "asd",
+        "cidade": "sad",
+        "uf": "RS"
+      },
+      "planejamento": {
+        "data": "2026-11-24",
+        "vistoria": true,
+        "observacoes": "afd"
+      },
+      "fotos": [],
+      "id": "Myv44iRfhA0"
+    }
+  ],
+  "avaliacoes": [
+    {
+      "id": "1",
+      "pedidoId": "1",
+      "codigo": "EB-4F7K2",
+      "tipo": "feedback",
+      "nota": 2,
+      "motivo": "Atraso na coleta ou na entrega",
+      "comentario": "O caminhão chegou duas horas depois.",
+      "criadoEm": "2026-11-17T14:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "pedidoId": "Myv44iRfhA0",
+      "codigo": "EB-TG6P3",
+      "tipo": "google",
+      "nota": 5,
+      "criadoEm": "2026-11-17T15:10:00.000Z"
+    },
+    {
+      "pedidoId": "1",
+      "codigo": "EB-4F7K2",
+      "tipo": "feedback",
+      "nota": 5,
+      "motivo": "Atraso na coleta ou na entrega",
+      "comentario": "asd",
+      "criadoEm": "2026-11-17T23:00:29.357Z",
+      "id": "j4nHH3KYDbU"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "email": "admin@expressobaldim.com",
+      "senha": "123456",
+      "perfil": "gestor"
+    }
+  ],
+  "depoimentos": [
+    {
+      "id": "1",
+      "nome": "Maria S.",
+      "nota": 5,
+      "texto": "Equipe cuidadosa e pontual do início ao fim.",
+      "publicado": true
+    },
+    {
+      "id": "2",
+      "nome": "João P.",
+      "nota": 4,
+      "texto": "Mudança tranquila, tudo chegou inteiro.",
+      "publicado": false
+    }
+  ]
+}
