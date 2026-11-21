@@ -1,0 +1,77 @@
+<nav class="pager" [attr.aria-label]="'Paginação de ' + substantivo()">
+  <p class="pager__summary" role="status" aria-live="polite">
+    Mostrando <strong>{{ inicio() }}</strong> a <strong>{{ fim() }}</strong> de <strong>{{ total() }}</strong> {{ substantivo() }}
+  </p>
+
+  <div class="pager__size">
+    <label for="eb-page-size">Por página</label>
+    <select id="eb-page-size" [value]="tamanhoPagina()" (change)="aoMudarTamanho($event)">
+      @for (tamanho of tamanhos(); track tamanho) {
+        <option [value]="tamanho">{{ tamanho }}</option>
+      }
+    </select>
+  </div>
+
+  <ul class="pager__pages">
+    <li>
+      <button
+        type="button"
+        class="pg pg--arrow"
+        aria-label="Página anterior"
+        [disabled]="pagina() <= 1"
+        (click)="mudouPagina.emit(pagina() - 1)"
+      >
+        ‹
+      </button>
+    </li>
+    @for (item of itens(); track item) {
+      <li>
+        @if (item === 'lacuna-inicio' || item === 'lacuna-fim') {
+          <span class="pg pg--gap" aria-hidden="true">…</span>
+        } @else {
+          <button
+            type="button"
+            class="pg"
+            [class.is-current]="item === pagina()"
+            [attr.aria-current]="item === pagina() ? 'page' : null"
+            [attr.aria-label]="'Página ' + item"
+            (click)="mudouPagina.emit(item)"
+          >
+            {{ item }}
+          </button>
+        }
+      </li>
+    }
+    <li>
+      <button
+        type="button"
+        class="pg pg--arrow"
+        aria-label="Próxima página"
+        [disabled]="pagina() >= totalPaginas()"
+        (click)="mudouPagina.emit(pagina() + 1)"
+      >
+        ›
+      </button>
+    </li>
+  </ul>
+
+  <div class="pager__bar">
+    <button
+      type="button"
+      class="eb-btn eb-btn--secondary eb-btn--compact"
+      [disabled]="pagina() <= 1"
+      (click)="mudouPagina.emit(pagina() - 1)"
+    >
+      <span aria-hidden="true">‹</span> Anterior
+    </button>
+    <span class="pager__of">Página {{ pagina() }} de {{ totalPaginas() }}</span>
+    <button
+      type="button"
+      class="eb-btn eb-btn--secondary eb-btn--compact"
+      [disabled]="pagina() >= totalPaginas()"
+      (click)="mudouPagina.emit(pagina() + 1)"
+    >
+      Próxima <span aria-hidden="true">›</span>
+    </button>
+  </div>
+</nav>

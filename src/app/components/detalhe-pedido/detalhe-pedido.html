@@ -1,0 +1,75 @@
+<a class="back" routerLink="/admin/pedidos" queryParamsHandling="preserve"><span aria-hidden="true">←</span> Voltar aos pedidos</a>
+
+@if (pedido(); as atual) {
+  <div class="panel eb-card">
+    <div class="head">
+      <div class="eb-tricolor" aria-hidden="true"></div>
+      <p class="eb-eyebrow">Detalhes do pedido</p>
+      <div class="head__row">
+        <h2 class="code">{{ atual.codigo }}</h2>
+        <eb-etiqueta-status class="head__tag" [status]="atual.status" />
+      </div>
+    </div>
+
+    <dl class="info">
+      <div class="info__item"><dt>Cliente</dt><dd>{{ atual.contato.nome }}</dd></div>
+      <div class="info__item"><dt>Serviço</dt><dd>{{ rotuloTipo[atual.tipo] }}</dd></div>
+      <div class="info__item"><dt>Rota</dt><dd>{{ cidadeDe(atual.origem) }} → {{ cidadeDe(atual.destino) }}</dd></div>
+      <div class="info__duo">
+        <div class="info__item"><dt>Volume estimado</dt><dd>{{ volumeDe(atual) === null ? '—' : volumeDe(atual) + ' m³' }}</dd></div>
+        <div class="info__item"><dt>Data desejada</dt><dd>{{ atual.planejamento?.data | dataBr }}</dd></div>
+      </div>
+    </dl>
+
+    <hr class="divider" />
+
+    <div class="eb-field">
+      <label for="status">Alterar status</label>
+      <select id="status" class="eb-select" [formControl]="controleStatus">
+        @for (item of status; track item.valor) {
+          <option [value]="item.valor">{{ item.rotulo }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="actions">
+      <button
+        type="button"
+        class="eb-btn eb-btn--primary eb-btn--block"
+        [disabled]="estado.estadoSalvar() === 'salvando' || controleStatus.value === atual.status"
+        (click)="salvar()"
+      >
+        @if (estado.estadoSalvar() === 'salvando') {
+          Salvando…
+        } @else {
+          Atualizar status <span aria-hidden="true">↗</span>
+        }
+      </button>
+    </div>
+
+    <p
+      class="note"
+      role="status"
+      [class.note--ok]="estado.estadoSalvar() === 'salvo'"
+      [class.note--error]="estado.estadoSalvar() === 'erro'"
+    >
+      @switch (estado.estadoSalvar()) {
+        @case ('salvo') { Status atualizado. O cliente já vê a mudança no rastreio. }
+        @case ('erro') { Não foi possível atualizar o status. Tente de novo. }
+        @default { O cliente verá o novo status na tela de rastreio. }
+      }
+    </p>
+  </div>
+} @else if (erro()) {
+  <div class="panel eb-card empty" role="alert">
+    <p class="empty__text">{{ erro() }}</p>
+  </div>
+} @else if (naoEncontrado()) {
+  <div class="panel eb-card empty" role="status">
+    <p class="empty__text">Não encontramos esse pedido. Ele pode ter sido removido ou o código está incorreto.</p>
+  </div>
+} @else {
+  <div class="panel eb-card empty">
+    <p class="empty__text">Selecione um pedido para ver os detalhes e alterar o status.</p>
+  </div>
+}
