@@ -169,17 +169,30 @@
 
     <div class="avaliacoes__topo">
       <h2 class="secao__titulo">Um espaço para ouvir você.</h2>
-      <div class="avaliacoes__setas">
-        <button type="button" class="seta" aria-label="Avaliação anterior">
-          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-        </button>
-        <button type="button" class="seta" aria-label="Próxima avaliação">
-          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-      </div>
+      @if (depoimentos().length > 1) {
+        <div class="avaliacoes__setas">
+          <button type="button" class="seta" aria-label="Avaliação anterior" (click)="anterior()">…</button>
+          <button type="button" class="seta" aria-label="Próxima avaliação" (click)="proximo()">…</button>
+        </div>
+      }
     </div>
-
-    <article class="cartao avaliacoes__cartao">
+    @if (atual(); as d) {
+      <article class="cartao avaliacoes__cartao">
+        <svg class="icone icone--grande" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M14.8 7.5a1.84 1.84 0 0 0-2.6 0l-.2.3-.3-.3a1.84 1.84 0 1 0-2.4 2.8L12 13l2.7-2.7c.9-.8.9-2.1.1-3Z"/></svg>
+        <div class="avaliacoes__texto">
+          <h3 class="avaliacoes__titulo avaliacoes__titulo--depoimento">“{{ d.texto }}”</h3>
+          <p>
+            {{ d.nome }} ·
+            <span class="avaliacoes__estrelas" [attr.aria-label]="d.nota + ' de 5 estrelas'">{{ '★'.repeat(d.nota) }}{{ '☆'.repeat(5 - d.nota) }}</span>
+          </p>
+        </div>
+        <a href="/avaliar" class="botao botao--secundario botao--pequeno">
+          Avaliar meu serviço
+          <svg class="icone icone--verde" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </article>
+    } @else {
+      <article class="cartao avaliacoes__cartao">
       <svg class="icone icone--grande" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M14.8 7.5a1.84 1.84 0 0 0-2.6 0l-.2.3-.3-.3a1.84 1.84 0 1 0-2.4 2.8L12 13l2.7-2.7c.9-.8.9-2.1.1-3Z"/></svg>
       <div class="avaliacoes__texto">
         <h3 class="avaliacoes__titulo">As próximas histórias podem ser as suas.</h3>
@@ -190,6 +203,7 @@
         <svg class="icone icone--verde" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
       </a>
     </article>
+    }
   </section>
 
   <section class="secao secao--final container">
