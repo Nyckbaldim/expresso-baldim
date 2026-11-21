@@ -11,12 +11,14 @@
 }
 .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
-.tag[data-status='RECEBIDO'] { color: var(--eb-muted); }
-.tag[data-status='EM_ANALISE'] { color: var(--eb-text); }
-.tag[data-status='EM_TRANSPORTE'] {
+.tag[data-status='recebido'] { color: var(--eb-muted); }
+.tag[data-status='em_analise'] { color: var(--eb-text); }
+.tag[data-status='orcamento_enviado'],
+.tag[data-status='agendado'] {
   color: var(--eb-green);
   background: rgba(37, 212, 125, 0.12);
   border-color: rgba(37, 212, 125, 0.5);
 }
-.tag[data-status='CONCLUIDO'] { background: var(--eb-green); border-color: var(--eb-green); color: #000; }
-.tag[data-status='CONCLUIDO'] .dot { display: none; }
+.tag[data-status='concluido'] { background: var(--eb-green); border-color: var(--eb-green); color: #000; }
+.tag[data-status='concluido'] .dot { display: none; }
+.tag[data-status='cancelado'] { color: var(--eb-red); }

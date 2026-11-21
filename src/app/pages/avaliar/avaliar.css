@@ -82,6 +82,22 @@ select.campo__controle option { background: #111313; color: var(--branco); }
   line-height: 1.5;
 }
 
+.campo__erro {
+  margin-top: 6px;
+  color: var(--vermelho-claro);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.avaliar__sucesso {
+  margin-top: 28px;
+  padding: 16px 20px;
+  background: var(--verde-fundo);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  color: var(--verde);
+  font-size: 15px;
+}
+
 .seletor {
   display: grid;
   grid-template-columns: 1fr 1fr 1.19fr;
