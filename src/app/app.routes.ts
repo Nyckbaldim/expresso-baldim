@@ -7,7 +7,6 @@ import { Orcamento } from './pages/orcamento/orcamento';
 import { Avaliar } from './pages/avaliar/avaliar';
 import { Mudanca } from './pages/orcamento/mudanca/mudanca';
 import { Frete } from './pages/orcamento/frete/frete';
-import { PublicLayout } from './components/public-layout/public-layout';
 
 export const routes: Routes = [
   {
