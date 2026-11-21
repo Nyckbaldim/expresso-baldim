@@ -4,8 +4,8 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 
-import { Auth } from '../../../services/auth';
-import { ADMIN_HOME } from '../../../constants';
+import { Autenticacao } from '../../../services/autenticacao';
+import { ROTA_INICIO_ADMIN } from '../../../configuracao';
 
 @Component({
   selector: 'eb-login',
@@ -14,52 +14,51 @@ import { ADMIN_HOME } from '../../../constants';
   styleUrl: './login.css',
 })
 export class Login {
-  private readonly fb = inject(NonNullableFormBuilder);
-  private readonly auth = inject(Auth);
-  private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
+  private readonly construtorFormulario = inject(NonNullableFormBuilder);
+  private readonly autenticacao = inject(Autenticacao);
+  private readonly roteador = inject(Router);
+  private readonly rota = inject(ActivatedRoute);
 
-  readonly form = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
+  readonly formulario = this.construtorFormulario.group({
+    email: ['', [Validators.required, Validators.email]],
+    senha: ['', Validators.required],
   });
 
-  readonly showPassword = signal(false);
-  readonly loading = signal(false);
-  readonly error = signal<string | null>(null);
+  readonly mostrarSenha = signal(false);
+  readonly carregando = signal(false);
+  readonly erro = signal<string | null>(null);
 
-  invalid(name: 'username' | 'password'): boolean {
-    const control = this.form.controls[name];
+  invalido(nome: 'email' | 'senha'): boolean {
+    const control = this.formulario.controls[nome];
     return control.invalid && (control.touched || control.dirty);
   }
 
-  submit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+  entrar(): void {
+    if (this.formulario.invalid) {
+      this.formulario.markAllAsTouched();
       return;
     }
 
-    this.error.set(null);
-    this.loading.set(true);
-    const { username, password } = this.form.getRawValue();
+    this.erro.set(null);
+    this.carregando.set(true);
+    const { email, senha } = this.formulario.getRawValue();
 
-    this.auth
-      .login(username.trim(), password)
-      .pipe(finalize(() => this.loading.set(false)))
+    this.autenticacao
+      .entrar(email.trim(), senha)
+      .pipe(finalize(() => this.carregando.set(false)))
       .subscribe({
-        next: () => void this.router.navigateByUrl(this.returnUrl()),
+        next: () => void this.roteador.navigateByUrl(this.rotaRetorno()),
         error: (err: HttpErrorResponse) =>
-          this.error.set(
+          this.erro.set(
             err.status === 401 || err.status === 403
-              ? 'Usuário ou senha incorretos. Confira os dados e tente de novo.'
-              : 'Não foi possível entrar agora. Tente novamente em instantes.',
+              ? 'E-mail ou senha incorretos. Confira os dados e tente de novo.'
+              : 'Não foi possível entrar agora. Confira se a API está disponível e tente novamente.',
           ),
       });
   }
 
-  /** Volta para a página que a pessoa tentou abrir, aceitando só caminhos internos do /admin. */
-  private returnUrl(): string {
-    const url = this.route.snapshot.queryParamMap.get('returnUrl');
-    return url && url.startsWith('/admin') && !url.startsWith('//') ? url : ADMIN_HOME;
+  private rotaRetorno(): string {
+    const url = this.rota.snapshot.queryParamMap.get('urlRetorno');
+    return url && url.startsWith('/admin') && !url.startsWith('//') ? url : ROTA_INICIO_ADMIN;
   }
 }

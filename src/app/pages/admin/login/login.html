@@ -5,24 +5,24 @@
     <h1 class="eb-title title">Acesso <span>administrativo</span></h1>
     <p class="lead">Entre com seu usuário e senha para acompanhar os pedidos e atualizar o status do rastreio.</p>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-      @if (error()) {
-        <div class="alert" role="alert">{{ error() }}</div>
+    <form [formGroup]="formulario" (ngSubmit)="entrar()" novalidate>
+      @if (erro()) {
+        <div class="alert" role="alert">{{ erro() }}</div>
       }
 
       <div class="eb-field">
-        <label for="username">Usuário</label>
+        <label for="email">E-mail</label>
         <input
-          id="username"
-          type="text"
-          formControlName="username"
+          id="email"
+          type="email"
+          formControlName="email"
           autocomplete="username"
-          placeholder="Digite seu usuário"
-          [attr.aria-invalid]="invalid('username')"
-          [attr.aria-describedby]="invalid('username') ? 'username-error' : null"
+          placeholder="Digite seu e-mail"
+          [attr.aria-invalid]="invalido('email')"
+          [attr.aria-describedby]="invalido('email') ? 'email-error' : null"
         />
-        @if (invalid('username')) {
-          <p class="field-error" id="username-error">Informe o usuário.</p>
+        @if (invalido('email')) {
+          <p class="field-error" id="email-error">Informe um e-mail válido.</p>
         }
       </div>
 
@@ -31,30 +31,30 @@
         <div class="password">
           <input
             id="password"
-            [type]="showPassword() ? 'text' : 'password'"
-            formControlName="password"
+            [type]="mostrarSenha() ? 'text' : 'password'"
+            formControlName="senha"
             autocomplete="current-password"
             placeholder="Digite sua senha"
-            [attr.aria-invalid]="invalid('password')"
-            [attr.aria-describedby]="invalid('password') ? 'password-error' : null"
+            [attr.aria-invalid]="invalido('senha')"
+            [attr.aria-describedby]="invalido('senha') ? 'senha-error' : null"
           />
           <button
             type="button"
             class="toggle"
-            (click)="showPassword.set(!showPassword())"
-            [attr.aria-pressed]="showPassword()"
-            [attr.aria-label]="showPassword() ? 'Ocultar senha' : 'Mostrar senha'"
+            (click)="mostrarSenha.set(!mostrarSenha())"
+            [attr.aria-pressed]="mostrarSenha()"
+            [attr.aria-label]="mostrarSenha() ? 'Ocultar senha' : 'Mostrar senha'"
           >
-            {{ showPassword() ? 'Ocultar' : 'Mostrar' }}
+            {{ mostrarSenha() ? 'Ocultar' : 'Mostrar' }}
           </button>
         </div>
-        @if (invalid('password')) {
-          <p class="field-error" id="password-error">Informe a senha.</p>
+        @if (invalido('senha')) {
+          <p class="field-error" id="senha-error">Informe a senha.</p>
         }
       </div>
 
-      <button type="submit" class="eb-btn eb-btn--primary eb-btn--block" [disabled]="loading()">
-        @if (loading()) {
+      <button type="submit" class="eb-btn eb-btn--primary eb-btn--block" [disabled]="carregando()">
+        @if (carregando()) {
           Entrando…
         } @else {
           Entrar <span aria-hidden="true">↗</span>
