@@ -1,0 +1,280 @@
+<section class="form-pagina">
+  <div class="container">
+
+    <header class="pagina-topo">
+      <span class="tricolor" aria-hidden="true"></span>
+      <span class="etiqueta">Orçamento / Mudança residencial</span>
+      <h1>Uma nova casa. Um próximo passo bem planejado.</h1>
+      <p class="pagina-topo__lead">Conte de onde você sai, para onde vai e o que precisa levar. O formulário completo está logo abaixo.</p>
+    </header>
+
+    <ol class="etapas" aria-label="Etapas do formulário">
+      <li><span>01</span> Contato</li>
+      <li><span>02</span> Endereços</li>
+      <li><span>03</span> Móveis e volume</li>
+      <li><span>04</span> Planejamento</li>
+    </ol>
+    <p class="form-nota">O volume ajuda no planejamento e não representa um preço de frete.</p>
+
+    @if (codigoGerado()) {
+      <section class="sucesso" role="status" aria-live="polite">
+        <p class="etiqueta">Solicitação enviada</p>
+        <h2 class="sucesso__titulo">Recebemos o seu pedido!</h2>
+        <p class="sucesso__texto">Guarde o código abaixo para acompanhar o andamento. A equipe vai analisar as informações e conversar com você pelo WhatsApp.</p>
+        <p class="sucesso__codigo">{{ codigoGerado() }}</p>
+        <div class="sucesso__acoes">
+          <a class="botao botao--primario" routerLink="/rastrear-pedido" [queryParams]="{ codigo: codigoGerado() }">
+            Acompanhar pedido
+            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+          <a class="botao botao--secundario" [href]="linkWhatsapp()" target="_blank" rel="noopener">
+            Abrir WhatsApp
+            <svg class="icone icone--verde" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+          <button type="button" class="botao botao--secundario" (click)="novaSolicitacao()">Nova solicitação</button>
+        </div>
+      </section>
+    } @else {
+      <form class="form-layout" [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+        <div class="form-coluna">
+
+      <section class="form-cartao" aria-labelledby="t-contato">
+        <h2 id="t-contato" class="form-cartao__titulo">01 / Seus dados de contato</h2>
+        <p class="form-cartao__intro">Os campos com <span class="obrigatorio">*</span> são obrigatórios. Usaremos estes dados para conversar sobre o orçamento.</p>
+        <div class="campos campos--contato" formGroupName="contato">
+          <div class="campo campo--cheio">
+            <label for="nome" class="campo__rotulo">Nome completo <span class="obrigatorio">*</span></label>
+            <input type="text" id="nome" formControlName="nome" class="campo__controle" placeholder="Como podemos chamar você?" autocomplete="name">
+            @if (invalido('contato.nome')) { <p class="campo__erro">{{ erro('contato.nome') }}</p> }
+          </div>
+          <div class="campo">
+            <label for="whatsapp" class="campo__rotulo">WhatsApp com DDD <span class="obrigatorio">*</span></label>
+            <input type="tel" id="whatsapp" formControlName="whatsapp" class="campo__controle" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel" (input)="mascarar($event, 'contato.whatsapp', formatarTelefone)">
+            @if (invalido('contato.whatsapp')) { <p class="campo__erro">{{ erro('contato.whatsapp') }}</p> }
+          </div>
+          <div class="campo">
+            <label for="email" class="campo__rotulo">E-mail <span class="obrigatorio">*</span></label>
+            <input type="email" id="email" formControlName="email" class="campo__controle" placeholder="seuemail@exemplo.com" autocomplete="email">
+            @if (invalido('contato.email')) { <p class="campo__erro">{{ erro('contato.email') }}</p> }
+          </div>
+        </div>
+      </section>
+
+      <section class="form-cartao" aria-labelledby="t-end">
+        <h2 id="t-end" class="form-cartao__titulo">02 / De onde para onde?</h2>
+        <p class="form-cartao__intro">Os detalhes de acesso ajudam a planejar a retirada e a entrega dos móveis.</p>
+        <div class="form-corpo">
+          @for (b of blocos; track b.chave) {
+            <div class="endereco" role="group" [attr.aria-labelledby]="'t-' + b.chave" [formGroupName]="b.chave">
+              <h3 [id]="'t-' + b.chave" class="endereco__titulo">{{ b.titulo }}</h3>
+              <div class="campos campos--enderecos">
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-cep'" class="campo__rotulo">CEP <span class="obrigatorio">*</span></label>
+                  <input type="text" [id]="b.chave + '-cep'" formControlName="cep" class="campo__controle" placeholder="00000-000" inputmode="numeric" autocomplete="postal-code" (input)="aoDigitarCep($event, b.chave)">
+                  @if (invalido(b.chave + '.cep')) { <p class="campo__erro">{{ erro(b.chave + '.cep') }}</p> }
+                </div>
+                <p class="campo__aviso-cep">{{ statusCep()[b.chave] || 'Busca automática pelo CEP. Confira os dados antes de enviar.' }}</p>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-rua'" class="campo__rotulo">Rua / avenida <span class="obrigatorio">*</span></label>
+                  <input type="text" [id]="b.chave + '-rua'" formControlName="rua" class="campo__controle" placeholder="Nome do logradouro">
+                  @if (invalido(b.chave + '.rua')) { <p class="campo__erro">{{ erro(b.chave + '.rua') }}</p> }
+                </div>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-numero'" class="campo__rotulo">Número <span class="obrigatorio">*</span></label>
+                  <input type="text" [id]="b.chave + '-numero'" formControlName="numero" class="campo__controle" placeholder="Número ou S/N">
+                  @if (invalido(b.chave + '.numero')) { <p class="campo__erro">{{ erro(b.chave + '.numero') }}</p> }
+                </div>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-complemento'" class="campo__rotulo">Complemento</label>
+                  <input type="text" [id]="b.chave + '-complemento'" formControlName="complemento" class="campo__controle" placeholder="Apartamento, bloco, referência">
+                </div>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-bairro'" class="campo__rotulo">Bairro <span class="obrigatorio">*</span></label>
+                  <input type="text" [id]="b.chave + '-bairro'" formControlName="bairro" class="campo__controle" placeholder="Nome do bairro">
+                  @if (invalido(b.chave + '.bairro')) { <p class="campo__erro">{{ erro(b.chave + '.bairro') }}</p> }
+                </div>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-cidade'" class="campo__rotulo">Cidade <span class="obrigatorio">*</span></label>
+                  <input type="text" [id]="b.chave + '-cidade'" formControlName="cidade" class="campo__controle" placeholder="Nome da cidade">
+                  @if (invalido(b.chave + '.cidade')) { <p class="campo__erro">{{ erro(b.chave + '.cidade') }}</p> }
+                </div>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-uf'" class="campo__rotulo">UF <span class="obrigatorio">*</span></label>
+                  <select [id]="b.chave + '-uf'" formControlName="uf" class="campo__controle">
+                    <option value="" disabled>Selecione</option>
+                    @for (u of ufs; track u) {
+                      <option [value]="u">{{ u }}</option>
+                    }
+                  </select>
+                  @if (invalido(b.chave + '.uf')) { <p class="campo__erro">{{ erro(b.chave + '.uf') }}</p> }
+                </div>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-andar'" class="campo__rotulo">Andar <span class="obrigatorio">*</span></label>
+                  <input type="text" [id]="b.chave + '-andar'" formControlName="andar" class="campo__controle" placeholder="Térreo ou número do andar">
+                  @if (invalido(b.chave + '.andar')) { <p class="campo__erro">{{ erro(b.chave + '.andar') }}</p> }
+                </div>
+                <div class="campo">
+                  <label [attr.for]="b.chave + '-elevador'" class="campo__rotulo">Elevador disponível? <span class="obrigatorio">*</span></label>
+                  <select [id]="b.chave + '-elevador'" formControlName="elevador" class="campo__controle">
+                    <option value="" disabled>Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                  </select>
+                  @if (invalido(b.chave + '.elevador')) { <p class="campo__erro">{{ erro(b.chave + '.elevador') }}</p> }
+                </div>
+              </div>
+            </div>
+          }
+          <p class="campo__ajuda campo__ajuda--solta">Há escadas estreitas, distância para estacionar ou restrições de horário no condomínio? Informe em observações.</p>
+        </div>
+      </section>
+
+      <section class="form-cartao" aria-labelledby="t-moveis">
+        <h2 id="t-moveis" class="form-cartao__titulo">03 / O que vai na mudança?</h2>
+        <p class="form-cartao__intro">Selecione os móveis por cômodo e indique a quantidade. Estado inicial: nenhum item selecionado.</p>
+        <div class="form-corpo">
+          <div class="comodos" formGroupName="moveis">
+            @for (c of comodos; track c.titulo) {
+              <section class="comodo">
+                <h3 class="comodo__titulo">{{ c.titulo }}</h3>
+                <ul class="comodo__lista">
+                  @for (m of c.itens; track m.id) {
+                    <li class="movel" [formGroupName]="m.id">
+                      <label class="check check--movel" [attr.for]="'m-' + m.id">
+                        <input type="checkbox" [id]="'m-' + m.id" formControlName="selecionado" (change)="aoMarcar(m.id, $event)">
+                        <span>{{ m.nome }}</span>
+                      </label>
+                      <div class="stepper" role="group" [attr.aria-label]="'Quantidade de ' + m.nome">
+                        <button type="button" class="stepper__botao" aria-label="Diminuir" (click)="alterarQuantidade(m.id, -1)">−</button>
+                        <output class="stepper__valor" aria-live="polite">{{ quantidade(m.id) }}</output>
+                        <button type="button" class="stepper__botao stepper__botao--mais" aria-label="Aumentar" (click)="alterarQuantidade(m.id, 1)">+</button>
+                      </div>
+                    </li>
+                  }
+                </ul>
+              </section>
+            }
+          </div>
+
+          <div class="volume" aria-live="polite">
+            <div>
+              <h3 class="volume__titulo">Volume estimado da mudança</h3>
+              <p class="volume__texto">{{ itens() }} {{ itens() === 1 ? 'item selecionado' : 'itens selecionados' }}. A estimativa será validada pela equipe.</p>
+            </div>
+            <p class="volume__valor">{{ volumeTexto() }}</p>
+          </div>
+          @if (semMoveis) {
+            <p class="campo__erro">Selecione ao menos um móvel para estimar o volume.</p>
+          }
+          <p class="campo__ajuda campo__ajuda--solta">Tem um item fora da lista ou um móvel de tamanho diferente? Descreva nas observações e envie fotos para a avaliação.</p>
+        </div>
+      </section>
+
+      <section class="form-cartao" aria-labelledby="t-extras">
+        <h2 id="t-extras" class="form-cartao__titulo">Serviços extras</h2>
+        <p class="form-cartao__intro">Marque o que deseja consultar. A disponibilidade e as condições serão confirmadas no orçamento.</p>
+        <div class="form-corpo extras" formGroupName="extras">
+          @for (e of extrasDisponiveis; track e.chave) {
+            <label class="check" [attr.for]="'extra-' + e.chave">
+              <input type="checkbox" [id]="'extra-' + e.chave" [formControlName]="e.chave">
+              <span>{{ e.rotulo }}</span>
+            </label>
+          }
+        </div>
+      </section>
+
+      <section class="form-cartao" aria-labelledby="t-fotos">
+        <h2 id="t-fotos" class="form-cartao__titulo">Fotos dos ambientes</h2>
+        <p class="form-cartao__intro">Envie várias fotos para complementar a lista de móveis e os detalhes de acesso.</p>
+        <div class="form-corpo">
+          <label class="dropzone" for="fotos" (dragover)="$event.preventDefault()" (drop)="aoSoltarFotos($event)">
+            <span class="dropzone__icone"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 22H4a2 2 0 0 1-2-2V6"/><path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18"/><circle cx="12" cy="8" r="2"/><rect width="16" height="16" x="6" y="2" rx="2"/></svg></span>
+            <span class="dropzone__titulo">Adicione fotos dos ambientes</span>
+            <span class="dropzone__texto">Arraste várias fotos ou selecione arquivos JPG e PNG</span>
+            <span class="dropzone__dica">Mostre os móveis e os acessos. <span class="dropzone__status" [class.dropzone__status--ok]="fotos().length">{{ statusFotos() }}</span></span>
+            <input type="file" id="fotos" class="dropzone__input" accept="image/jpeg,image/png" multiple (change)="aoEscolherFotos($event)">
+          </label>
+          @if (erroFotos()) { <p class="campo__erro">{{ erroFotos() }}</p> }
+          @if (fotos().length) {
+            <ul class="fotos-lista">
+              @for (f of fotos(); track $index) {
+                <li>
+                  <span>{{ f.name }}</span>
+                  <button type="button" (click)="removerFoto($index)" [attr.aria-label]="'Remover ' + f.name">×</button>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </section>
+
+      <section class="form-cartao" aria-labelledby="t-plano">
+        <h2 id="t-plano" class="form-cartao__titulo">Planejamento e observações</h2>
+        <div class="form-corpo" formGroupName="planejamento">
+          <div class="campo">
+            <label for="data" class="campo__rotulo">Data desejada <span class="obrigatorio">*</span></label>
+            <input type="date" id="data" formControlName="data" class="campo__controle" [min]="hoje">
+            @if (invalido('planejamento.data')) { <p class="campo__erro">{{ erro('planejamento.data') }}</p> }
+            <p class="campo__ajuda">A disponibilidade será confirmada pela equipe.</p>
+          </div>
+
+          <div class="vistoria">
+            <label class="check" for="vistoria">
+              <input type="checkbox" id="vistoria" formControlName="vistoria">
+              <span>Quero solicitar uma vistoria virtual ou física</span>
+            </label>
+            <p class="campo__ajuda">Indicada para cargas complexas ou dúvidas sobre volume e acesso. O agendamento será combinado pelo WhatsApp.</p>
+          </div>
+
+          <div class="campo">
+            <label for="observacoes" class="campo__rotulo">Observações</label>
+            <textarea id="observacoes" formControlName="observacoes" class="campo__controle campo__controle--area" placeholder="Conte sobre horários, itens frágeis, restrições de acesso ou outras necessidades."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <div class="form-acoes">
+        <button type="submit" class="botao botao--primario" [disabled]="enviando()">
+          {{ enviando() ? 'Enviando...' : 'Solicitar orçamento de mudança' }}
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </button>
+        <button type="button" class="botao botao--secundario" [disabled]="enviando()" (click)="enviar(true)">
+          Continuar no WhatsApp
+          <svg class="icone icone--verde" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </button>
+      </div>
+      @if (erroEnvio()) {
+        <p class="form-erro" role="alert">{{ erroEnvio() }}</p>
+      }
+      <p class="form-aviso">A solicitação não confirma a contratação. A equipe avaliará volume, acessos, serviços extras e disponibilidade antes de apresentar o orçamento.</p>
+        </div>
+
+      <aside class="resumo" aria-label="Resumo do pedido">
+        <p class="etiqueta">Seu pedido</p>
+        <h2 class="resumo__titulo">Mudança residencial</h2>
+        <dl class="resumo__lista">
+          <div><dt>Origem</dt><dd>{{ resumo().origem }}</dd></div>
+          <div><dt>Destino</dt><dd>{{ resumo().destino }}</dd></div>
+          <div><dt>Data desejada</dt><dd>{{ resumo().data }}</dd></div>
+          <div><dt>Volume estimado</dt><dd>{{ resumo().volume }}</dd></div>
+        </dl>
+        <p class="resumo__texto">O orçamento depende da rota, das características da carga e dos acessos.</p>
+        <p class="resumo__valor">Valor sob orçamento</p>
+        <p class="resumo__texto resumo__texto--menor">Sem cobrança nesta solicitação. Após a análise, a conversa continua pelo WhatsApp.</p>
+        <div class="resumo__acoes">
+          <button type="submit" class="botao botao--primario" [disabled]="enviando()">
+            Solicitar orçamento
+            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </button>
+          <button type="button" class="botao botao--secundario" [disabled]="enviando()" (click)="enviar(true)">
+            Continuar no WhatsApp
+            <svg class="icone icone--verde" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </button>
+        </div>
+        <p class="resumo__aviso">Confira seus dados antes de enviar. Eles serão usados para atender à sua solicitação.</p>
+      </aside>
+      </form>
+    }
+
+  </div>
+</section>
