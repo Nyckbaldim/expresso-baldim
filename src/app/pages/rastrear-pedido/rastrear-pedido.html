@@ -1,0 +1,54 @@
+<section class="rastreio">
+  <div class="container">
+    <header class="rastreio__cabecalho">
+      <span class="tricolor" aria-hidden="true"></span>
+      <span class="etiqueta">Acompanhamento do pedido</span>
+      <h1>Rastreie seu pedido</h1>
+      <p class="rastreio__descricao">
+        Informe o código recebido na solicitação para consultar o status atualizado pela nossa equipe.
+      </p>
+    </header>
+
+    <div class="rastreio__cartao">
+      <form class="rastreio__formulario" [formGroup]="formulario" (ngSubmit)="consultar()" novalidate>
+        <div class="campo">
+          <label for="codigo-pedido" class="campo__rotulo">Código do pedido</label>
+          <input
+            id="codigo-pedido"
+            class="campo__controle"
+            type="text"
+            formControlName="codigo"
+            autocomplete="off"
+            placeholder="Ex.: EB-4F7K2"
+            [attr.aria-invalid]="codigoInvalido()"
+            [attr.aria-describedby]="codigoInvalido() ? 'codigo-pedido-erro' : null"
+          />
+          @if (codigoInvalido()) {
+            <p class="campo__erro" id="codigo-pedido-erro">Informe o código do pedido.</p>
+          }
+        </div>
+
+        <button class="botao botao--primario" type="submit" [disabled]="carregando()">
+          {{ carregando() ? 'Consultando…' : 'Consultar status' }}
+        </button>
+      </form>
+
+      @if (carregando()) {
+        <p class="rastreio__mensagem" role="status">Buscando seu pedido…</p>
+      }
+
+      @if (erro()) {
+        <p class="rastreio__erro" role="alert">{{ erro() }}</p>
+      }
+
+      @if (pedido(); as pedidoAtual) {
+        <section class="rastreio__resultado" aria-live="polite" aria-labelledby="status-pedido">
+          <p class="rastreio__codigo">Pedido {{ pedidoAtual.codigo }}</p>
+          <h2 id="status-pedido">Status atual</h2>
+          <eb-etiqueta-status [status]="pedidoAtual.status" />
+          <p class="rastreio__mensagem">Este é o status mais recente informado pela equipe.</p>
+        </section>
+      }
+    </div>
+  </div>
+</section>

@@ -7,6 +7,7 @@ import { Orcamento } from './pages/orcamento/orcamento';
 import { Avaliar } from './pages/avaliar/avaliar';
 import { Mudanca } from './pages/orcamento/mudanca/mudanca';
 import { Frete } from './pages/orcamento/frete/frete';
+import { RastrearPedido } from './pages/rastrear-pedido/rastrear-pedido';
 
 export const routes: Routes = [
   {
@@ -19,12 +20,13 @@ export const routes: Routes = [
       { path: 'orcamento', component: Orcamento },
       { path: 'orcamento/frete', component: Frete},
       { path: 'orcamento/mudanca', component: Mudanca},
-      { path: 'avaliar', component: Avaliar }
+      { path: 'avaliar', component: Avaliar },
+      { path: 'rastrear-pedido', component: RastrearPedido }
     ]
   },
   {
     path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+    loadChildren: () => import('./pages/admin/admin.routes').then((modulo) => modulo.ROTAS_ADMIN),
   },
   { path: '**', redirectTo: '' }
 ];
