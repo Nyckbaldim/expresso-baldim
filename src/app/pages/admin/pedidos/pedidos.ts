@@ -3,81 +3,80 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 
-import { OrderDetail } from '../../../components/order-detail/order-detail';
-import { Pagination } from '../../../components/pagination/pagination';
-import { StatusTag } from '../../../components/status-tag/status-tag';
+import { DetalhePedido } from '../../../components/detalhe-pedido/detalhe-pedido';
+import { EtiquetaStatus } from '../../../components/etiqueta-status/etiqueta-status';
+import { Paginacao } from '../../../components/paginacao/paginacao';
 import {
-  DEFAULT_PAGE_SIZE,
-  ORDER_STATUSES,
-  ORDER_STATUS_LABEL,
-  PAGE_SIZES,
-  SERVICE_LABEL,
-} from '../../../models/order';
-import { BrDatePipe } from '../../../pipes/br-date-pipe';
-import { Auth } from '../../../services/auth';
-import { OrdersStore, StatusFilter } from '../../../services/orders-store';
+  STATUS_PEDIDO,
+  ROTULO_STATUS,
+  ROTULO_TIPO,
+  TAMANHO_PADRAO,
+  TAMANHOS_PAGINA,
+  cidadeDe,
+} from '../../../models/pedido';
+import { DataBr } from '../../../pipes/data-br';
+import { Autenticacao } from '../../../services/autenticacao';
+import { EstadoPedidos, FiltroStatus } from '../../../services/estado-pedidos';
 
 @Component({
-  imports: [RouterLink, BrDatePipe, StatusTag, OrderDetail, Pagination],
+  imports: [RouterLink, DataBr, EtiquetaStatus, DetalhePedido, Paginacao],
   selector: 'eb-pedidos',
   styleUrl: './pedidos.css',
   templateUrl: './pedidos.html',
 })
 export class Pedidos implements OnInit {
-  protected readonly store = inject(OrdersStore);
-  private readonly auth = inject(Auth);
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
+  protected readonly estado = inject(EstadoPedidos);
+  private readonly autenticacao = inject(Autenticacao);
+  private readonly rota = inject(ActivatedRoute);
+  private readonly roteador = inject(Router);
 
-  protected readonly pageSizes = PAGE_SIZES;
-
-  protected readonly serviceLabel = SERVICE_LABEL;
-  protected readonly filters: { value: StatusFilter; label: string }[] = [
-    { value: 'TODOS', label: 'Todos' },
-    ...ORDER_STATUSES.map((s) => ({ value: s as StatusFilter, label: ORDER_STATUS_LABEL[s] })),
+  protected readonly tamanhosPagina = TAMANHOS_PAGINA;
+  protected readonly rotuloTipo = ROTULO_TIPO;
+  protected readonly filtros: { valor: FiltroStatus; rotulo: string }[] = [
+    { valor: 'todos', rotulo: 'Todos' },
+    ...STATUS_PEDIDO.map((status) => ({ valor: status as FiltroStatus, rotulo: ROTULO_STATUS[status] })),
   ];
 
-  protected readonly code = toSignal(this.route.paramMap.pipe(map((p) => p.get('codigo'))), {
-    initialValue: this.route.snapshot.paramMap.get('codigo'),
+  protected readonly codigo = toSignal(this.rota.paramMap.pipe(map((parametros) => parametros.get('codigo'))), {
+    initialValue: this.rota.snapshot.paramMap.get('codigo'),
   });
 
-  protected readonly selected = computed(() => {
-    const code = this.code();
-    if (!code) return null;
-    // Link direto para um pedido fora da página atual: o store busca à parte.
-    return this.store.orders().find((o) => o.code === code) ?? this.store.fetched();
+  protected readonly selecionado = computed(() => {
+    const codigo = this.codigo();
+    if (!codigo) return null;
+    return this.estado.pedidos().find((pedido) => pedido.codigo === codigo) ?? this.estado.buscado();
   });
 
-  /** Sem código na URL, o painel do desktop mostra o primeiro pedido da página. */
-  protected readonly panelOrder = computed(() =>
-    this.code() ? this.selected() : (this.store.orders()[0] ?? null),
+  protected readonly pedidoPainel = computed(() =>
+    this.codigo() ? this.selecionado() : (this.estado.pedidos()[0] ?? null),
   );
 
-  protected readonly notFound = computed(
+  protected readonly naoEncontrado = computed(
     () =>
-      !!this.code() &&
-      this.store.loaded() &&
-      !this.store.fetching() &&
-      !this.store.loadError() &&
-      !this.selected(),
+      !!this.codigo() &&
+      this.estado.carregado() &&
+      !this.estado.buscando() &&
+      !this.estado.erroCarga() &&
+      !this.estado.erroPedido() &&
+      !this.selecionado(),
   );
+
+  protected readonly cidadeDe = cidadeDe;
 
   constructor() {
-    // untracked: só o código da URL deve disparar o efeito, não os signals que o store lê por dentro.
     effect(() => {
-      const code = this.code();
-      untracked(() => this.store.openOrder(code));
+      const codigo = this.codigo();
+      untracked(() => this.estado.abrirPedido(codigo));
     });
 
-    // O store é a fonte da verdade; a URL só espelha página e tamanho para o F5 e o "voltar" não perderem o lugar.
     effect(() => {
-      const page = this.store.page();
-      const size = this.store.pageSize();
-      void this.router.navigate([], {
-        relativeTo: this.route,
+      const pagina = this.estado.pagina();
+      const tamanho = this.estado.tamanhoPagina();
+      void this.roteador.navigate([], {
+        relativeTo: this.rota,
         queryParams: {
-          pagina: page === 1 ? null : page,
-          tamanho: size === DEFAULT_PAGE_SIZE ? null : size,
+          pagina: pagina === 1 ? null : pagina,
+          tamanho: tamanho === TAMANHO_PADRAO ? null : tamanho,
         },
         queryParamsHandling: 'merge',
       });
@@ -85,18 +84,20 @@ export class Pedidos implements OnInit {
   }
 
   ngOnInit(): void {
-    // E o contrário: se a URL mudar (botão voltar, link com ?pagina=3), o store acompanha.
-    this.route.queryParamMap.subscribe((q) => {
-      this.store.applyParams(Number(q.get('pagina') ?? 1), Number(q.get('tamanho') ?? DEFAULT_PAGE_SIZE));
-      this.store.init();
+    this.rota.queryParamMap.subscribe((parametros) => {
+      this.estado.aplicarParametros(
+        Number(parametros.get('pagina') ?? 1),
+        Number(parametros.get('tamanho') ?? TAMANHO_PADRAO),
+      );
+      this.estado.iniciar();
     });
   }
 
-  protected onSearch(event: Event): void {
-    this.store.setQuery((event.target as HTMLInputElement).value);
+  protected aoBuscar(evento: Event): void {
+    this.estado.definirBusca((evento.target as HTMLInputElement).value);
   }
 
-  protected logout(): void {
-    this.auth.logout();
+  protected sair(): void {
+    this.autenticacao.sair();
   }
 }

@@ -1,28 +1,31 @@
-<div class="page" [class.has-selection]="!!code()">
+<div class="page" [class.has-selection]="!!codigo()">
   <header class="hero">
     <div class="eb-tricolor" aria-hidden="true"></div>
     <p class="eb-eyebrow">Painel de controle</p>
     <h1 class="eb-title hero__title">Painel de <span>pedidos</span></h1>
     <p class="hero__lead">Veja as solicitações recebidas e atualize o status para o cliente acompanhar pelo rastreio.</p>
-    <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact hero__logout" (click)="logout()">
+    <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact hero__logout" (click)="sair()">
       Sair <span aria-hidden="true">↗</span>
     </button>
   </header>
 
+  @if (estado.erroResumo()) {
+    <p class="state state--error" role="alert">{{ estado.erroResumo() }}</p>
+  }
   <section class="stats" aria-label="Resumo dos pedidos">
     <div class="stat">
       <span class="stat__label">Novos pedidos</span>
-      <strong class="stat__value">{{ store.summary().novos }}</strong>
+      <strong class="stat__value">{{ estado.resumo().novos }}</strong>
       <span class="stat__hint">Aguardando análise</span>
     </div>
     <div class="stat">
       <span class="stat__label">Em andamento</span>
-      <strong class="stat__value">{{ store.summary().andamento }}</strong>
+      <strong class="stat__value">{{ estado.resumo().andamento }}</strong>
       <span class="stat__hint">Em análise ou em transporte</span>
     </div>
     <div class="stat">
       <span class="stat__label">Concluídos</span>
-      <strong class="stat__value stat__value--accent">{{ store.summary().concluidos }}</strong>
+      <strong class="stat__value stat__value--accent">{{ estado.resumo().concluidos }}</strong>
       <span class="stat__hint">Serviços finalizados</span>
     </div>
   </section>
@@ -38,75 +41,80 @@
             type="search"
             placeholder="Buscar por código ou cliente"
             autocomplete="off"
-            [value]="store.query()"
-            (input)="onSearch($event)"
+            [value]="estado.busca()"
+            (input)="aoBuscar($event)"
           />
         </div>
       </div>
 
       <div class="chips" role="group" aria-label="Filtrar por status">
-        @for (f of filters; track f.value) {
+        @for (filtro of filtros; track filtro.valor) {
           <button
             type="button"
             class="chip"
-            [class.is-active]="store.statusFilter() === f.value"
-            [attr.aria-pressed]="store.statusFilter() === f.value"
-            (click)="store.setStatus(f.value)"
+            [class.is-active]="estado.filtroStatus() === filtro.valor"
+            [attr.aria-pressed]="estado.filtroStatus() === filtro.valor"
+            (click)="estado.definirStatus(filtro.valor)"
           >
-            {{ f.label }}
+            {{ filtro.rotulo }}
           </button>
         }
       </div>
 
-      @if (store.loading() && !store.orders().length) {
+      @if (estado.carregando() && !estado.pedidos().length) {
         <p class="state" role="status">Carregando pedidos…</p>
-      } @else if (store.loadError()) {
+      } @else if (estado.erroCarga()) {
         <p class="state state--error" role="alert">
-          {{ store.loadError() }}
-          <button type="button" class="link" (click)="store.reload()">Tentar de novo</button>
+          {{ estado.erroCarga() }}
+          <button type="button" class="link" (click)="estado.recarregar()">Tentar de novo</button>
         </p>
-      } @else if (!store.orders().length) {
+      } @else if (!estado.pedidos().length) {
         <p class="state">Nenhum pedido encontrado. Limpe a busca ou escolha outro status.</p>
       } @else {
         <div class="table__head" aria-hidden="true">
           <span>Código</span><span>Cliente</span><span>Serviço</span><span>Rota</span><span>Data desejada</span><span>Status</span>
         </div>
-        <ul class="rows" [class.is-loading]="store.loading()" [attr.aria-busy]="store.loading()">
-          @for (o of store.orders(); track o.code) {
+        <ul class="rows" [class.is-loading]="estado.carregando()" [attr.aria-busy]="estado.carregando()">
+          @for (pedido of estado.pedidos(); track pedido.id) {
             <li>
               <a
                 class="row"
-                [routerLink]="['/admin/pedidos', o.code]"
+                [routerLink]="['/admin/pedidos', pedido.codigo]"
                 queryParamsHandling="preserve"
-                [class.is-selected]="o.code === code()"
-                [class.is-default]="!code() && o.code === panelOrder()?.code"
-                [class.is-last]="!code() && o.code === store.lastOpened()"
+                [class.is-selected]="pedido.codigo === codigo()"
+                [class.is-default]="!codigo() && pedido.codigo === pedidoPainel()?.codigo"
+                [class.is-last]="!codigo() && pedido.codigo === estado.ultimoAberto()"
               >
-                <span class="code">{{ o.code }}</span>
-                <span class="customer">{{ o.customerName }}</span>
-                <span class="service">{{ serviceLabel[o.service] }}</span>
-                <span class="route">{{ o.origin }} → {{ o.destination }}</span>
+                <span class="code">{{ pedido.codigo }}</span>
+                <span class="customer">{{ pedido.contato.nome }}</span>
+                <span class="service">{{ rotuloTipo[pedido.tipo] }}</span>
+                <span class="route">{{ cidadeDe(pedido.origem) }} → {{ cidadeDe(pedido.destino) }}</span>
                 <span class="date">
                   <span class="date__label">Data desejada</span>
-                  <span class="date__value">{{ o.desiredDate | brDate }}</span>
+                  <span class="date__value">{{ pedido.planejamento?.data | dataBr }}</span>
                 </span>
-                <span class="status"><eb-status-tag [status]="o.status" /></span>
+                <span class="status"><eb-etiqueta-status [status]="pedido.status" /></span>
                 <span class="chevron" aria-hidden="true">›</span>
               </a>
             </li>
           }
         </ul>
-        <eb-pagination
-          [page]="store.page()"
-          [pageSize]="store.pageSize()"
-          [total]="store.total()"
-          [sizes]="pageSizes"
-          (pageChange)="store.setPage($event)"
-          (sizeChange)="store.setPageSize($event)"
+        <eb-paginacao
+          [pagina]="estado.pagina()"
+          [tamanhoPagina]="estado.tamanhoPagina()"
+          [total]="estado.total()"
+          [tamanhos]="tamanhosPagina"
+          (mudouPagina)="estado.definirPagina($event)"
+          (mudouTamanho)="estado.definirTamanho($event)"
         />
       }
     </section>
 
-    <eb-order-detail class="detail" [order]="panelOrder()" [notFound]="notFound()" />
+    <eb-detalhe-pedido
+      class="detail"
+      [pedido]="pedidoPainel()"
+      [naoEncontrado]="naoEncontrado()"
+      [erro]="estado.erroPedido()"
+    />
   </div>
 </div>
