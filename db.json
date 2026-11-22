@@ -4,8 +4,8 @@
       "id": "1",
       "codigo": "EB-4F7K2",
       "tipo": "frete",
-      "status": "recebido",
-      "criadoEm": "2026-11-17T14:00:00.000Z",
+      "status": "orcamento_enviado",
+      "criadoEm": "2026-11-17T15:00:00.000Z",
       "contato": {
         "nome": "Ana Souza",
         "whatsapp": "(31) 99999-9999",
@@ -26,7 +26,9 @@
         "complemento": "",
         "bairro": "Centro",
         "cidade": "Belo Horizonte",
-        "uf": "MG"
+        "uf": "MG",
+        "andar": "",
+        "elevador": ""
       },
       "destino": {
         "cep": "32010-000",
@@ -35,19 +37,24 @@
         "complemento": "",
         "bairro": "Centro",
         "cidade": "Contagem",
-        "uf": "MG"
+        "uf": "MG",
+        "andar": "",
+        "elevador": ""
       },
       "planejamento": {
         "data": "",
         "vistoria": false,
         "observacoes": ""
       },
-      "fotos": []
+      "fotos": [],
+      "atualizadoEm": "2026-11-22T21:50:02.431Z",
+      "atualizadoPor": "admin@expressobaldim.com",
+      "observacoesAdmin": ""
     },
     {
       "codigo": "EB-TG6P3",
       "tipo": "frete",
-      "status": "concluido",
+      "status": "em_analise",
       "criadoEm": "2026-11-21T19:20:23.836Z",
       "contato": {
         "nome": "Fah",
@@ -86,7 +93,191 @@
         "observacoes": "afd"
       },
       "fotos": [],
-      "id": "Myv44iRfhA0"
+      "id": "Myv44iRfhA0",
+      "atualizadoEm": "2026-11-22T20:34:14.349Z",
+      "atualizadoPor": "SISTEMA"
+    },
+    {
+      "codigo": "EB-7VNOL",
+      "tipo": "mudanca",
+      "status": "concluido",
+      "criadoEm": "2026-10-14T15:00:00.000Z",
+      "atualizadoEm": "2026-11-22T20:39:20.518Z",
+      "criadoPor": "SISTEMA",
+      "atualizadoPor": "SISTEMA",
+      "contato": {
+        "nome": "asd",
+        "whatsapp": "",
+        "email": ""
+      },
+      "origem": {
+        "cep": "",
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "cidade": "",
+        "uf": "",
+        "andar": "",
+        "elevador": ""
+      },
+      "destino": {
+        "cep": "",
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "cidade": "",
+        "uf": "",
+        "andar": "",
+        "elevador": ""
+      },
+      "planejamento": {
+        "data": "",
+        "vistoria": false,
+        "observacoes": ""
+      },
+      "fotos": [],
+      "id": "GmaIdFLuCr4"
+    },
+    {
+      "codigo": "EB-OUENN",
+      "tipo": "frete",
+      "status": "agendado",
+      "criadoEm": "2026-11-22T20:39:48.847Z",
+      "atualizadoEm": "2026-11-22T21:13:59.111Z",
+      "criadoPor": "SISTEMA",
+      "atualizadoPor": "admin@expressobaldim.com",
+      "contato": {
+        "nome": "",
+        "whatsapp": "",
+        "email": ""
+      },
+      "origem": {
+        "cep": "",
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "cidade": "",
+        "uf": "",
+        "andar": "",
+        "elevador": ""
+      },
+      "destino": {
+        "cep": "",
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "cidade": "",
+        "uf": "",
+        "andar": "",
+        "elevador": ""
+      },
+      "planejamento": {
+        "data": "",
+        "vistoria": false,
+        "observacoes": ""
+      },
+      "fotos": [],
+      "id": "ccy7tTkTBQo"
+    },
+    {
+      "codigo": "EB-HNR7J",
+      "tipo": "frete",
+      "status": "em_analise",
+      "criadoEm": "2026-11-22T21:15:40.950Z",
+      "atualizadoEm": "2026-11-22T21:20:22.159Z",
+      "criadoPor": "admin@expressobaldim.com",
+      "atualizadoPor": "admin@expressobaldim.com",
+      "contato": {
+        "nome": "",
+        "whatsapp": "",
+        "email": ""
+      },
+      "origem": {
+        "cep": "",
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "cidade": "",
+        "uf": "",
+        "andar": "",
+        "elevador": ""
+      },
+      "destino": {
+        "cep": "",
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "cidade": "",
+        "uf": "",
+        "andar": "",
+        "elevador": ""
+      },
+      "planejamento": {
+        "data": "",
+        "vistoria": false,
+        "observacoes": ""
+      },
+      "fotos": [],
+      "id": "dO2-pkzLKiI"
+    },
+    {
+      "codigo": "EB-8WGBU",
+      "tipo": "mudanca",
+      "status": "recebido",
+      "criadoEm": "2026-11-22T15:00:00.000Z",
+      "contato": {
+        "nome": "asd",
+        "whatsapp": "(11) 11111-1111",
+        "email": "exemplo@exemplo.com"
+      },
+      "origem": {
+        "cep": "31080-255",
+        "rua": "Rua Contagem",
+        "numero": "11111",
+        "complemento": "11111",
+        "bairro": "Santa Inês",
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "andar": "11",
+        "elevador": "Sim"
+      },
+      "destino": {
+        "cep": "11111-111",
+        "rua": "1111",
+        "numero": "111111",
+        "complemento": "11111",
+        "bairro": "111",
+        "cidade": "11111",
+        "uf": "PI",
+        "andar": "11111",
+        "elevador": "Sim"
+      },
+      "mudanca": {
+        "moveis": [],
+        "volumeM3": 0,
+        "extras": [
+          "Consultar embalagem e proteção dos pertences",
+          "Consultar desmontagem e montagem de móveis",
+          "Preciso de orientação para itens especiais ou frágeis"
+        ]
+      },
+      "planejamento": {
+        "data": "2026-11-26",
+        "vistoria": true,
+        "observacoes": "111111"
+      },
+      "fotos": [],
+      "criadoPor": "SISTEMA",
+      "atualizadoPor": "admin@expressobaldim.com",
+      "atualizadoEm": "2026-11-22T22:04:21.205Z",
+      "id": "AxGmajPLTu4",
+      "observacoesAdmin": "asdasd"
     }
   ],
   "avaliacoes": [
@@ -117,6 +308,24 @@
       "comentario": "asd",
       "criadoEm": "2026-11-17T23:00:29.357Z",
       "id": "j4nHH3KYDbU"
+    },
+    {
+      "pedidoId": "1",
+      "codigo": "EB-4F7K2",
+      "tipo": "google",
+      "nota": 5,
+      "criadoEm": "2026-11-22T19:08:19.939Z",
+      "id": "VXf0UqyNxMQ"
+    },
+    {
+      "pedidoId": "dO2-pkzLKiI",
+      "codigo": "EB-HNR7J",
+      "tipo": "feedback",
+      "nota": 1,
+      "motivo": "Cuidado com os itens",
+      "comentario": "os.tens chegaran destroidos. nao recomemdo",
+      "criadoEm": "2026-11-22T21:26:02.590Z",
+      "id": "uKtYZTvyFsQ"
     }
   ],
   "usuarios": [
@@ -140,7 +349,29 @@
       "nome": "João P.",
       "nota": 4,
       "texto": "Mudança tranquila, tudo chegou inteiro.",
-      "publicado": false
+      "publicado": true
+    },
+    {
+      "id": "3",
+      "nome": "Carla M.",
+      "nota": 5,
+      "texto": "Serviço excelente, recomendo a todos.",
+      "publicado": true
+    },
+    {
+      "id": "4",
+      "nome": "Lucas R.",
+      "nota": 3,
+      "texto": "Alguns atrasos, mas no geral foi bom.",
+      "publicado": true
+    },
+    {
+      "id": "5",
+      "nome": "Fernanda L.",
+      "nota": 5,
+      "texto": "Profissionais muito atenciosos e cuidadosos.",
+      "publicado": true
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
