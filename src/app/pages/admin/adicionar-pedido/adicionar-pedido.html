@@ -1,0 +1,149 @@
+<section class="adicionar">
+  <header class="adicionar__cabecalho">
+    <a routerLink="/admin/pedidos" class="adicionar__voltar">← Voltar aos pedidos</a>
+    <div class="eb-tricolor" aria-hidden="true"></div>
+    <p class="eb-eyebrow">Cadastro administrativo</p>
+    <h1>Adicionar orçamento</h1>
+    <p>Preencha apenas as informações disponíveis. Os campos em branco podem ficar vazios no pedido.</p>
+  </header>
+
+  @if (sucesso(); as criado) {
+    <div class="adicionar__sucesso eb-card" role="status">
+      <h2>Pedido criado</h2>
+      <p>Código do pedido: <strong>{{ criado.codigo }}</strong></p>
+      <div class="adicionar__acoes">
+        <button type="button" class="eb-btn eb-btn--primary" (click)="verPedido()">Ver pedido</button>
+        <button type="button" class="eb-btn eb-btn--secondary" (click)="novoPedido()">Adicionar outro</button>
+      </div>
+    </div>
+  } @else {
+    <form class="adicionar__formulario" [formGroup]="form" (ngSubmit)="salvar()" novalidate>
+      <nav class="adicionar__abas" aria-label="Seções do pedido">
+        <button type="button" [class.is-active]="aba() === 'status'" (click)="aba.set('status')">Status e observações</button>
+        <button type="button" [class.is-active]="aba() === 'dados'" (click)="aba.set('dados')">Dados do pedido</button>
+      </nav>
+
+      @if (aba() === 'status') {
+        <section class="adicionar__secao eb-card">
+          <h2>Status e observações administrativas</h2>
+          <div class="adicionar__grade">
+            <div class="eb-field">
+              <label for="statusAba">Status inicial</label>
+              <select id="statusAba" class="eb-select" formControlName="status">
+                @for (item of status; track item.valor) { <option [value]="item.valor">{{ item.rotulo }}</option> }
+              </select>
+            </div>
+            <div class="eb-field adicionar__campo--inteiro">
+              <label for="observacoesAdmin">Observações administrativas</label>
+              <textarea id="observacoesAdmin" class="eb-input" formControlName="observacoesAdmin" placeholder="Observações internas visíveis no rastreio público"></textarea>
+            </div>
+          </div>
+        </section>
+      } @else {
+      <section class="adicionar__secao eb-card">
+        <h2>Dados principais</h2>
+        <div class="adicionar__grade">
+          <div class="eb-field">
+            <label for="codigo">Código (opcional)</label>
+            <input id="codigo" class="eb-input" formControlName="codigo" placeholder="Gerado automaticamente">
+          </div>
+          <div class="eb-field">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" class="eb-select" formControlName="tipo">
+              @for (item of tipos; track item.valor) { <option [value]="item.valor">{{ item.rotulo }}</option> }
+            </select>
+          </div>
+          <div class="eb-field">
+            <label for="criadoEm">Data da solicitação</label>
+            <input id="criadoEm" type="date" class="eb-input" formControlName="criadoEm">
+          </div>
+        </div>
+      </section>
+
+      <section class="adicionar__secao eb-card" formGroupName="contato">
+        <h2>Contato</h2>
+        <div class="adicionar__grade">
+          <div class="eb-field"><label for="nome">Nome</label><input id="nome" class="eb-input" formControlName="nome"></div>
+          <div class="eb-field"><label for="whatsapp">WhatsApp</label><input id="whatsapp" class="eb-input" formControlName="whatsapp"></div>
+          <div class="eb-field"><label for="email">E-mail</label><input id="email" type="email" class="eb-input" formControlName="email"></div>
+        </div>
+      </section>
+
+      @for (bloco of [
+        { chave: 'origem', titulo: 'Endereço de origem' },
+        { chave: 'destino', titulo: 'Endereço de destino' }
+      ]; track bloco.chave) {
+        <section class="adicionar__secao eb-card" [formGroupName]="bloco.chave">
+          <h2>{{ bloco.titulo }}</h2>
+          <div class="adicionar__grade">
+            <div class="eb-field"><label [for]="bloco.chave + 'cep'">CEP</label><input [id]="bloco.chave + 'cep'" class="eb-input" formControlName="cep"></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'rua'">Rua / avenida</label><input [id]="bloco.chave + 'rua'" class="eb-input" formControlName="rua"></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'numero'">Número</label><input [id]="bloco.chave + 'numero'" class="eb-input" formControlName="numero"></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'complemento'">Complemento</label><input [id]="bloco.chave + 'complemento'" class="eb-input" formControlName="complemento"></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'bairro'">Bairro</label><input [id]="bloco.chave + 'bairro'" class="eb-input" formControlName="bairro"></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'cidade'">Cidade</label><input [id]="bloco.chave + 'cidade'" class="eb-input" formControlName="cidade"></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'uf'">UF</label><select [id]="bloco.chave + 'uf'" class="eb-select" formControlName="uf"><option value="">Selecione</option>@for (uf of ufs; track uf) { <option [value]="uf">{{ uf }}</option> }</select></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'andar'">Andar</label><input [id]="bloco.chave + 'andar'" class="eb-input" formControlName="andar"></div>
+            <div class="eb-field"><label [for]="bloco.chave + 'elevador'">Elevador</label><input [id]="bloco.chave + 'elevador'" class="eb-input" formControlName="elevador"></div>
+          </div>
+        </section>
+      }
+
+      @if (form.controls.tipo.value === 'frete') {
+        <section class="adicionar__secao eb-card" formGroupName="carga">
+          <h2>Informações da carga</h2>
+          <div class="adicionar__grade">
+            <div class="eb-field"><label for="cargaTipo">Tipo</label><input id="cargaTipo" class="eb-input" formControlName="tipo"></div>
+            <div class="eb-field adicionar__campo--inteiro"><label for="cargaDescricao">Descrição</label><textarea id="cargaDescricao" class="eb-input" formControlName="descricao"></textarea></div>
+            <div class="eb-field"><label for="comprimento">Comprimento (cm)</label><input id="comprimento" type="number" class="eb-input" formControlName="comprimento"></div>
+            <div class="eb-field"><label for="largura">Largura (cm)</label><input id="largura" type="number" class="eb-input" formControlName="largura"></div>
+            <div class="eb-field"><label for="altura">Altura (cm)</label><input id="altura" type="number" class="eb-input" formControlName="altura"></div>
+            <div class="eb-field"><label for="peso">Peso (kg)</label><input id="peso" type="number" class="eb-input" formControlName="peso"></div>
+          </div>
+        </section>
+      } @else {
+        <section class="adicionar__secao eb-card" formGroupName="mudanca">
+          <h2>Informações da mudança</h2>
+          <div class="mudanca-itens">
+            @for (item of mudancaItens(); track item.id; let indice = $index) {
+              <div class="mudanca-item">
+                <div class="eb-field"><label>Nome do item<input class="eb-input" [value]="item.nome" (input)="atualizarMudancaItem(indice, 'nome', $event)"></label></div>
+                <div class="eb-field"><label>Quantidade<input type="number" min="1" class="eb-input" [value]="item.quantidade" (input)="atualizarMudancaItem(indice, 'quantidade', $event)"></label></div>
+                <div class="eb-field"><label>Volume aproximado (m³)<input type="number" min="0" step="0.01" class="eb-input" [value]="item.volumeM3" (input)="atualizarMudancaItem(indice, 'volumeM3', $event)"></label></div>
+                <button type="button" class="mudanca-item__remover" aria-label="Remover item" (click)="removerMudancaItem(indice)">×</button>
+              </div>
+            }
+          </div>
+          <button type="button" class="eb-btn eb-btn--secondary" (click)="adicionarMudancaItem()">Adicionar item +</button>
+          <p class="mudanca-volume"><strong>Volume estimado:</strong> {{ volumeMudanca() | number:'1.2-2' }} m³</p>
+          <div class="adicionar__grade">
+            <div class="eb-field adicionar__campo--inteiro"><label for="extras">Serviços extras</label><textarea id="extras" class="eb-input" formControlName="extras" placeholder="Separe por vírgulas ou uma por linha"></textarea></div>
+          </div>
+        </section>
+      }
+
+      <section class="adicionar__secao eb-card" formGroupName="planejamento">
+        <h2>Planejamento</h2>
+        <div class="adicionar__grade">
+          <div class="eb-field"><label for="data">Data desejada</label><input id="data" type="date" class="eb-input" formControlName="data"></div>
+          <label class="adicionar__check" for="vistoria"><input id="vistoria" type="checkbox" formControlName="vistoria"> Solicitar vistoria</label>
+          <div class="eb-field adicionar__campo--inteiro"><label for="observacoes">Observações</label><textarea id="observacoes" class="eb-input" formControlName="observacoes"></textarea></div>
+        </div>
+      </section>
+
+      <section class="adicionar__secao eb-card">
+        <h2>Fotos</h2>
+        <div class="eb-field">
+          <label for="fotos">URLs das fotos</label>
+          <textarea id="fotos" class="eb-input" formControlName="fotos" placeholder="Uma URL por linha ou separada por vírgulas"></textarea>
+        </div>
+      </section>
+      }
+
+      @if (erro()) { <p class="adicionar__erro" role="alert">{{ erro() }}</p> }
+      <button type="submit" class="eb-btn eb-btn--primary adicionar__salvar" [disabled]="salvando()">
+        {{ salvando() ? 'Adicionando…' : 'Adicionar pedido' }}
+      </button>
+    </form>
+  }
+</section>
