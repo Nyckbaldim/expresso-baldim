@@ -1,0 +1,73 @@
+:host { display: block; }
+.editar { max-width: 1100px; margin: 0 auto; padding: 40px var(--eb-page-pad) 64px; }
+.editar__cabecalho { display: grid; gap: 10px; margin-bottom: 24px; }
+.editar__cabecalho h1 { margin: 0; font-size: 38px; }
+.editar__voltar { color: var(--eb-green); text-decoration: none; font-weight: 700; }
+form, .editar__estado, .editar__erro { display: grid; gap: 16px; }
+.editar__abas { display: flex; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--eb-border); }
+.editar__abas button { min-height: 42px; padding: 0 16px; border: 1px solid var(--eb-border); border-radius: 8px; background: var(--eb-surface); color: var(--eb-muted); cursor: pointer; font: 700 14px var(--eb-font); }
+.editar__abas button.is-active { background: var(--eb-green); border-color: var(--eb-green); color: #07130d; }
+.editar__secao { display: grid; gap: 18px; padding: 24px; }
+.editar__secao h2 { margin: 0; font-size: 20px; }
+.editar__grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.editar__campo--inteiro { grid-column: 1 / -1; }
+.eb-field { display: grid; gap: 7px; min-width: 0; }
+.eb-field label {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  min-width: 0;
+  color: var(--eb-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.eb-input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  background: var(--eb-surface-2);
+  border: 1px solid var(--eb-border);
+  border-radius: 8px;
+  color: var(--eb-text);
+  font: 14px/1.4 var(--eb-font);
+}
+textarea.eb-input { min-height: 92px; resize: vertical; }
+.editar__check { display: flex; align-items: center; gap: 8px; align-self: end; min-height: 42px; color: var(--eb-muted); }
+.mudanca-itens { display: grid; gap: 10px; }
+.mudanca-item {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(100px, 0.7fr) minmax(150px, 1fr) 40px;
+  align-items: end;
+  gap: 10px;
+  padding: 12px;
+  background: var(--eb-surface-2);
+  border: 1px solid var(--eb-border);
+  border-radius: 8px;
+}
+.mudanca-item__remover {
+  height: 42px;
+  border: 1px solid var(--eb-border);
+  border-radius: 8px;
+  background: var(--eb-surface);
+  color: #ff8a82;
+  cursor: pointer;
+  font-size: 20px;
+}
+.mudanca-volume { margin: 0; color: var(--eb-muted); }
+.editar__erro { color: #ff8a82; }
+.editar__acoes { display: flex; gap: 10px; justify-content: flex-end; }
+@media (max-width: 767.98px) {
+  .editar { padding-top: 24px; }
+  .editar__cabecalho h1 { font-size: 30px; }
+  .editar__secao { padding: 18px; }
+  .editar__grade { grid-template-columns: 1fr; }
+  .editar__campo--inteiro { grid-column: auto; }
+  .mudanca-item { grid-template-columns: 1fr 40px; }
+  .mudanca-item .eb-field { grid-column: 1 / -1; }
+  .mudanca-item__remover { grid-column: 2; grid-row: 1; align-self: start; }
+  .editar__acoes { flex-direction: column; }
+  .editar__acoes .eb-btn { width: 100%; justify-content: center; }
+}
