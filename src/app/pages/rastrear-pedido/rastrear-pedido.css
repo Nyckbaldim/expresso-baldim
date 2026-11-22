@@ -38,6 +38,24 @@
 }
 .rastreio__resultado h2 { font-size: 20px; }
 .rastreio__codigo { color: var(--cinza); font-size: 14px; }
+.rastreio__observacoes {
+  width: 100%;
+  padding: 14px;
+  background: var(--campo);
+  border-left: 3px solid var(--verde);
+  border-radius: 8px;
+  color: var(--cinza);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.rastreio__observacoes strong { color: var(--branco); }
+.rastreio__observacoes p { margin-top: 6px; white-space: pre-wrap; }
+.rastreio__atualizado {
+  color: var(--cinza);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.rastreio__atualizado strong { color: var(--branco); }
 .rastreio__mensagem { color: var(--cinza); font-size: 14px; line-height: 1.5; }
 .rastreio__erro { margin-top: 20px; color: var(--vermelho-claro); }
 

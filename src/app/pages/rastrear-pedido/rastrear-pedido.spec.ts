@@ -35,6 +35,7 @@ describe('RastrearPedido', () => {
         codigo: 'EB-TESTE1',
         tipo: 'frete',
         status: 'em_analise',
+        atualizadoEm: '2026-11-22T12:30:00.000Z',
         criadoEm: '2026-11-21T12:00:00.000Z',
         contato: { nome: 'Pessoa Teste', whatsapp: '31999999999', email: 'teste@example.com' },
         origem: { cep: '', rua: '', numero: '', complemento: '', bairro: '', cidade: 'Belo Horizonte', uf: 'MG' },
@@ -46,6 +47,7 @@ describe('RastrearPedido', () => {
 
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Em análise');
+    expect(fixture.nativeElement.textContent).toContain('Atualizado em');
   });
 
   it('informa quando o código não corresponde a nenhum pedido', () => {

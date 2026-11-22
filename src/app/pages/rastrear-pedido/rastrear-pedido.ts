@@ -28,6 +28,16 @@ export class RastrearPedido {
   readonly carregando = signal(false);
   readonly erro = signal<string | null>(null);
 
+  formatarAtualizacao(valor: string | undefined): string {
+    if (!valor) return 'Aguardando primeira atualização pela equipe.';
+    const data = new Date(valor);
+    if (Number.isNaN(data.getTime())) return valor;
+    return new Intl.DateTimeFormat('pt-BR', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    }).format(data);
+  }
+
   private idConsulta = 0;
 
   constructor() {

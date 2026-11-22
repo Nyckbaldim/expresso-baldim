@@ -46,6 +46,20 @@
           <p class="rastreio__codigo">Pedido {{ pedidoAtual.codigo }}</p>
           <h2 id="status-pedido">Status atual</h2>
           <eb-etiqueta-status [status]="pedidoAtual.status" />
+          <p class="rastreio__atualizado">
+            <strong>Atualizado em:</strong> {{ formatarAtualizacao(pedidoAtual.atualizadoEm) }}
+          </p>
+          @if (pedidoAtual.atualizadoPor) {
+            <p class="rastreio__atualizado">
+              <strong>Atualizado por:</strong> {{ pedidoAtual.atualizadoPor }}
+            </p>
+          }
+          @if (pedidoAtual.observacoesAdmin) {
+            <div class="rastreio__observacoes" role="note">
+              <strong>Observações da equipe:</strong>
+              <p>{{ pedidoAtual.observacoesAdmin }}</p>
+            </div>
+          }
           <p class="rastreio__mensagem">Este é o status mais recente informado pela equipe.</p>
         </section>
       }
