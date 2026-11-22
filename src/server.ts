@@ -5,12 +5,37 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import { existsSync } from 'node:fs';
+import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+app.get('/api/carousel-images', async (_req, res, next) => {
+  try {
+    const imagensCompiladas = join(browserDistFolder, 'images');
+    const diretorioImagens = existsSync(imagensCompiladas)
+      ? imagensCompiladas
+      : join(process.cwd(), 'public', 'images');
+    const arquivos = await readdir(diretorioImagens, { withFileTypes: true });
+    const imagens = arquivos
+      .filter(
+        (arquivo) =>
+          arquivo.isFile() &&
+          arquivo.name.startsWith('Carrocel') &&
+          /\.(?:jpe?g|png|webp|avif|gif)$/i.test(arquivo.name),
+      )
+      .map((arquivo) => `/images/${encodeURIComponent(arquivo.name)}`)
+      .sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true, sensitivity: 'base' }));
+
+    res.json(imagens);
+  } catch (erro) {
+    next(erro);
+  }
+});
 
 /**
  * Example Express Rest API endpoints can be defined here.

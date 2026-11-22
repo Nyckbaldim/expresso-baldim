@@ -9,7 +9,31 @@
     </header>
 
     <section class="destaque">
-      <img src="images/Caminhao.jpeg" alt="Caminhão baú branco da Expresso Baldim" class="destaque__imagem">
+      <figure
+        class="destaque__visual"
+        (mouseenter)="imagemEmHover.set(true)"
+        (mouseleave)="imagemEmHover.set(false)"
+        (focusin)="imagemComFoco.set(true)"
+        (focusout)="imagemComFoco.set(false)"
+      >
+        <img
+          [src]="imagemAtual()"
+          [class.is-fading]="imagemEmTransicao()"
+          alt="Caminhão baú branco da Expresso Baldim"
+          class="destaque__imagem"
+          imagemAmpliavel
+        >
+        @if (imagensDestaque().length > 1) {
+          <div class="destaque__controles" role="group" aria-label="Controles das imagens da frota">
+            <button type="button" class="destaque__seta" aria-label="Imagem anterior" (click)="imagemAnterior()">
+              <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="destaque__seta" aria-label="Próxima imagem" (click)="imagemProxima()">
+              <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        }
+      </figure>
 
       <div class="destaque__texto">
         <span class="etiqueta">Veículo em destaque</span>
@@ -23,6 +47,7 @@
         </a>
       </div>
     </section>
+
 
     <aside class="ficha">
       <div class="ficha__foto" role="img" aria-label="Foto indisponível">

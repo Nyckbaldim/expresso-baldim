@@ -1,0 +1,16 @@
+<dialog
+  #dialog
+  class="visualizador"
+  aria-label="Imagem em tela cheia"
+  (click)="fecharAoClicarFora($event)"
+  (close)="servico.fechar()"
+>
+  @if (servico.imagem(); as imagem) {
+    <button type="button" class="visualizador__fechar" aria-label="Fechar imagem" (click)="fechar()">
+      <svg class="icone" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <img [src]="imagem.src" [alt]="imagem.alt" class="visualizador__imagem">
+  }
+</dialog>
