@@ -180,14 +180,14 @@ export class EstadoPedidos {
     });
   }
 
-  atualizarStatus(codigo: string, status: StatusPedido): void {
+  atualizarStatus(codigo: string, status: StatusPedido, atualizadoPor = 'SISTEMA'): void {
     const pedido = this.pedidos().find((item) => item.codigo === codigo) ?? this.buscado();
     if (!pedido?.id) {
       this.estadoSalvar.set('erro');
       return;
     }
     this.estadoSalvar.set('salvando');
-    this.pedidosApi.atualizarStatus(pedido.id, status).subscribe({
+    this.pedidosApi.atualizarStatus(pedido.id, status, atualizadoPor).subscribe({
       next: (atualizado) => {
         this.pedidos.update((lista) => lista.map((item) => (item.codigo === codigo ? atualizado : item)));
         if (this.buscado()?.codigo === codigo) this.buscado.set(atualizado);
@@ -196,6 +196,29 @@ export class EstadoPedidos {
       },
       error: () => this.estadoSalvar.set('erro'),
     });
+  }
+
+  atualizarPedido(pedido: Pedido, alteracoes: Partial<Pedido>, atualizadoPor: string): void {
+    if (!pedido.id) {
+      this.estadoSalvar.set('erro');
+      return;
+    }
+    this.estadoSalvar.set('salvando');
+    const agora = new Date().toISOString();
+    this.pedidosApi
+      .atualizarPedido(pedido.id, {
+        ...alteracoes,
+        atualizadoEm: agora,
+        atualizadoPor,
+      })
+      .subscribe({
+        next: (atualizado) => {
+          this.pedidos.update((lista) => lista.map((item) => (item.codigo === atualizado.codigo ? atualizado : item)));
+          if (this.buscado()?.codigo === atualizado.codigo) this.buscado.set(atualizado);
+          this.estadoSalvar.set('salvo');
+        },
+        error: () => this.estadoSalvar.set('erro'),
+      });
   }
 
   limparEstadoSalvar(): void {

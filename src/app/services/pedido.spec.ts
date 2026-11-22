@@ -16,7 +16,10 @@ describe('PedidoService', () => {
     requisicoes = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => requisicoes.verify());
+  afterEach(() => {
+    sessionStorage.removeItem('eb_admin_email');
+    requisicoes.verify();
+  });
 
   it('consulta a coleção do JSON Server e filtra os resultados', () => {
     let resultado: unknown;
@@ -58,6 +61,23 @@ describe('PedidoService', () => {
         expect.objectContaining({ id: 'pedido-1', codigo: 'EB-ABC12' }),
       ],
       total: 1,
+    });
+  });
+
+  it('atualiza o status e registra a data da alteração', () => {
+    sessionStorage.setItem('eb_admin_email', 'admin@expressobaldim.com');
+    servico.atualizarStatus('pedido-1', 'orcamento_enviado').subscribe();
+
+    const requisicao = requisicoes.expectOne(`${environment.apiUrl}/pedidos/pedido-1`);
+    expect(requisicao.request.method).toBe('PATCH');
+    expect(requisicao.request.body.status).toBe('orcamento_enviado');
+    expect(requisicao.request.body.atualizadoEm).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+    expect(requisicao.request.body.atualizadoPor).toBe('admin@expressobaldim.com');
+    requisicao.flush({
+      id: 'pedido-1',
+      codigo: 'EB-ABC12',
+      status: 'orcamento_enviado',
+      atualizadoEm: requisicao.request.body.atualizadoEm,
     });
   });
 });

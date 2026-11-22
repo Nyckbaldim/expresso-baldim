@@ -48,8 +48,28 @@
 
 .table__head, .row {
   display: grid; align-items: center; column-gap: 12px; padding: 0 12px;
-  grid-template-columns: 100px 128px 140px minmax(0, 1fr) 90px 126px;
+  grid-template-columns: 90px 110px 100px minmax(180px, 1fr) 120px 120px 90px 150px;
 }
+.table__head { min-width: 1080px; }
+.row { min-width: 1080px; }
+.list { overflow-x: auto; }
+.created-by, .updated-by {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--eb-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.adicionar-pedido {
+  flex: 0 0 auto;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  background: var(--eb-green) !important;
+  color: #07130d !important;
+  font-weight: 800;
+}
+.adicionar-pedido:hover { background: #78efaa !important; }
 .table__head {
   min-height: 40px; border-bottom: 1px solid var(--eb-border);
   font: 700 12px/1.25 var(--eb-font); letter-spacing: 0.1em; text-transform: uppercase; color: var(--eb-muted);
@@ -65,6 +85,9 @@
 .row.is-selected .code, .row.is-default .code { color: var(--eb-green); }
 .code { font-weight: 700; }
 .service, .route { color: var(--eb-muted); }
+.route { display: flex; flex-direction: column; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.route__linha { display: block; }
+.route__linha strong { color: var(--eb-text); }
 .date__label, .chevron { display: none; }
 
 /* Enquanto carrega outra página, mantém a lista atual apagada em vez de piscar. */
@@ -73,7 +96,7 @@
 .state--error { color: #ff8a82; }
 .link { background: none; border: 0; padding: 0; margin-left: 8px; cursor: pointer; color: var(--eb-green); font: 700 14px var(--eb-font); }
 
-@media (max-width: 767.98px) {
+@media (max-width: 900px) {
   .page { gap: 24px; padding: 24px var(--eb-page-pad) 32px; }
   /* Com um pedido aberto, o celular mostra só o detalhe (lista e detalhe são telas separadas). */
   .page.has-selection { padding: 20px var(--eb-page-pad) 0; }
@@ -104,9 +127,11 @@
   .stat__value { grid-area: value; font-size: 32px; }
 
   .content { grid-template-columns: minmax(0, 1fr); }
-  .list { padding: 0; gap: 24px; background: none; border: 0; border-radius: 0; }
-  .list__head { display: block; }
+  .list { padding: 0; gap: 24px; background: none; border: 0; border-radius: 0; overflow-x: visible; }
+  .list__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; }
   .list__title { display: none; }
+  .search { grid-row: 1; grid-column: 1; }
+  .adicionar-pedido { grid-row: 1; grid-column: 2; }
   .search input { width: 100%; height: 48px; }
   .chip { height: 40px; }
 
@@ -114,7 +139,8 @@
   .rows { margin-top: 0; display: flex; flex-direction: column; gap: 12px; }
   .row {
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas: 'code status' 'customer chevron' 'service service' 'route route' 'date date';
+    grid-template-areas: 'code status' 'customer chevron' 'service service' 'route route' 'created-by created-by' 'updated-by updated-by' 'date date';
+    min-width: 0;
     row-gap: 10px; min-height: 0; padding: 16px;
     background: var(--eb-surface); border: 1px solid var(--eb-border); border-radius: 16px;
   }
@@ -126,7 +152,23 @@
   .chevron { grid-area: chevron; display: block; color: var(--eb-muted); font-size: 22px; line-height: 1; }
   .service { grid-area: service; font-size: 13px; }
   .route { grid-area: route; font-size: 13px; }
+  .created-by { grid-area: created-by; font-size: 13px; }
+  .updated-by { grid-area: updated-by; font-size: 13px; }
   .date { grid-area: date; display: flex; justify-content: space-between; font-size: 13px; }
   .date__label { display: inline; color: var(--eb-muted); }
   .date__value { font-weight: 600; }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .page { --eb-page-pad: 24px; }
+}
+
+@media (max-width: 380px) {
+  .row {
+    grid-template-areas: 'code code' 'status status' 'customer chevron' 'service service' 'route route' 'created-by created-by' 'updated-by updated-by' 'date date';
+  }
+  .status { justify-self: start; }
+  .list__head { grid-template-columns: 1fr; }
+  .search { grid-row: 1; grid-column: 1; }
+  .adicionar-pedido { grid-row: 2; grid-column: 1; width: 100%; justify-content: center; }
 }

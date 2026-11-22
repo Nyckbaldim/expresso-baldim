@@ -89,6 +89,7 @@ export interface MovelPedido {
   id: string;
   nome: string;
   quantidade: number;
+  volumeM3?: number;
 }
 
 export interface DadosMudanca {
@@ -102,6 +103,10 @@ export interface Pedido {
   codigo: string;
   tipo: TipoPedido;
   status: StatusPedido;
+  atualizadoEm?: string;
+  atualizadoPor?: string;
+  criadoPor?: string;
+  observacoesAdmin?: string;
   criadoEm: string;
   contato: Contato;
   origem: Endereco;

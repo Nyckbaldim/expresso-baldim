@@ -62,8 +62,24 @@ export class PedidoService {
     return this.http.post<Pedido>(this.url, pedido);
   }
 
-  atualizarStatus(id: string, status: StatusPedido) {
-    return this.http.patch<Pedido>(`${this.url}/${encodeURIComponent(id)}`, { status });
+  atualizarStatus(id: string, status: StatusPedido, atualizadoPor?: string) {
+    let responsavel = atualizadoPor?.trim();
+    if (!responsavel) {
+      try {
+        responsavel = sessionStorage.getItem('eb_admin_email')?.trim() || 'SISTEMA';
+      } catch {
+        responsavel = 'SISTEMA';
+      }
+    }
+    return this.http.patch<Pedido>(`${this.url}/${encodeURIComponent(id)}`, {
+      status,
+      atualizadoEm: new Date().toISOString(),
+      atualizadoPor: responsavel,
+    });
+  }
+
+  atualizarPedido(id: string, alteracoes: Partial<Pedido>) {
+    return this.http.patch<Pedido>(`${this.url}/${encodeURIComponent(id)}`, alteracoes);
   }
 
   private paginar(lista: Pedido[], consulta: ConsultaPedidos): Pagina<Pedido> {

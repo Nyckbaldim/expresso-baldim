@@ -196,6 +196,9 @@ export abstract class FormularioPedido {
       const fotos = await Promise.all(this.fotos().map((f) => reduzirImagem(f)));
       const codigo = await this.gerarCodigoUnico();
       const pedido = this.montarPedido(codigo, fotos);
+      pedido.criadoPor = 'SISTEMA';
+      pedido.atualizadoPor = 'SISTEMA';
+      pedido.atualizadoEm = pedido.criadoEm;
       const salvo = await firstValueFrom(this.pedidos.criar(pedido));
 
       this.codigoGerado.set(salvo.codigo);

@@ -59,6 +59,7 @@
             {{ filtro.rotulo }}
           </button>
         }
+        <a routerLink="/admin/pedidos/adicionar" class="eb-btn eb-btn--primary adicionar-pedido">Adicionar +</a>
       </div>
 
       @if (estado.carregando() && !estado.pedidos().length) {
@@ -72,7 +73,7 @@
         <p class="state">Nenhum pedido encontrado. Limpe a busca ou escolha outro status.</p>
       } @else {
         <div class="table__head" aria-hidden="true">
-          <span>Código</span><span>Cliente</span><span>Serviço</span><span>Rota</span><span>Data desejada</span><span>Status</span>
+          <span>Código</span><span>Cliente</span><span>Serviço</span><span>Rota</span><span>Criado por</span><span>Atualizado por</span><span>Data desejada</span><span>Status</span>
         </div>
         <ul class="rows" [class.is-loading]="estado.carregando()" [attr.aria-busy]="estado.carregando()">
           @for (pedido of estado.pedidos(); track pedido.id) {
@@ -88,7 +89,22 @@
                 <span class="code">{{ pedido.codigo }}</span>
                 <span class="customer">{{ pedido.contato.nome }}</span>
                 <span class="service">{{ rotuloTipo[pedido.tipo] }}</span>
-                <span class="route">{{ cidadeDe(pedido.origem) }} → {{ cidadeDe(pedido.destino) }}</span>
+                <span class="route">
+                  <span class="route__linha">
+                    <strong>Origem:</strong>
+                    {{ pedido.origem.rua }}, {{ pedido.origem.numero }}<br>
+                    {{ pedido.origem.bairro }} · {{ pedido.origem.cidade }}/{{ pedido.origem.uf }}
+                    @if (pedido.origem.complemento) { · {{ pedido.origem.complemento }} }
+                  </span>
+                  <span class="route__linha">
+                    <strong>Destino:</strong>
+                    {{ pedido.destino.rua }}, {{ pedido.destino.numero }}<br>
+                    {{ pedido.destino.bairro }} · {{ pedido.destino.cidade }}/{{ pedido.destino.uf }}
+                    @if (pedido.destino.complemento) { · {{ pedido.destino.complemento }} }
+                  </span>
+                </span>
+                <span class="created-by"><strong>Criado por:</strong> {{ pedido.criadoPor || 'SISTEMA' }}</span>
+                <span class="updated-by"><strong>Atualizado por:</strong> {{ pedido.atualizadoPor || '—' }}</span>
                 <span class="date">
                   <span class="date__label">Data desejada</span>
                   <span class="date__value">{{ pedido.planejamento?.data | dataBr }}</span>
