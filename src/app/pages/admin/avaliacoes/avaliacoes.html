@@ -1,0 +1,70 @@
+<section class="page" aria-labelledby="avaliacoes-titulo">
+  <header class="hero">
+    <div class="eb-tricolor" aria-hidden="true"></div>
+    <p class="eb-eyebrow">Painel de controle</p>
+    <h1 class="eb-title hero__title" id="avaliacoes-titulo">Avaliações</h1>
+    <p class="hero__lead">Consulte as avaliações e os feedbacks enviados pelos clientes.</p>
+  </header>
+
+  <section class="reviews" aria-label="Avaliações recebidas">
+    @if (carregando()) {
+      <p class="state" role="status">Carregando avaliações…</p>
+    } @else if (erro()) {
+      <p class="state state--error" role="alert">
+        {{ erro() }}
+        <button type="button" class="link" (click)="carregar()">Tentar de novo</button>
+      </p>
+    } @else if (!ordenadas().length) {
+      <p class="state">Nenhuma avaliação foi enviada ainda.</p>
+    } @else {
+      @for (avaliacao of ordenadas(); track avaliacao.id ?? $index) {
+        <article class="review eb-card">
+          <header class="review__head">
+            <div>
+              <h2 class="review__code">{{ avaliacao.codigo }}</h2>
+              <p class="review__type">{{ rotuloTipo(avaliacao.tipo) }}</p>
+            </div>
+            <time class="review__date" [attr.datetime]="avaliacao.criadoEm">
+              {{ avaliacao.criadoEm | date: 'dd/MM/yyyy HH:mm' }}
+            </time>
+          </header>
+
+          <dl class="review__details">
+            <div>
+              <dt>ID da avaliação</dt>
+              <dd>{{ avaliacao.id || '—' }}</dd>
+            </div>
+            <div>
+              <dt>ID do pedido</dt>
+              <dd>{{ avaliacao.pedidoId }}</dd>
+            </div>
+            <div>
+              <dt>Código do pedido</dt>
+              <dd>{{ avaliacao.codigo }}</dd>
+            </div>
+            <div>
+              <dt>Tipo</dt>
+              <dd>{{ rotuloTipo(avaliacao.tipo) }}</dd>
+            </div>
+            <div>
+              <dt>Nota</dt>
+              <dd>{{ avaliacao.nota }} de 5</dd>
+            </div>
+            <div>
+              <dt>Data e horário</dt>
+              <dd>{{ avaliacao.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</dd>
+            </div>
+            <div class="review__wide">
+              <dt>Motivo</dt>
+              <dd>{{ avaliacao.motivo || 'Não informado' }}</dd>
+            </div>
+            <div class="review__wide">
+              <dt>Comentário</dt>
+              <dd>{{ avaliacao.comentario || 'Não informado' }}</dd>
+            </div>
+          </dl>
+        </article>
+      }
+    }
+  </section>
+</section>
