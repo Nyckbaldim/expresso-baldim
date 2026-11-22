@@ -4,7 +4,9 @@
   display: inline-flex; align-items: center; gap: 8px;
   padding: 6px 12px; border-radius: 100px;
   font: 600 12px/1.2 var(--eb-font);
-  white-space: nowrap;
+  max-width: 150px;
+  white-space: normal;
+  text-align: center;
   background: var(--eb-surface-2);
   border: 1px solid var(--eb-border);
   color: var(--eb-text);
