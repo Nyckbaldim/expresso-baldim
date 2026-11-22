@@ -43,3 +43,9 @@
   .pager__size { justify-content: center; }
   .pager__bar .eb-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 }
+
+@media (max-width: 380px) {
+  .pager__bar { grid-template-columns: 40px minmax(0, 1fr) 40px; gap: 8px; }
+  .pager__bar .eb-btn { width: 40px; min-width: 40px; padding-inline: 0; gap: 0; }
+  .pager__button-label { display: none; }
+}
