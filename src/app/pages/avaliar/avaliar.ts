@@ -59,6 +59,13 @@ export class Avaliar {
           .subscribe({
             next: () => {
               this.enviado.set(true);
+              this.form.reset({
+                tipo: '',
+                codigo: '',
+                nota: '',
+                motivo: '',
+                comentario: '',
+              });
             },
             error: () => this.erro.set('Não foi possível enviar agora. Tente novamente.'),
           });
