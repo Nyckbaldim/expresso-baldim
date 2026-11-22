@@ -3,9 +3,13 @@
     <!-- 127 × 96 mantém a proporção do arquivo (2376 × 1792) -->
     <img [ngSrc]="logo" width="127" height="96" priority alt="Expresso Baldim Transportes e Mudanças" />
   </a>
-  <a routerLink="/" class="eb-btn eb-btn--secondary eb-btn--compact">
+  <nav class="admin-nav" aria-label="Navegação administrativa">
+    <a routerLink="/admin/pedidos" routerLinkActive="is-active" ariaCurrentWhenActive="page">Pedidos</a>
+    <a routerLink="/admin/avaliacoes" routerLinkActive="is-active" ariaCurrentWhenActive="page">Avaliações</a>
+  </nav>
+  <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact" (click)="voltarAoSite()">
     Voltar ao site <span aria-hidden="true">↗</span>
-  </a>
+  </button>
 </header>
 
 <main id="conteudo"><router-outlet /></main>

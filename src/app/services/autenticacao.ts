@@ -8,6 +8,7 @@ import { ROTA_LOGIN_ADMIN } from '../configuracao';
 import { EstadoPedidos } from './estado-pedidos';
 
 const CHAVE_SESSAO = 'eb_admin_token';
+const CHAVE_ADMIN_EMAIL = 'eb_admin_email';
 
 interface Usuario {
   id: string;
@@ -24,6 +25,14 @@ function lerSessao(): string | null {
   }
 }
 
+function lerEmailAdmin(): string | null {
+  try {
+    return sessionStorage.getItem(CHAVE_ADMIN_EMAIL)?.trim() || null;
+  } catch {
+    return null;
+  }
+}
+
 @Service()
 export class Autenticacao {
   private readonly http = inject(HttpClient);
@@ -31,9 +40,14 @@ export class Autenticacao {
   private readonly pedidos = inject(EstadoPedidos);
 
   private readonly sinalSessao = signal<string | null>(lerSessao());
+  private readonly sinalEmail = signal<string | null>(lerEmailAdmin());
 
   get sessao(): string | null {
     return this.sinalSessao();
+  }
+
+  get email(): string | null {
+    return this.sinalEmail();
   }
 
   autenticado(): boolean {
@@ -52,7 +66,7 @@ export class Autenticacao {
           if (!usuario) throw new HttpErrorResponse({ status: 401 });
           return usuario;
         }),
-        tap((usuario) => this.guardarSessao(usuario.id)),
+        tap((usuario) => this.guardarSessao(usuario.id, usuario.email?.trim() || email.trim())),
         map(() => void 0),
       );
   }
@@ -60,20 +74,25 @@ export class Autenticacao {
   sair(redirecionar = true): void {
     try {
       sessionStorage.removeItem(CHAVE_SESSAO);
+      sessionStorage.removeItem(CHAVE_ADMIN_EMAIL);
     } catch {
       this.sinalSessao.set(null);
+      this.sinalEmail.set(null);
     }
     this.sinalSessao.set(null);
+    this.sinalEmail.set(null);
     this.pedidos.limpar();
     if (redirecionar) void this.router.navigateByUrl(ROTA_LOGIN_ADMIN);
   }
 
-  private guardarSessao(id: string): void {
+  private guardarSessao(id: string, email: string): void {
     try {
       sessionStorage.setItem(CHAVE_SESSAO, id);
+      sessionStorage.setItem(CHAVE_ADMIN_EMAIL, email);
     } catch {
       throw new Error('Não foi possível iniciar a sessão neste navegador.');
     }
     this.sinalSessao.set(id);
+    this.sinalEmail.set(email.trim() || null);
   }
 }
