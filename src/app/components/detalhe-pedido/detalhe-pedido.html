@@ -11,17 +11,123 @@
       </div>
     </div>
 
-    <dl class="info">
-      <div class="info__item"><dt>Cliente</dt><dd>{{ atual.contato.nome }}</dd></div>
-      <div class="info__item"><dt>Serviço</dt><dd>{{ rotuloTipo[atual.tipo] }}</dd></div>
-      <div class="info__item"><dt>Rota</dt><dd>{{ cidadeDe(atual.origem) }} → {{ cidadeDe(atual.destino) }}</dd></div>
-      <div class="info__duo">
-        <div class="info__item"><dt>Volume estimado</dt><dd>{{ volumeDe(atual) === null ? '—' : volumeDe(atual) + ' m³' }}</dd></div>
-        <div class="info__item"><dt>Data desejada</dt><dd>{{ atual.planejamento?.data | dataBr }}</dd></div>
-      </div>
-    </dl>
+    <div class="info">
+      <section class="info__secao" aria-label="Identificação do pedido">
+        <h3 class="info__titulo">Pedido</h3>
+        <div class="info__grid">
+          <div class="info__item"><dt>Código</dt><dd>{{ atual.codigo }}</dd></div>
+          <div class="info__item"><dt>ID no banco</dt><dd>{{ texto(atual.id) }}</dd></div>
+          <div class="info__item"><dt>Tipo</dt><dd>{{ rotuloTipo[atual.tipo] }}</dd></div>
+          <div class="info__item"><dt>Status atual</dt><dd>{{ rotuloStatus[atual.status] }}</dd></div>
+          <div class="info__item"><dt>Atualizado em</dt><dd>{{ atual.atualizadoEm ? formatarCriadoEm(atual.atualizadoEm) : 'Ainda não foi atualizado' }}</dd></div>
+          <div class="info__item"><dt>Criado por</dt><dd>{{ texto(atual.criadoPor || 'SISTEMA') }}</dd></div>
+          <div class="info__item"><dt>Atualizado por</dt><dd>{{ texto(atual.atualizadoPor) }}</dd></div>
+          <div class="info__item"><dt>Criado em</dt><dd>{{ formatarCriadoEm(atual.criadoEm) }}</dd></div>
+        </div>
+      </section>
+
+      <section class="info__secao" aria-label="Contato do cliente">
+        <h3 class="info__titulo">Contato</h3>
+        <div class="info__grid">
+          <div class="info__item"><dt>Nome</dt><dd>{{ texto(atual.contato?.nome) }}</dd></div>
+          <div class="info__item"><dt>WhatsApp</dt><dd>{{ texto(atual.contato?.whatsapp) }}</dd></div>
+          <div class="info__item"><dt>E-mail</dt><dd>{{ texto(atual.contato?.email) }}</dd></div>
+        </div>
+      </section>
+
+      <section class="info__secao" aria-label="Endereços da solicitação">
+        <h3 class="info__titulo">Endereços</h3>
+        <div class="info__grid">
+          <div class="info__item"><dt>Origem</dt><dd>{{ enderecoCompleto(atual.origem) }}</dd></div>
+          @if (atual.origem?.andar) {
+            <div class="info__item"><dt>Andar de origem</dt><dd>{{ texto(atual.origem.andar) }}</dd></div>
+          }
+          @if (atual.origem?.elevador) {
+            <div class="info__item"><dt>Elevador na origem</dt><dd>{{ texto(atual.origem.elevador) }}</dd></div>
+          }
+          <div class="info__item"><dt>Destino</dt><dd>{{ enderecoCompleto(atual.destino) }}</dd></div>
+          @if (atual.destino?.andar) {
+            <div class="info__item"><dt>Andar de destino</dt><dd>{{ texto(atual.destino.andar) }}</dd></div>
+          }
+          @if (atual.destino?.elevador) {
+            <div class="info__item"><dt>Elevador no destino</dt><dd>{{ texto(atual.destino.elevador) }}</dd></div>
+          }
+        </div>
+      </section>
+
+      @if (atual.carga; as carga) {
+        <section class="info__secao" aria-label="Informações da carga">
+          <h3 class="info__titulo">Carga</h3>
+          <div class="info__grid">
+            <div class="info__item"><dt>Tipo</dt><dd>{{ texto(carga.tipo) }}</dd></div>
+            <div class="info__item"><dt>Descrição</dt><dd>{{ texto(carga.descricao) }}</dd></div>
+            <div class="info__item"><dt>Comprimento</dt><dd>{{ texto(carga.comprimento) }} cm</dd></div>
+            <div class="info__item"><dt>Largura</dt><dd>{{ texto(carga.largura) }} cm</dd></div>
+            <div class="info__item"><dt>Altura</dt><dd>{{ texto(carga.altura) }} cm</dd></div>
+            <div class="info__item"><dt>Peso aproximado</dt><dd>{{ texto(carga.peso) }} kg</dd></div>
+          </div>
+        </section>
+      }
+
+      @if (atual.mudanca; as mudanca) {
+        <section class="info__secao" aria-label="Informações da mudança">
+          <h3 class="info__titulo">Mudança</h3>
+          <div class="info__grid">
+            <div class="info__item"><dt>Volume estimado</dt><dd>{{ texto(mudanca.volumeM3) }} m³</dd></div>
+            @if (mudanca.extras?.length) {
+              <div class="info__item"><dt>Serviços extras</dt><dd>{{ mudanca.extras.join(', ') }}</dd></div>
+            }
+          </div>
+          @if (mudanca.moveis?.length) {
+            <ul class="info__lista">
+              @for (movel of mudanca.moveis; track movel.id) {
+                <li>
+                  <strong>{{ movel.nome }}</strong>
+                  <span>
+                    {{ movel.quantidade }} unidade(s)
+                    @if (movel.volumeM3) { · {{ movel.volumeM3 }} m³/un. }
+                  </span>
+                </li>
+              }
+            </ul>
+          }
+        </section>
+      }
+
+      <section class="info__secao" aria-label="Planejamento">
+        <h3 class="info__titulo">Planejamento</h3>
+        <div class="info__grid">
+          <div class="info__item"><dt>Data desejada</dt><dd>{{ atual.planejamento?.data | dataBr }}</dd></div>
+          <div class="info__item"><dt>Vistoria</dt><dd>{{ booleano(atual.planejamento?.vistoria) }}</dd></div>
+          <div class="info__item info__item--inteiro"><dt>Observações</dt><dd>{{ texto(atual.planejamento?.observacoes) }}</dd></div>
+        </div>
+      </section>
+
+      @if (atual.fotos?.length) {
+        <section class="info__secao" aria-label="Fotos do pedido">
+          <h3 class="info__titulo">Fotos</h3>
+          <div class="info__fotos">
+            @for (foto of atual.fotos; track $index) {
+              <img [src]="foto" alt="Foto {{ $index + 1 }} do pedido {{ atual.codigo }}" imagemAmpliavel>
+            }
+          </div>
+        </section>
+      }
+
+      @if (atual.observacoesAdmin) {
+        <section class="info__secao" aria-label="Observações administrativas">
+          <h3 class="info__titulo">Observações do administrador</h3>
+          <p class="info__observacoes">{{ atual.observacoesAdmin }}</p>
+        </section>
+      }
+    </div>
 
     <hr class="divider" />
+
+    <a
+      class="eb-btn eb-btn--secondary eb-btn--block"
+      [routerLink]="['/admin/pedidos', atual.codigo, 'editar']"
+    >Editar pedido</a>
 
     <div class="eb-field">
       <label for="status">Alterar status</label>
