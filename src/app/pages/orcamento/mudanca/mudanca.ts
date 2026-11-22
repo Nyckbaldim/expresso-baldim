@@ -1,14 +1,13 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { startWith } from 'rxjs';
 
-import { NovoPedido } from '../../../models/pedido';
+import { MovelPedido, NovoPedido } from '../../../models/pedido';
 import { FormularioPedido } from '../../../shared/formulario-pedido';
 import { formatarData } from '../../../shared/mascaras';
-import { COMODOS, TODOS_OS_MOVEIS, calcularVolume, contarItens } from '../../../shared/moveis';
-import { aoMenosUmMovel, dataNaoPassada, digitos } from '../../../shared/validadores';
+import { dataNaoPassada, digitos } from '../../../shared/validadores';
 
 @Component({
   selector: 'app-mudanca',
@@ -22,7 +21,8 @@ export class Mudanca extends FormularioPedido {
     { chave: 'destino' as const, titulo: 'Destino • novo endereço' },
   ];
 
-  readonly comodos = COMODOS;
+  readonly moveis = signal<MovelPedido[]>([]);
+  readonly erroMoveis = signal('');
 
   readonly extrasDisponiveis = [
     { chave: 'embalagem', rotulo: 'Consultar embalagem e proteção dos pertences' },
@@ -38,15 +38,7 @@ export class Mudanca extends FormularioPedido {
     }),
     origem: this.grupoEndereco(true),
     destino: this.grupoEndereco(true),
-    moveis: this.fb.group(
-      Object.fromEntries(
-        TODOS_OS_MOVEIS.map((m) => [
-          m.id,
-          this.fb.nonNullable.group({ selecionado: false, quantidade: 0 }),
-        ]),
-      ),
-      { validators: aoMenosUmMovel },
-    ),
+    moveis: this.fb.nonNullable.control<MovelPedido[]>([]),
     extras: this.fb.nonNullable.group({ embalagem: false, montagem: false, especiais: false }),
     planejamento: this.fb.nonNullable.group({
       data: ['', [Validators.required, dataNaoPassada]],
@@ -57,14 +49,15 @@ export class Mudanca extends FormularioPedido {
 
   private readonly alteracoes = toSignal(this.form.valueChanges.pipe(startWith(null)));
 
-  private readonly quantidades = computed(() => {
-    this.alteracoes();
-    const v = this.form.getRawValue().moveis as Record<string, { quantidade: number }>;
-    return Object.fromEntries(Object.entries(v).map(([id, m]) => [id, m.quantidade]));
-  });
-
-  readonly volume = computed(() => calcularVolume(this.quantidades()));
-  readonly itens = computed(() => contarItens(this.quantidades()));
+  readonly volume = computed(() =>
+    this.moveis().reduce(
+      (total, movel) => total + (movel.quantidade * (movel.volumeM3 ?? 0)),
+      0,
+    ),
+  );
+  readonly itens = computed(() =>
+    this.moveis().reduce((total, movel) => total + movel.quantidade, 0),
+  );
 
   readonly volumeTexto = computed(
     () =>
@@ -89,41 +82,47 @@ export class Mudanca extends FormularioPedido {
     };
   });
 
-  quantidade(id: string): number {
-    return this.form.get(['moveis', id, 'quantidade'])?.value ?? 0;
+  adicionarMovel(): void {
+    const indice = this.moveis().length + 1;
+    this.moveis.update((lista) => [
+      ...lista,
+      { id: `movel-${Date.now()}-${indice}`, nome: '', quantidade: 1, volumeM3: 0 },
+    ]);
+    this.sincronizarMoveis();
   }
 
-  aoMarcar(id: string, evento: Event): void {
-    const grupo = this.form.get(['moveis', id]);
-    if (!grupo) return;
-    const marcado = (evento.target as HTMLInputElement).checked;
-    grupo.get('selecionado')?.setValue(marcado);
-    grupo.get('quantidade')?.setValue(marcado ? Math.max(1, this.quantidade(id)) : 0);
-    this.form.get('moveis')?.markAsTouched();
+  atualizarMovel(indice: number, campo: 'nome' | 'quantidade' | 'volumeM3', evento: Event): void {
+    const input = evento.target as HTMLInputElement;
+    const valor = campo === 'nome' ? input.value : Math.max(0, Number(input.value) || 0);
+    this.moveis.update((lista) =>
+      lista.map((movel, posicao) =>
+        posicao === indice ? { ...movel, [campo]: valor } : movel,
+      ),
+    );
+    this.sincronizarMoveis();
   }
 
-  alterarQuantidade(id: string, delta: number): void {
-    const grupo = this.form.get(['moveis', id]);
-    if (!grupo) return;
-    const nova = Math.min(99, Math.max(0, this.quantidade(id) + delta));
-    grupo.get('quantidade')?.setValue(nova);
-    grupo.get('selecionado')?.setValue(nova > 0);
-    this.form.get('moveis')?.markAsTouched();
+  removerMovel(indice: number): void {
+    this.moveis.update((lista) => lista.filter((_, posicao) => posicao !== indice));
+    this.sincronizarMoveis();
+  }
+
+  private sincronizarMoveis(): void {
+    this.form.controls.moveis.setValue(this.moveis());
+    this.form.controls.moveis.markAsTouched();
+    this.erroMoveis.set('');
   }
 
   get semMoveis(): boolean {
-    const g = this.form.get('moveis');
-    return !!g && g.hasError('semMoveis') && g.touched;
+    return this.moveis().length === 0 && this.form.controls.moveis.touched;
   }
 
 
   protected montarPedido(codigo: string, fotos: string[]): NovoPedido {
     const v = this.form.getRawValue();
-    const moveis = TODOS_OS_MOVEIS.map((m) => ({
-      id: m.id,
-      nome: m.nome,
-      quantidade: this.quantidade(m.id),
-    })).filter((m) => m.quantidade > 0);
+    const moveis = this.moveis().filter((movel) =>
+      movel.nome.trim() && movel.quantidade > 0,
+    );
 
     const extras = this.extrasDisponiveis
       .filter((e) => v.extras[e.chave as keyof typeof v.extras])
@@ -141,6 +140,22 @@ export class Mudanca extends FormularioPedido {
       planejamento: v.planejamento,
       fotos,
     };
+  }
+
+  override async enviar(continuarNoWhatsapp = false): Promise<void> {
+    if (this.moveis().length === 0) {
+      this.form.controls.moveis.markAsTouched();
+      this.erroMoveis.set('Adicione ao menos um item à mudança.');
+      return;
+    }
+    if (this.moveis().some((movel) =>
+      !movel.nome.trim() || movel.quantidade < 1 || !movel.volumeM3 || movel.volumeM3 <= 0,
+    )) {
+      this.erroMoveis.set('Preencha nome, quantidade e volume aproximado de todos os itens.');
+      return;
+    }
+    this.erroMoveis.set('');
+    await super.enviar(continuarNoWhatsapp);
   }
 
   protected montarMensagemWhatsapp(p: NovoPedido): string {

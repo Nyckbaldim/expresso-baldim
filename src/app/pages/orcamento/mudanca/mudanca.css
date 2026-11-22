@@ -1,10 +1,27 @@
 :host { display: block; }
 
-.comodos {
+.moveis-lista { display: grid; gap: 12px; }
+.movel-item {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px 16px;
+  grid-template-columns: minmax(0, 2fr) minmax(100px, 0.7fr) minmax(150px, 1fr) 40px;
+  align-items: end;
+  gap: 12px;
+  padding: 16px;
+  background: var(--campo);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
 }
+.movel-item__remover {
+  width: 40px;
+  height: 42px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: var(--campo);
+  color: var(--vermelho-claro);
+  cursor: pointer;
+  font-size: 22px;
+}
+.moveis-adicionar { margin-top: 16px; }
 
 .comodo {
   padding: 18px 20px;
@@ -73,9 +90,12 @@
 .extras { display: grid; gap: 21px; }
 
 @media (max-width: 992px) {
-  .comodos { grid-template-columns: 1fr; }
+  .movel-item { grid-template-columns: minmax(0, 1fr) 110px 150px 40px; }
 }
 
 @media (max-width: 640px) {
   .volume { flex-direction: column; align-items: flex-start; }
+  .movel-item { grid-template-columns: minmax(0, 1fr) 40px; }
+  .movel-item .campo { grid-column: 1 / -1; }
+  .movel-item__remover { grid-column: 2; grid-row: 1; align-self: start; }
 }

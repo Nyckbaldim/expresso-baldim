@@ -131,30 +131,52 @@
 
       <section class="form-cartao" aria-labelledby="t-moveis">
         <h2 id="t-moveis" class="form-cartao__titulo">03 / O que vai na mudança?</h2>
-        <p class="form-cartao__intro">Selecione os móveis por cômodo e indique a quantidade. Estado inicial: nenhum item selecionado.</p>
+        <p class="form-cartao__intro">Adicione cada item, sua quantidade e o volume aproximado em m³.</p>
         <div class="form-corpo">
-          <div class="comodos" formGroupName="moveis">
-            @for (c of comodos; track c.titulo) {
-              <section class="comodo">
-                <h3 class="comodo__titulo">{{ c.titulo }}</h3>
-                <ul class="comodo__lista">
-                  @for (m of c.itens; track m.id) {
-                    <li class="movel" [formGroupName]="m.id">
-                      <label class="check check--movel" [attr.for]="'m-' + m.id">
-                        <input type="checkbox" [id]="'m-' + m.id" formControlName="selecionado" (change)="aoMarcar(m.id, $event)">
-                        <span>{{ m.nome }}</span>
-                      </label>
-                      <div class="stepper" role="group" [attr.aria-label]="'Quantidade de ' + m.nome">
-                        <button type="button" class="stepper__botao" aria-label="Diminuir" (click)="alterarQuantidade(m.id, -1)">−</button>
-                        <output class="stepper__valor" aria-live="polite">{{ quantidade(m.id) }}</output>
-                        <button type="button" class="stepper__botao stepper__botao--mais" aria-label="Aumentar" (click)="alterarQuantidade(m.id, 1)">+</button>
-                      </div>
-                    </li>
-                  }
-                </ul>
-              </section>
+          <div class="moveis-lista">
+            @for (movel of moveis(); track movel.id; let indice = $index) {
+              <div class="movel-item">
+                <div class="campo">
+                  <label [for]="'movel-nome-' + indice" class="campo__rotulo">Nome do item</label>
+                  <input
+                    [id]="'movel-nome-' + indice"
+                    type="text"
+                    class="campo__controle"
+                    [value]="movel.nome"
+                    placeholder="Ex.: Sofá"
+                    (input)="atualizarMovel(indice, 'nome', $event)"
+                  >
+                </div>
+                <div class="campo">
+                  <label [for]="'movel-quantidade-' + indice" class="campo__rotulo">Quantidade</label>
+                  <input
+                    [id]="'movel-quantidade-' + indice"
+                    type="number"
+                    min="1"
+                    class="campo__controle"
+                    [value]="movel.quantidade"
+                    (input)="atualizarMovel(indice, 'quantidade', $event)"
+                  >
+                </div>
+                <div class="campo">
+                  <label [for]="'movel-volume-' + indice" class="campo__rotulo">Volume aproximado (m³)</label>
+                  <input
+                    [id]="'movel-volume-' + indice"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    class="campo__controle"
+                    [value]="movel.volumeM3"
+                    (input)="atualizarMovel(indice, 'volumeM3', $event)"
+                  >
+                </div>
+                <button type="button" class="movel-item__remover" aria-label="Remover item" (click)="removerMovel(indice)">×</button>
+              </div>
             }
           </div>
+
+          <button type="button" class="botao botao--secundario moveis-adicionar" (click)="adicionarMovel()">Adicionar item +</button>
+          @if (erroMoveis()) { <p class="campo__erro">{{ erroMoveis() }}</p> }
 
           <div class="volume" aria-live="polite">
             <div>
