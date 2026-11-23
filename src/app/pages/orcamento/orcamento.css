@@ -47,14 +47,14 @@ p { color: var(--cinza); }
   place-items: center;
   width: 60px;
   height: 60px;
-  background: var(--verde-fundo);
+  background: var(--superficie-botao);
   border-radius: 12px;
-  color: var(--verde);
+  color: var(--cinza);
 }
 .opcao__icone .icone { width: 26px; height: 26px; stroke-width: 1.75; }
 
 .opcao__rotulo {
-  color: var(--verde);
+  color: var(--cinza);
   font-size: 12px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -101,14 +101,14 @@ p { color: var(--cinza); }
   margin-top: 30px;
   min-height: 112px;
   padding: 24px 28px;
-  background: var(--verde-fundo);
+  background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: var(--raio);
 }
 .icone--duvida {
   width: 22px;
   height: 22px;
-  color: var(--verde);
+  color: var(--cinza);
   stroke-width: 1.75;
 }
 .duvida__texto { flex: 1; }
