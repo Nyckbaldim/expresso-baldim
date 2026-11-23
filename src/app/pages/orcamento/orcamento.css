@@ -1,7 +1,4 @@
-:host {
-  display: block;
-  --verde-fundo: #0b2518;
-}
+:host { display: block; }
 
 .orcamento { padding: 49px 0 28px; }
 
