@@ -30,6 +30,9 @@
 *::before,
 *::after { box-sizing: border-box; }
 
+/* Reserva o espaço da barra de rolagem: a largura útil não muda quando uma página fica curta (ex.: "Carregando…"). */
+html { scrollbar-gutter: stable; }
+
 body {
   margin: 0;
   min-height: 100vh;
