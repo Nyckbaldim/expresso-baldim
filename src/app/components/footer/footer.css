@@ -30,11 +30,23 @@
 .rodape__coluna .rodape__whatsapp:hover { color: var(--verde-texto); text-decoration: underline; }
 
 .rodape__direitos {
-  padding: 22px 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 18px 0 20px;
   border-top: 1px solid var(--borda);
   color: var(--cinza);
   font-size: 13px;
 }
+/* link discreto para o painel; padding vertical garante área de toque de 24px (WCAG 2.5.8) */
+.rodape__restrita {
+  padding: 4px 0;
+  color: var(--cinza);
+  line-height: 20px;
+}
+.rodape__restrita:hover { color: var(--branco); text-decoration: underline; }
 
 @media (max-width: 1100px) {
   .rodape__grade { grid-template-columns: 1fr 1fr; }
