@@ -74,10 +74,7 @@ p { color: var(--cinza); }
   color: var(--branco);
   cursor: pointer;
 }
-.destaque__seta:hover {
-  border-color: var(--verde);
-  color: var(--verde);
-}
+.destaque__seta:hover { border-color: var(--branco); }
 
 .destaque__imagem,
 .destaque__seta { cursor: zoom-in; }
@@ -85,7 +82,7 @@ p { color: var(--cinza); }
 .destaque__imagem:focus-visible,
 .destaque__seta:focus-visible,
 .visualizador__fechar:focus-visible {
-  outline: 3px solid var(--verde);
+  outline: 3px solid var(--branco);
   outline-offset: 3px;
 }
 
@@ -122,10 +119,10 @@ p { color: var(--cinza); }
   color: var(--branco);
   cursor: pointer;
 }
-.visualizador__fechar:hover { color: var(--verde); border-color: var(--verde); }
+.visualizador__fechar:hover { border-color: var(--branco); }
 
 .destaque__seta:focus-visible {
-  outline: 2px solid var(--verde);
+  outline: 2px solid var(--branco);
   outline-offset: 3px;
 }
 
@@ -211,7 +208,7 @@ p { color: var(--cinza); }
 .icone--servico {
   width: 22px;
   height: 22px;
-  color: var(--verde);
+  color: var(--cinza);
   stroke-width: 1.75;
 }
 .solucao h3 {
