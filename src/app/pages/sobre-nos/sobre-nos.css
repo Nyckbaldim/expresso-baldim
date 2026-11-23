@@ -33,8 +33,6 @@ h4 { font-size: 1rem; font-weight: 600; }
 p { color: var(--cinza); font-size: 0.9rem; line-height: 1.65; }
 
 
-.tricolor { margin-bottom: 14px; }
-
 
 .sobre__hero {
   display: grid;
@@ -42,7 +40,6 @@ p { color: var(--cinza); font-size: 0.9rem; line-height: 1.65; }
   gap: 12px;
   margin-bottom: clamp(24px, 3vw, 40px);
 }
-.sobre__hero .tricolor { margin-bottom: 4px; }
 .sobre__lead { font-size: 0.95rem; max-width: 60ch; }
 
 
@@ -63,8 +60,7 @@ p { color: var(--cinza); font-size: 0.9rem; line-height: 1.65; }
   margin-top: 8px;
 }
 .assinatura img { width: 80px; height: auto; flex-shrink: 0; }
-.assinatura strong { display: block; font-size: 0.85rem; margin-bottom: 8px; }
-.assinatura .tricolor { margin: 0; }
+.assinatura strong { display: block; font-size: 0.85rem; }
 
 .quem-somos__foto {
   margin: 0;
