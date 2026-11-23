@@ -16,6 +16,11 @@
   --vermelho-claro: #e5584a;
   --ambar: #f5a524;
 
+  --faixa-tricolor: linear-gradient(90deg,
+    var(--verde) 0 33.33%,
+    var(--branco) 33.33% 66.66%,
+    var(--vermelho) 66.66% 100%);
+
   --largura: 1280px;
   --raio: 16px;
   --raio-botao: 8px;
@@ -66,10 +71,7 @@ img { display: block; max-width: 100%; }
   display: block;
   width: 120px;
   height: 3px;
-  background: linear-gradient(90deg,
-    var(--verde) 0 33.33%,
-    var(--branco) 33.33% 66.66%,
-    var(--vermelho) 66.66% 100%);
+  background: var(--faixa-tricolor);
 }
 .tricolor--curto { width: 104px; }
 
