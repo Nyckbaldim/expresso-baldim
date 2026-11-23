@@ -25,9 +25,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--verde);
+  color: var(--verde-texto);
 }
-.rodape__coluna .rodape__whatsapp:hover { color: var(--verde); text-decoration: underline; }
+.rodape__coluna .rodape__whatsapp:hover { color: var(--verde-texto); text-decoration: underline; }
 
 .rodape__direitos {
   padding: 22px 0 24px;
