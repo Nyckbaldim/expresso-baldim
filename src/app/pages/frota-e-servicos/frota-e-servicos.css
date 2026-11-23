@@ -249,7 +249,9 @@ p { color: var(--cinza); }
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  padding-top: 96px;
+  margin-top: 96px;
+  padding-top: 40px;
+  border-top: 1px solid var(--borda);
 }
 .cta h2 { margin-bottom: 12px; }
 .cta p { font-size: 16px; }
@@ -289,6 +291,6 @@ p { color: var(--cinza); }
   .cta {
     flex-direction: column;
     align-items: stretch;
-    padding-top: 72px;
+    margin-top: 72px;
   }
 }
