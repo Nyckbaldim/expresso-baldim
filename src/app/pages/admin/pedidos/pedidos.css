@@ -5,12 +5,7 @@
   padding: 48px var(--eb-page-pad) 80px;
 }
 
-.hero {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 24px; row-gap: 14px;
-}
-.hero > :not(.hero__logout) { grid-column: 1; }
-.hero__logout { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
+.hero { display: grid; row-gap: 14px; }
 .hero__title { --eb-title-size: 40px; }
 .hero__lead { margin: 0; max-width: 60ch; color: var(--eb-muted); font-size: 16px; line-height: 1.55; }
 
@@ -106,7 +101,6 @@
   .page:not(.has-selection) .detail { display: none; }
 
   .hero { row-gap: 12px; }
-  .hero__logout { grid-row: 2; }
   .hero__title { --eb-title-size: 32px; }
   .hero__lead { font-size: 14px; }
 

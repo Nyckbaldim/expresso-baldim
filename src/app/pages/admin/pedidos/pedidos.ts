@@ -15,7 +15,6 @@ import {
   cidadeDe,
 } from '../../../models/pedido';
 import { DataBr } from '../../../pipes/data-br';
-import { Autenticacao } from '../../../services/autenticacao';
 import { EstadoPedidos, FiltroStatus } from '../../../services/estado-pedidos';
 
 @Component({
@@ -26,7 +25,6 @@ import { EstadoPedidos, FiltroStatus } from '../../../services/estado-pedidos';
 })
 export class Pedidos implements OnInit {
   protected readonly estado = inject(EstadoPedidos);
-  private readonly autenticacao = inject(Autenticacao);
   private readonly rota = inject(ActivatedRoute);
   private readonly roteador = inject(Router);
 
@@ -95,9 +93,5 @@ export class Pedidos implements OnInit {
 
   protected aoBuscar(evento: Event): void {
     this.estado.definirBusca((evento.target as HTMLInputElement).value);
-  }
-
-  protected sair(): void {
-    this.autenticacao.sair();
   }
 }
