@@ -85,12 +85,6 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   line-height: 16px;
 }
-.etiqueta::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  background: var(--verde);
-}
 
 .botao {
   display: inline-flex;
