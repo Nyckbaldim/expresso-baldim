@@ -249,6 +249,8 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
+  padding-top: 40px;
+  border-top: 1px solid var(--borda);
 }
 .chamada__titulo { margin-bottom: 12px; }
 .chamada__texto { color: var(--cinza); font-size: 16px; }
