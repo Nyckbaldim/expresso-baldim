@@ -27,7 +27,13 @@
         <h2 class="rodape__titulo">Podemos ajudar?</h2>
         <a href="/rastrear-pedido">Rastrear pedido</a>
         <a href="/avaliar">Avaliar</a>
-        <a href="#" class="rodape__whatsapp">
+        <a
+          [href]="whatsappUrl"
+          class="rodape__whatsapp"
+          target="_blank"
+          rel="noopener"
+          aria-label="Falar pelo WhatsApp (abre em nova aba)"
+        >
           Falar pelo WhatsApp
           <svg class="icone icone--minusculo" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
