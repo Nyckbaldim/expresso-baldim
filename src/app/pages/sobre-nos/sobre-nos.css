@@ -99,6 +99,7 @@ p { color: var(--cinza); font-size: 0.9rem; line-height: 1.65; }
   padding: clamp(20px, 3vw, 28px);
   display: grid;
   gap: 12px;
+  align-content: start;
 }
 
 .card__icone {
