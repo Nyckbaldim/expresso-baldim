@@ -5,7 +5,9 @@
   --superficie: #111313;
   --superficie-botao: #191c1b;
   --borda: #2b302e;
-  --verde: #25d47d;
+  --verde: #1f7a45;          /* verde da marca: só ação (botão principal, menu ativo, estados) */
+  --verde-hover: #228049;
+  --verde-texto: #3fa66b;    /* verde para texto pequeno (links, status) — 6,9:1 no preto */
   --vermelho: #db453d;
   --branco: #ffffff;
   --cinza: #a9b2ad;
@@ -113,8 +115,8 @@ button:focus-visible {
   outline: 2px solid var(--verde);
   outline-offset: 3px;
 }
-.botao--primario { background: var(--verde); color: #04140c; }
-.botao--primario:hover { background: #3ee493; }
+.botao--primario { background: var(--verde); color: var(--branco); }
+.botao--primario:hover { background: var(--verde-hover); }
 .botao--secundario {
   background: var(--superficie-botao);
   border-color: var(--borda);
@@ -299,7 +301,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
 }
 .check input:hover { border-color: var(--branco); }
 .check input:checked {
-  background: var(--verde) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2304140c' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 14px no-repeat;
+  background: var(--verde) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 14px no-repeat;
   border-color: var(--verde);
 }
 .check input:focus-visible { outline: 2px solid var(--verde); outline-offset: 3px; }
