@@ -12,6 +12,7 @@ const INTERVALO_AUTOPLAY_MS = 5000;
 /**
  * Carrossel de imagens acessível (padrão WAI-ARIA "Carousel").
  * As fotos ocupam uma moldura de proporção fixa (`--carrossel-proporcao`, padrão 5 / 3) e são cortadas com `object-fit: cover`.
+ * Uma legenda opcional pode ser projetada abaixo dos controles: `<div legenda>...</div>`.
  */
 @Component({
   selector: 'app-carrossel-imagens',
