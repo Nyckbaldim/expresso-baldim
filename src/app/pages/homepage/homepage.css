@@ -55,7 +55,7 @@
   font-weight: 800;
   line-height: 1.04;
 }
-.destaque { display: block; }
+.destaque { display: block; color: var(--verde-texto); }
 
 .hero__descricao {
   max-width: 530px;
@@ -122,6 +122,8 @@
   border-radius: var(--raio);
 }
 .cartao--servico { padding: 24px 28px; min-height: 205px; }
+/* ícone de serviço leva a um orçamento: verde indica ação */
+.cartao--servico .icone--cartao { color: var(--verde-texto); }
 .cartao--valor { padding: 24px; min-height: 205px; }
 
 .cartao__titulo {
