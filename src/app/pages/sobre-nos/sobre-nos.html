@@ -24,10 +24,12 @@
         </div>
       </div>
 
-      <figure class="quem-somos__foto">
-        <img src="images/Caminhao.jpeg" alt="Caminhão da Expresso Baldim" imagemAmpliavel />
-        <figcaption>Expresso Baldim • Fotografia original do veículo da empresa</figcaption>
-      </figure>
+      <app-carrossel-imagens
+        class="quem-somos__galeria"
+        [imagens]="galeria"
+        rotuloGrupo="Fotos da frota da Expresso Baldim"
+        [prioridade]="true"
+      />
     </section>
 
     <section class="mv">
