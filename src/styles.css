@@ -142,11 +142,11 @@ button:focus-visible {
   padding: 14px 0;
   border-top: 1px solid var(--borda);
   border-bottom: 1px solid var(--borda);
-  color: var(--verde);
+  color: var(--cinza);
   font-size: 13px;
   line-height: 18px;
 }
-.etapas span { margin-right: 6px; }
+.etapas span { margin-right: 6px; color: var(--branco); font-weight: 700; }
 .form-nota { margin-top: 12px; color: var(--cinza); font-size: 13px; line-height: 20px; }
 
 /* estrutura: coluna principal + resumo */
@@ -230,7 +230,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
 .endereco + .endereco { margin-top: 17px; }
 .endereco__titulo {
   margin-bottom: 12px;
-  color: var(--verde);
+  color: var(--branco);
   font-size: 17px;
   font-weight: 400;
   line-height: 24px;
@@ -255,7 +255,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
   cursor: pointer;
   transition: border-color 0.2s;
 }
-.dropzone:hover { border-color: var(--verde); }
+.dropzone:hover { border-color: var(--cinza); }
 .dropzone:focus-within { border-color: var(--branco); }
 .dropzone__icone { display: flex; align-self: center; color: var(--cinza); }
 .dropzone__icone .icone { width: 24px; height: 24px; stroke-width: 1.75; }
@@ -322,7 +322,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
 .resumo__lista dt { color: var(--cinza); font-size: 12.5px; line-height: 18px; }
 .resumo__lista dd { margin: 2px 0 0; color: var(--branco); font-size: 15px; font-weight: 700; line-height: 24px; }
 .resumo__texto { margin-top: 22px; color: var(--cinza); font-size: 14px; line-height: 21px; }
-.resumo__valor { margin-top: 22px; color: var(--verde); font-size: 18px; line-height: 26px; }
+.resumo__valor { margin-top: 22px; color: var(--branco); font-size: 18px; line-height: 26px; }
 .resumo__texto--menor { margin-top: 20px; font-size: 13px; line-height: 20px; }
 .resumo__acoes { display: grid; gap: 22px; margin-top: 21px; }
 .resumo__aviso { margin-top: 22px; color: var(--cinza); font-size: 12px; line-height: 18px; }
@@ -340,7 +340,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
   font-size: 14px;
   line-height: 21px;
 }
-.dropzone__status--ok { color: var(--verde); }
+.dropzone__status--ok { color: var(--verde-texto); }
 .fotos-lista { display: grid; gap: 8px; margin-top: 12px; }
 .fotos-lista li {
   display: flex;
@@ -387,7 +387,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
   background: var(--campo);
   border: 1px solid var(--borda);
   border-radius: 12px;
-  color: var(--verde);
+  color: var(--branco);
   font-size: 32px;
   font-weight: 800;
   letter-spacing: 0.06em;
