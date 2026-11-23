@@ -17,7 +17,6 @@ h1 {
 }
 p { color: var(--cinza); }
 
-.tricolor { margin-bottom: 16px; }
 .obrigatorio { color: var(--vermelho-claro); }
 
 .avaliar__cabecalho h1 { margin-top: 16px; }
