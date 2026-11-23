@@ -23,37 +23,18 @@
       <p class="hero__nota">Um orçamento para a sua necessidade.</p>
     </div>
 
-    <figure
+    <app-carrossel-imagens
       class="hero__cartao"
-      (mouseenter)="imagemEmHover.set(true)"
-      (mouseleave)="imagemEmHover.set(false)"
-      (focusin)="imagemComFoco.set(true)"
-      (focusout)="imagemComFoco.set(false)"
+      [imagens]="imagensDestaque()"
+      rotuloGrupo="Fotos da frota da Expresso Baldim"
+      [autoplay]="true"
+      [prioridade]="true"
     >
-      <img
-        [src]="imagemAtual()"
-        [class.is-fading]="imagemEmTransicao()"
-        alt="Imagem da frota da Expresso Baldim"
-        class="hero__imagem"
-        imagemAmpliavel
-      >
-      @if (imagensDestaque().length > 1) {
-        <div class="hero__controles" role="group" aria-label="Controles das imagens">
-          <button type="button" class="hero__seta" aria-label="Imagem anterior" (click)="imagemAnterior()">
-            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-          <button type="button" class="hero__seta" aria-label="Próxima imagem" (click)="imagemProxima()">
-            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
-        </div>
-      }
-      <figcaption class="hero__legenda">
-        <div>
-          <strong>Expresso Baldim</strong>
-          <span>Transporte de cargas e mudanças residenciais</span>
-        </div>
-      </figcaption>
-    </figure>
+      <div legenda class="hero__legenda">
+        <strong>Expresso Baldim</strong>
+        <span>Transporte de cargas e mudanças residenciais</span>
+      </div>
+    </app-carrossel-imagens>
   </section>
 
 

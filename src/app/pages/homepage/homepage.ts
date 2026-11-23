@@ -6,11 +6,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval, timer } from 'rxjs';
 import { DepoimentoService, Depoimento } from '../../services/depoimento';
 import { ImagemAmpliavelDirective } from '../../directives/imagem-ampliavel';
+import { CarrosselImagens, type ImagemCarrossel } from '../../components/carrossel-imagens/carrossel-imagens';
+import { FOTO_INICIAL_HOME, fotoDaFrota } from '../../shared/galerias';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [RouterLink, ImagemAmpliavelDirective],
+  imports: [RouterLink, ImagemAmpliavelDirective, CarrosselImagens],
   styleUrl: './homepage.css',
   templateUrl: './homepage.html',
 })
@@ -35,12 +37,7 @@ export class Homepage {
   avaliacaoComFoco = signal(false);
   avaliacaoEmTransicao = signal(false);
   atual = computed(() => this.depoimentos()[this.indice()] ?? null);
-  imagensDestaque = signal<string[]>(['/images/Caminhao.jpeg']);
-  indiceImagem = signal(0);
-  imagemAtual = computed(() => this.imagensDestaque()[this.indiceImagem()] ?? '/images/Caminhao.jpeg');
-  imagemEmHover = signal(false);
-  imagemComFoco = signal(false);
-  imagemEmTransicao = signal(false);
+  imagensDestaque = signal<readonly ImagemCarrossel[]>([FOTO_INICIAL_HOME]);
 
   constructor() {
     this.carregarImagensDestaque();
@@ -67,14 +64,7 @@ export class Homepage {
         const validas = Array.isArray(imagens)
           ? imagens.filter((imagem) => typeof imagem === 'string' && imagem.startsWith('/images/'))
           : [];
-        this.imagensDestaque.set(validas.length ? validas : ['/images/Caminhao.jpeg']);
-        if (this.podeRotacionarAutomaticamente && validas.length > 1) {
-          interval(5000)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => {
-              if (!this.imagemEmHover() && !this.imagemComFoco()) this.proximaImagem();
-            });
-        }
+        if (validas.length) this.imagensDestaque.set(validas.map(fotoDaFrota));
       },
       error: (erro) => console.error('Falha ao carregar imagens do carrossel', erro),
     });
@@ -86,18 +76,6 @@ export class Homepage {
 
   proximo() {
     this.mudarSlide(this.indice, this.avaliacaoEmTransicao, 1, this.depoimentos().length);
-  }
-
-  imagemAnterior() {
-    this.mudarSlide(this.indiceImagem, this.imagemEmTransicao, -1, this.imagensDestaque().length);
-  }
-
-  imagemProxima() {
-    this.mudarSlide(this.indiceImagem, this.imagemEmTransicao, 1, this.imagensDestaque().length);
-  }
-
-  private proximaImagem(): void {
-    this.imagemProxima();
   }
 
   private mudarSlide(indice: WritableSignal<number>, emTransicao: WritableSignal<boolean>, direcao: number, total: number): void {
