@@ -51,6 +51,7 @@ p { color: var(--cinza); font-size: 0.9rem; line-height: 1.65; }
 }
 .destaques__item { display: grid; gap: 4px; align-content: start; }
 .destaques dt {
+  color: var(--verde-texto);
   font-size: clamp(1.15rem, 2.2vw, 1.5rem);
   font-weight: 700;
   line-height: 1.2;
