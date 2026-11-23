@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { LOGO_SRC } from '../../constants';
@@ -17,9 +17,15 @@ export class AdminLayout {
   private readonly autenticacao = inject(Autenticacao);
   protected readonly logo = LOGO_SRC;
   protected readonly year = new Date().getFullYear();
+  /** "Sair" só aparece com sessão ativa (nunca na tela de login). */
+  protected readonly autenticado = computed(() => this.autenticacao.autenticado());
 
   protected voltarAoSite(): void {
     this.autenticacao.sair(false);
     void this.roteador.navigateByUrl('/');
+  }
+
+  protected sair(): void {
+    this.autenticacao.sair();
   }
 }

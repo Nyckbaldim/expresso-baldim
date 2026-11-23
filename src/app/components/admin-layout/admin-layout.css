@@ -13,6 +13,7 @@
 .logo img { display: block; height: 96px; width: auto; }
 
 .admin-nav { display: flex; align-items: center; gap: 8px; }
+.header__acoes { display: flex; align-items: center; gap: 8px; }
 .admin-nav a {
   padding: 10px 14px; border-radius: 8px;
   color: var(--eb-muted); font: 600 14px/1.2 var(--eb-font);

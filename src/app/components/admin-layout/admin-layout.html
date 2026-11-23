@@ -7,9 +7,16 @@
     <a routerLink="/admin/pedidos" routerLinkActive="is-active" ariaCurrentWhenActive="page">Pedidos</a>
     <a routerLink="/admin/avaliacoes" routerLinkActive="is-active" ariaCurrentWhenActive="page">Avaliações</a>
   </nav>
-  <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact" (click)="voltarAoSite()">
-    Voltar ao site <span aria-hidden="true">↗</span>
-  </button>
+  <div class="header__acoes">
+    <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact" (click)="voltarAoSite()">
+      Voltar ao site <span aria-hidden="true">↗</span>
+    </button>
+    @if (autenticado()) {
+      <button type="button" class="eb-btn eb-btn--secondary eb-btn--compact" (click)="sair()">
+        Sair <span aria-hidden="true">↗</span>
+      </button>
+    }
+  </div>
 </header>
 
 <main id="conteudo"><router-outlet /></main>
