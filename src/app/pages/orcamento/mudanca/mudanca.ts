@@ -113,9 +113,6 @@ export class Mudanca extends FormularioPedido {
     this.erroMoveis.set('');
   }
 
-  get semMoveis(): boolean {
-    return this.moveis().length === 0 && this.form.controls.moveis.touched;
-  }
 
 
   protected montarPedido(codigo: string, fotos: string[]): NovoPedido {
@@ -143,19 +140,40 @@ export class Mudanca extends FormularioPedido {
   }
 
   override async enviar(continuarNoWhatsapp = false): Promise<void> {
-    if (this.moveis().length === 0) {
-      this.form.controls.moveis.markAsTouched();
-      this.erroMoveis.set('Adicione ao menos um item à mudança.');
+    if (this.enviando()) return;
+
+    const problema = this.validarMoveis();
+    this.erroMoveis.set(problema?.mensagem ?? '');
+    if (!problema) {
+      await super.enviar(continuarNoWhatsapp);
       return;
     }
-    if (this.moveis().some((movel) =>
-      !movel.nome.trim() || movel.quantidade < 1 || !movel.volumeM3 || movel.volumeM3 <= 0,
-    )) {
-      this.erroMoveis.set('Preencha nome, quantidade e volume aproximado de todos os itens.');
-      return;
+
+    // Mostra os erros de todos os campos junto com o dos móveis e leva o foco ao primeiro problema da página.
+    this.erroEnvio.set('');
+    this.form.markAllAsTouched();
+    const primeiroCampoInvalido = document.querySelector<HTMLElement>('.campo__controle.ng-invalid');
+    (primeiroCampoInvalido ?? document.getElementById(problema.idFoco))?.focus();
+  }
+
+  /** Retorna o problema da lista de móveis (mensagem e campo a focar) ou `null` se estiver tudo certo. */
+  private validarMoveis(): { mensagem: string; idFoco: string } | null {
+    const lista = this.moveis();
+    if (lista.length === 0) {
+      return { mensagem: 'Adicione ao menos um item à mudança.', idFoco: 'moveis-adicionar' };
     }
-    this.erroMoveis.set('');
-    await super.enviar(continuarNoWhatsapp);
+
+    const indice = lista.findIndex(
+      (movel) => !movel.nome.trim() || movel.quantidade < 1 || !movel.volumeM3 || movel.volumeM3 <= 0,
+    );
+    if (indice === -1) return null;
+
+    const movel = lista[indice];
+    const campo = !movel.nome.trim() ? 'nome' : movel.quantidade < 1 ? 'quantidade' : 'volume';
+    return {
+      mensagem: 'Preencha nome, quantidade e volume aproximado de todos os itens.',
+      idFoco: `movel-${campo}-${indice}`,
+    };
   }
 
   protected montarMensagemWhatsapp(p: NovoPedido): string {

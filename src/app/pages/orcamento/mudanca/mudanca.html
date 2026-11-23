@@ -174,8 +174,14 @@
             }
           </div>
 
-          <button type="button" class="botao botao--secundario moveis-adicionar" (click)="adicionarMovel()">Adicionar item +</button>
-          @if (erroMoveis()) { <p class="campo__erro">{{ erroMoveis() }}</p> }
+          <button
+            type="button"
+            id="moveis-adicionar"
+            class="botao botao--secundario moveis-adicionar"
+            [attr.aria-describedby]="erroMoveis() ? 'erro-moveis' : null"
+            (click)="adicionarMovel()"
+          >Adicionar item +</button>
+          @if (erroMoveis()) { <p id="erro-moveis" class="campo__erro">{{ erroMoveis() }}</p> }
 
           <div class="volume" aria-live="polite">
             <div>
@@ -184,9 +190,6 @@
             </div>
             <p class="volume__valor">{{ volumeTexto() }}</p>
           </div>
-          @if (semMoveis) {
-            <p class="campo__erro">Selecione ao menos um móvel para estimar o volume.</p>
-          }
           <p class="campo__ajuda campo__ajuda--solta">Tem um item fora da lista ou um móvel de tamanho diferente? Descreva nas observações e envie fotos para a avaliação.</p>
         </div>
       </section>
