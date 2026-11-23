@@ -1,0 +1,60 @@
+<div class="carrossel__slides" [attr.aria-live]="girando() ? 'off' : 'polite'">
+  @for (imagem of imagens(); track imagem.src; let i = $index) {
+    <div
+      class="carrossel__slide"
+      role="group"
+      aria-roledescription="slide"
+      [attr.aria-label]="i + 1 + ' de ' + total()"
+      [class.carrossel__slide--ativo]="i === indice()"
+      [attr.inert]="i === indice() ? null : ''"
+    >
+      <img
+        class="carrossel__imagem"
+        [ngSrc]="imagem.src"
+        [alt]="imagem.alt"
+        fill
+        [priority]="prioridade() && i === 0"
+        imagemAmpliavel
+      >
+    </div>
+  }
+</div>
+
+@if (temVarias()) {
+  <div class="carrossel__controles">
+    @if (autoplayDisponivel()) {
+      <button
+        type="button"
+        class="carrossel__botao"
+        [attr.aria-label]="pausadoPeloUsuario() ? 'Retomar passagem automática' : 'Pausar passagem automática'"
+        (click)="alternarPausa()"
+      >
+        @if (pausadoPeloUsuario()) {
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 13 8-13 8z"/></svg>
+        } @else {
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14"/><path d="M16 5v14"/></svg>
+        }
+      </button>
+    }
+
+    <button type="button" class="carrossel__botao" aria-label="Foto anterior" (click)="anterior()">
+      <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+
+    <div class="carrossel__indicadores">
+      @for (imagem of imagens(); track imagem.src; let i = $index) {
+        <button
+          type="button"
+          class="carrossel__indicador"
+          [attr.aria-label]="'Mostrar foto ' + (i + 1) + ' de ' + total()"
+          [attr.aria-current]="i === indice() ? 'true' : null"
+          (click)="irPara(i)"
+        ></button>
+      }
+    </div>
+
+    <button type="button" class="carrossel__botao" aria-label="Próxima foto" (click)="proxima()">
+      <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+}

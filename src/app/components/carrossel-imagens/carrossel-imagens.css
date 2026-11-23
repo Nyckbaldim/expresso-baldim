@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+}
+
+.carrossel__slides {
+  position: relative;
+  aspect-ratio: var(--carrossel-proporcao, 5 / 3);
+}
+
+.carrossel__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+}
+.carrossel__slide--ativo {
+  opacity: 1;
+  visibility: visible;
+}
+
+.carrossel__imagem { object-fit: cover; }
+.carrossel__imagem:focus-visible {
+  outline: 3px solid var(--branco);
+  outline-offset: -3px;
+}
+
+.carrossel__controles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--borda);
+}
+
+.carrossel__botao {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: var(--superficie-botao);
+  border: 1px solid var(--borda);
+  border-radius: 50%;
+  color: var(--branco);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.carrossel__botao:hover { border-color: var(--branco); }
+
+.carrossel__indicadores {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* área clicável de 24px (WCAG 2.5.8); o ponto visível é menor */
+.carrossel__indicador {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.carrossel__indicador::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--cinza);
+  border-radius: 50%;
+}
+.carrossel__indicador:hover::before { border-color: var(--branco); }
+.carrossel__indicador[aria-current='true']::before {
+  background: var(--branco);
+  border-color: var(--branco);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carrossel__slide { transition: none; }
+}
