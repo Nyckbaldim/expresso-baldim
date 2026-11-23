@@ -97,9 +97,7 @@ p { color: var(--cinza); font-size: 0.9rem; line-height: 1.65; }
   padding: clamp(20px, 3vw, 28px);
   display: grid;
   gap: 12px;
-  transition: border-color 0.25s, transform 0.25s;
 }
-.card:hover { border-color: var(--verde); transform: translateY(-2px); }
 
 .card__icone {
   display: grid;
@@ -157,8 +155,4 @@ p { color: var(--cinza); font-size: 0.9rem; line-height: 1.65; }
     align-items: stretch;
   }
   .botao { width: 100%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card:hover { transform: none; }
 }
