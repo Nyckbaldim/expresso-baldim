@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { WHATSAPP_URL } from '../../constants';
 
 @Component({
   imports: [RouterLink],
@@ -7,4 +8,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './orcamento.css',
   templateUrl: './orcamento.html',
 })
-export class Orcamento {}
+export class Orcamento {
+  protected readonly whatsappUrl = WHATSAPP_URL;
+}
