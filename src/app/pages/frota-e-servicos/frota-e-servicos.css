@@ -15,7 +15,6 @@ h2 {
 h3 { font-weight: 700; }
 p { color: var(--cinza); }
 
-.etiqueta--sem-marca::before { display: none; }
 
 
 .frota__cabecalho h1 { margin-top: 16px; }
