@@ -78,7 +78,7 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--verde);
+  color: var(--cinza);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
