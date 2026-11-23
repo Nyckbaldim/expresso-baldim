@@ -62,7 +62,7 @@
   cursor: pointer;
   transition: color 0.2s, background-color 0.2s;
 }
-.stepper__botao--mais { color: var(--verde); }
+.stepper__botao--mais { color: var(--verde-texto); }
 .stepper__botao:hover { background: rgba(255, 255, 255, 0.06); }
 .stepper__valor { color: var(--branco); font-size: 14px; }
 
@@ -80,7 +80,7 @@
 .volume__titulo { font-size: 22px; line-height: 28px; font-weight: 700; }
 .volume__texto { margin-top: 4px; color: var(--cinza); font-size: 13.5px; line-height: 20px; }
 .volume__valor {
-  color: var(--verde);
+  color: var(--branco);
   font-size: 36px;
   font-weight: 800;
   line-height: 1.1;
