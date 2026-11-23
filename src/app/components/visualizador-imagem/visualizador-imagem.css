@@ -33,8 +33,8 @@
   color: var(--branco);
   cursor: pointer;
 }
-.visualizador__fechar:hover { color: var(--verde); border-color: var(--verde); }
+.visualizador__fechar:hover { border-color: var(--branco); }
 .visualizador__fechar:focus-visible {
-  outline: 3px solid var(--verde);
+  outline: 3px solid var(--branco);
   outline-offset: 3px;
 }
