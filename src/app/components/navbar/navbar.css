@@ -24,6 +24,7 @@
 
 .logo-link {
   display: flex;
+  flex-shrink: 0; /* o logo nunca encolhe para caber o menu */
   align-items: center;
 }
 
@@ -77,19 +78,30 @@
   .logo-img { height: 75px; }
 }
 
-@media (max-width: 640px) {
+/* Abaixo de ~885px logo, menu e botão não cabem numa linha: o menu desce para a segunda linha. */
+@media (max-width: 900px) {
   .navegacao {
     height: auto;
-    padding: 12px 16px;
+    padding: 12px 32px;
     flex-wrap: wrap;
-    gap: 12px;
+    row-gap: 8px;
   }
-  .logo-img { height: 54px; }
   .menu-principal {
     order: 3;
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 6px 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .navegacao {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .logo-img { height: 54px; }
+  .menu-principal {
     gap: 6px 16px;
     font-size: 0.85rem;
   }
