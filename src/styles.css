@@ -112,7 +112,7 @@ img { display: block; max-width: 100%; }
 .botao:focus-visible,
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--verde);
+  outline: 2px solid var(--branco);
   outline-offset: 3px;
 }
 .botao--primario { background: var(--verde); color: var(--branco); }
@@ -206,8 +206,8 @@ button:focus-visible {
 .campo__controle:hover { border-color: #3a413e; }
 .campo__controle:focus {
   outline: none;
-  border-color: var(--verde);
-  box-shadow: 0 0 0 3px rgba(37, 212, 125, 0.18);
+  border-color: var(--branco);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
 }
 select.campo__controle {
   appearance: none;
@@ -262,8 +262,8 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
   cursor: pointer;
   transition: border-color 0.2s;
 }
-.dropzone:hover,
-.dropzone:focus-within { border-color: var(--verde); }
+.dropzone:hover { border-color: var(--verde); }
+.dropzone:focus-within { border-color: var(--branco); }
 .dropzone__icone { display: flex; align-self: center; color: var(--verde); }
 .dropzone__icone .icone { width: 24px; height: 24px; stroke-width: 1.75; }
 .dropzone__titulo {
@@ -304,7 +304,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
   background: var(--verde) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 14px no-repeat;
   border-color: var(--verde);
 }
-.check input:focus-visible { outline: 2px solid var(--verde); outline-offset: 3px; }
+.check input:focus-visible { outline: 2px solid var(--branco); outline-offset: 3px; }
 .vistoria { margin-top: 20px; }
 .vistoria .campo__ajuda { margin-top: 20px; }
 .vistoria + .campo { margin-top: 18px; }
