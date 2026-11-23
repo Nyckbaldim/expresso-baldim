@@ -33,11 +33,11 @@
   color: var(--branco);
   cursor: pointer;
 }
-.visualizador__fechar:hover { color: var(--verde); border-color: var(--verde); }
+.visualizador__fechar:hover { border-color: var(--branco); }
 .visualizador__fechar:focus-visible,
 .hero__imagem:focus-visible,
 .sobre__imagem:focus-visible {
-  outline: 3px solid var(--verde);
+  outline: 3px solid var(--branco);
   outline-offset: 3px;
 }
 .hero__imagem,
@@ -97,7 +97,7 @@
   background: rgba(0, 0, 0, 0.72); border: 1px solid var(--borda); border-radius: 50%;
   color: var(--branco); cursor: pointer;
 }
-.hero__seta:hover { border-color: var(--verde); color: var(--verde); }
+.hero__seta:hover { border-color: var(--branco); }
 .hero__legenda { padding: 15px 24px 17px; }
 .hero__legenda div { display: flex; flex-direction: column; gap: 4px; }
 .hero__legenda strong { font-size: 17px; font-weight: 500; }
@@ -167,7 +167,7 @@
   align-items: center;
   gap: 6px;
   margin-top: 16px;
-  color: var(--verde);
+  color: var(--verde-texto);
   font-size: 14px;
   font-weight: 700;
 }
@@ -198,7 +198,7 @@
 .passo { padding-top: 20px; border-top: 1px solid var(--borda); }
 .passo__numero {
   display: block;
-  color: var(--verde);
+  color: var(--cinza);
   font-size: 28px;
   font-weight: 700;
   line-height: 1.2;
@@ -227,7 +227,7 @@
   color: var(--branco);
   cursor: pointer;
 }
-.seta:hover { border-color: var(--verde); color: var(--verde); }
+.seta:hover { border-color: var(--branco); }
 
 .avaliacoes__cartao {
   display: flex;
@@ -241,7 +241,7 @@
 .avaliacoes__titulo { margin-bottom: 2px; font-size: 24px; font-weight: 700; line-height: 1.3; }
 .avaliacoes__texto p { color: var(--cinza); font-size: 14px; }
 .avaliacoes__titulo--depoimento { font-size: 18px; font-weight: 600; line-height: 1.5; }
-.avaliacoes__estrelas { color: var(--verde); letter-spacing: 2px; }
+.avaliacoes__estrelas { color: var(--branco); letter-spacing: 2px; }
 
 .secao--final { padding-bottom: 58px; }
 .chamada {
@@ -256,7 +256,7 @@
 .link-destaque:focus-visible,
 .seta:focus-visible,
 .hero__seta:focus-visible {
-  outline: 2px solid var(--verde);
+  outline: 2px solid var(--branco);
   outline-offset: 3px;
 }
 
