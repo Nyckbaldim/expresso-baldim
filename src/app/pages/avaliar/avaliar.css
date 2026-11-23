@@ -52,8 +52,8 @@ p { color: var(--cinza); }
 .campo__controle:hover { border-color: #3a413e; }
 .campo__controle:focus {
   outline: none;
-  border-color: var(--verde);
-  box-shadow: 0 0 0 3px rgba(37, 212, 125, 0.18);
+  border-color: var(--branco);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
 }
 
 select.campo__controle {
@@ -93,7 +93,7 @@ select.campo__controle option { background: #111313; color: var(--branco); }
   background: var(--verde-fundo);
   border: 1px solid var(--borda);
   border-radius: var(--raio);
-  color: var(--verde);
+  color: var(--verde-texto);
   font-size: 15px;
 }
 
@@ -157,7 +157,7 @@ select.campo__controle option { background: #111313; color: var(--branco); }
 .nota__estrela:hover svg,
 .nota__estrela:has(~ .nota__estrela:hover) svg { color: var(--branco); }
 .nota__radio:focus-visible + .nota__estrela {
-  outline: 2px solid var(--verde);
+  outline: 2px solid var(--branco);
   outline-offset: 2px;
 }
 .nota__numero { color: var(--cinza); font-size: 12px; line-height: 18px; }
@@ -184,7 +184,7 @@ select.campo__controle option { background: #111313; color: var(--branco); }
 .avaliar:has(#nota-2:checked) { --cor-nota: var(--vermelho-claro); }
 .avaliar:has(#nota-3:checked) { --cor-nota: var(--ambar); }
 .avaliar:has(#nota-4:checked),
-.avaliar:has(#nota-5:checked) { --cor-nota: var(--verde); }
+.avaliar:has(#nota-5:checked) { --cor-nota: var(--verde-texto); }
 
 .nota__estrelas:has(#nota-1:checked) .nota__estrela:nth-of-type(-n+1) svg { fill: currentColor; color: var(--cor-nota); }
 .nota__estrelas:has(#nota-2:checked) .nota__estrela:nth-of-type(-n+2) svg { fill: currentColor; color: var(--cor-nota); }
@@ -215,7 +215,7 @@ select.campo__controle option { background: #111313; color: var(--branco); }
 .avaliar:has(#tipo-review option[value="feedback"]:checked) .avaliar__dica,
 .avaliar:has(#tipo-review option[value="google"]:checked) .avaliar__dica { display: none; }
 
-.painel__rotulo { color: var(--verde); font-size: 12px; line-height: 16px; }
+.painel__rotulo { color: var(--cinza); font-size: 12px; line-height: 16px; }
 .painel h2 {
   margin-top: 18px;
   font-size: 30px;
