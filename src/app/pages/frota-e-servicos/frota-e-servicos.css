@@ -186,6 +186,99 @@ p { color: var(--cinza); }
   line-height: 1.6;
 }
 
+.nossa-frota { margin-top: 48px; }
+.nossa-frota__intro {
+  max-width: 640px;
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.nossa-frota__grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.veiculo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+}
+.veiculo__foto {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid var(--borda);
+}
+.veiculo__imagem { object-fit: cover; }
+.veiculo__imagem:focus-visible {
+  outline: 3px solid var(--branco);
+  outline-offset: -3px;
+}
+
+.veiculo__corpo { padding: 24px 28px 28px; }
+.veiculo__nome {
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.veiculo__selos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.veiculo__selo {
+  padding: 4px 12px;
+  background: var(--superficie-botao);
+  border: 1px solid var(--borda);
+  border-radius: 100px;
+  color: var(--cinza);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.veiculo__specs {
+  display: grid;
+  margin: 22px 0 0;
+}
+.veiculo__spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--borda);
+}
+.veiculo__spec dt {
+  color: var(--cinza);
+  font-size: 14px;
+}
+.veiculo__spec dd {
+  margin: 0;
+  color: var(--branco);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.nossa-frota__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 24px;
+}
+.nossa-frota__nota {
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
 .solucoes { padding-top: 56px; }
 .solucoes .etiqueta { margin-bottom: 18px; }
 .solucoes__titulo { margin-bottom: 22px; }
@@ -276,7 +369,15 @@ p { color: var(--cinza); }
   .cuidados { grid-template-columns: 1fr; gap: 24px; }
 }
 
+@media (max-width: 768px) {
+  .nossa-frota__grade { grid-template-columns: minmax(0, 1fr); }
+  .nossa-frota__rodape { flex-direction: column; align-items: stretch; }
+}
+
 @media (max-width: 640px) {
+  .veiculo__corpo { padding: 20px; }
+  .veiculo__spec { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .veiculo__spec dd { text-align: left; }
   .frota { padding-top: 32px; }
   h1 { font-size: 32px; }
   h2 { font-size: 28px; line-height: 36px; }

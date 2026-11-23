@@ -1,19 +1,44 @@
-import { isPlatformBrowser } from '@angular/common';
+import { NgOptimizedImage, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, DestroyRef, PLATFORM_ID, computed, inject, signal, type WritableSignal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { interval, timer } from 'rxjs';
 import { ImagemAmpliavelDirective } from '../../directives/imagem-ampliavel';
+import { FROTA, type Veiculo } from '../../shared/frota';
+import { formatarDimensoes, formatarPeso, formatarVolume } from '../../shared/formatar-medidas';
+
+interface CartaoVeiculo extends Veiculo {
+  selo: string;
+  especificacoes: readonly { rotulo: string; valor: string }[];
+}
+
+function paraCartao(veiculo: Veiculo): CartaoVeiculo {
+  const eixos = `${veiculo.eixosTraseiros} ${veiculo.eixosTraseiros === 1 ? 'eixo traseiro' : 'eixos traseiros'}`;
+  return {
+    ...veiculo,
+    selo: [veiculo.carroceria, veiculo.configuracao, eixos].join(' · '),
+    especificacoes: [
+      { rotulo: 'Capacidade de carga', valor: formatarPeso(veiculo.capacidadeKg) },
+      { rotulo: 'Cubagem', valor: formatarVolume(veiculo.cubagemM3) },
+      {
+        rotulo: 'Medidas internas do baú (C × L × A)',
+        valor: formatarDimensoes(veiculo.comprimentoM, veiculo.larguraM, veiculo.alturaM),
+      },
+    ],
+  };
+}
 
 @Component({
-  imports: [RouterLink, ImagemAmpliavelDirective],
+  imports: [RouterLink, ImagemAmpliavelDirective, NgOptimizedImage],
   standalone: true,
   selector: 'app-frota-e-servicos',
   styleUrl: './frota-e-servicos.css',
   templateUrl: './frota-e-servicos.html',
 })
 export class FrotaEServicos {
+  protected readonly cartoes = FROTA.map(paraCartao);
+
   private readonly http = inject(HttpClient);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
