@@ -7,7 +7,10 @@
   --eb-border: #2b302e;
   --eb-text: #ffffff;
   --eb-muted: #a9b2ad;
-  --eb-green: #25d47d;
+  --eb-green: #1f7a45;         /* verde da marca: fundos, bordas e foco */
+  --eb-green-hover: #228049;
+  --eb-green-texto: #3fa66b;   /* verde para texto (6,1:1 sobre --eb-surface) */
+  --eb-amber: #f5a524;
   --eb-red: #db453d;         /* faixa da assinatura tricolor e erros */
   --eb-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
@@ -57,7 +60,7 @@
   font: 700 12px/1.2 var(--eb-font);
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--eb-green);
+  color: var(--eb-green-texto);
 }
 .eb-eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--eb-green); }
 
@@ -67,7 +70,7 @@
   letter-spacing: -0.045em;
   color: var(--eb-text);
 }
-.eb-title span { color: var(--eb-green); }
+.eb-title span { color: var(--eb-green-texto); }
 
 .eb-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 14px;
@@ -79,7 +82,7 @@
 }
 .eb-btn span[aria-hidden='true'] { font-size: 18px; line-height: 1; }
 
-.eb-btn--primary { background: var(--eb-green); border-color: var(--eb-green); color: #000; }
+.eb-btn--primary { background: var(--eb-green); border-color: var(--eb-green); color: #fff; }
 .eb-btn--primary:hover:not(:disabled) { filter: brightness(1.08); }
 .eb-btn--secondary { background: var(--eb-surface-2); border-color: var(--eb-border); color: var(--eb-text); }
 .eb-btn--secondary:hover:not(:disabled) { border-color: var(--eb-muted); }

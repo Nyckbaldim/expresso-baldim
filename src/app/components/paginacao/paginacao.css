@@ -28,7 +28,7 @@
   font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
 }
 .pg:hover:not(:disabled):not(.is-current) { border-color: var(--eb-green); }
-.pg.is-current { background: var(--eb-green); border-color: var(--eb-green); color: #04120b; cursor: default; }
+.pg.is-current { background: var(--eb-green); border-color: var(--eb-green); color: #fff; cursor: default; }
 .pg:disabled { opacity: 0.4; cursor: not-allowed; }
 .pg--gap { border: 0; background: none; color: var(--eb-muted); cursor: default; min-width: 24px; padding: 0; }
 .pg:focus-visible, .pager__size select:focus-visible { outline: 2px solid var(--eb-green); outline-offset: 2px; }

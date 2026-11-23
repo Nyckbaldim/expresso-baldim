@@ -4,7 +4,7 @@
 .adicionar__cabecalho { display: grid; gap: 10px; margin-bottom: 24px; }
 .adicionar__cabecalho h1 { margin: 0; font-size: 38px; }
 .adicionar__cabecalho > p:last-child { margin: 0; color: var(--eb-muted); line-height: 1.5; }
-.adicionar__voltar { width: fit-content; color: var(--eb-green); text-decoration: none; font-weight: 700; }
+.adicionar__voltar { width: fit-content; color: var(--eb-green-texto); text-decoration: none; font-weight: 700; }
 .adicionar__formulario { display: grid; gap: 16px; }
 .adicionar__abas {
   display: flex;
@@ -25,7 +25,7 @@
 .adicionar__abas button.is-active {
   background: var(--eb-green);
   border-color: var(--eb-green);
-  color: #07130d;
+  color: #fff;
 }
 .adicionar__secao { display: grid; gap: 18px; padding: 24px; }
 .adicionar__secao h2 { margin: 0; font-size: 20px; }

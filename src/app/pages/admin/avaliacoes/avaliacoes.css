@@ -13,7 +13,7 @@
 .review { min-width: 0; padding: 24px; }
 .review__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .review__code { margin: 0; font: 800 20px/1.2 var(--eb-font); overflow-wrap: anywhere; }
-.review__type { margin: 6px 0 0; color: var(--eb-green); font-size: 13px; font-weight: 600; }
+.review__type { margin: 6px 0 0; color: var(--eb-green-texto); font-size: 13px; font-weight: 600; }
 .review__date { flex: none; color: var(--eb-muted); font-size: 13px; }
 
 .review__details {
@@ -28,7 +28,7 @@
 
 .state { margin: 0; padding: 24px 0; color: var(--eb-muted); font-size: 14px; }
 .state--error { color: #ff8a82; }
-.link { margin-left: 8px; padding: 0; border: 0; background: none; color: var(--eb-green); cursor: pointer; font: 700 14px var(--eb-font); }
+.link { margin-left: 8px; padding: 0; border: 0; background: none; color: var(--eb-green-texto); cursor: pointer; font: 700 14px var(--eb-font); }
 
 @media (max-width: 767.98px) {
   .page { gap: 24px; padding: 24px var(--eb-page-pad) 32px; }

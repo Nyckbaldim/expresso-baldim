@@ -2,11 +2,11 @@
 .editar { max-width: 1100px; margin: 0 auto; padding: 40px var(--eb-page-pad) 64px; }
 .editar__cabecalho { display: grid; gap: 10px; margin-bottom: 24px; }
 .editar__cabecalho h1 { margin: 0; font-size: 38px; }
-.editar__voltar { color: var(--eb-green); text-decoration: none; font-weight: 700; }
+.editar__voltar { color: var(--eb-green-texto); text-decoration: none; font-weight: 700; }
 form, .editar__estado, .editar__erro { display: grid; gap: 16px; }
 .editar__abas { display: flex; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--eb-border); }
 .editar__abas button { min-height: 42px; padding: 0 16px; border: 1px solid var(--eb-border); border-radius: 8px; background: var(--eb-surface); color: var(--eb-muted); cursor: pointer; font: 700 14px var(--eb-font); }
-.editar__abas button.is-active { background: var(--eb-green); border-color: var(--eb-green); color: #07130d; }
+.editar__abas button.is-active { background: var(--eb-green); border-color: var(--eb-green); color: #fff; }
 .editar__secao { display: grid; gap: 18px; padding: 24px; }
 .editar__secao h2 { margin: 0; font-size: 20px; }
 .editar__grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
