@@ -57,11 +57,10 @@ img { display: block; max-width: 100%; }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.icone--verde   { color: var(--verde); }
 .icone--pequeno { width: 14px; height: 14px; }
 .icone--minusculo { width: 13px; height: 13px; }
-.icone--cartao  { width: 22px; height: 22px; color: var(--verde); stroke-width: 1.75; }
-.icone--grande  { width: 36px; height: 36px; color: var(--verde); stroke-width: 1.5; }
+.icone--cartao  { width: 22px; height: 22px; color: var(--cinza); stroke-width: 1.75; }
+.icone--grande  { width: 36px; height: 36px; color: var(--cinza); stroke-width: 1.5; }
 
 .tricolor {
   display: block;
@@ -258,7 +257,7 @@ input[type='date'].campo__controle:invalid { color: var(--cinza); }
 }
 .dropzone:hover { border-color: var(--verde); }
 .dropzone:focus-within { border-color: var(--branco); }
-.dropzone__icone { display: flex; align-self: center; color: var(--verde); }
+.dropzone__icone { display: flex; align-self: center; color: var(--cinza); }
 .dropzone__icone .icone { width: 24px; height: 24px; stroke-width: 1.75; }
 .dropzone__titulo {
   align-self: center;
