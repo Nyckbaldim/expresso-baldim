@@ -49,7 +49,7 @@ export const ATEGO_TOCO: Veiculo = {
   cubagemM3: 67,
   capacidadeKg: 7500,
   foto: {
-    src: '/images/Carrocel-01.jpeg',
+    src: '/images/Carrocel-01.webp',
     alt: 'Caminhão baú toco da Expresso Baldim estacionado em uma rua de bairro',
   },
 };
