@@ -195,6 +195,9 @@
           <p>
             {{ d.nome }} ·
             <span class="avaliacoes__estrelas" [attr.aria-label]="d.nota + ' de 5 estrelas'">{{ '★'.repeat(d.nota) }}{{ '☆'.repeat(5 - d.nota) }}</span>
+            @if (d.origem) {
+              · {{ rotuloOrigem[d.origem] }}
+            }
           </p>
         </div>
         <a href="/avaliar" class="botao botao--secundario botao--pequeno">

@@ -4,7 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval, timer } from 'rxjs';
-import { DepoimentoService, Depoimento } from '../../services/depoimento';
+import { DepoimentoService, Depoimento, ROTULO_ORIGEM_DEPOIMENTO } from '../../services/depoimento';
 import { ImagemAmpliavelDirective } from '../../directives/imagem-ampliavel';
 import { CarrosselImagens, type ImagemCarrossel } from '../../components/carrossel-imagens/carrossel-imagens';
 import { FOTO_INICIAL_HOME, fotoDaFrota } from '../../shared/galerias';
@@ -31,6 +31,7 @@ export class Homepage {
       ? (globalThis.matchMedia?.('(prefers-reduced-motion: no-preference)').matches ?? false)
       : false;
 
+  protected readonly rotuloOrigem = ROTULO_ORIGEM_DEPOIMENTO;
   depoimentos = signal<Depoimento[]>([]);
   indice = signal(0);
   avaliacaoEmHover = signal(false);
