@@ -15,7 +15,6 @@ h2 {
 h3 { font-weight: 700; }
 p { color: var(--cinza); }
 
-.tricolor { margin-bottom: 16px; }
 .etiqueta--sem-marca::before { display: none; }
 
 
@@ -192,7 +191,6 @@ p { color: var(--cinza); }
 }
 
 .solucoes { padding-top: 56px; }
-.solucoes .tricolor { margin-bottom: 22px; }
 .solucoes .etiqueta { margin-bottom: 18px; }
 .solucoes__titulo { margin-bottom: 22px; }
 
@@ -257,7 +255,6 @@ p { color: var(--cinza); }
   gap: 24px;
   padding-top: 96px;
 }
-.cta .tricolor { margin-bottom: 26px; }
 .cta h2 { margin-bottom: 12px; }
 .cta p { font-size: 16px; }
 
