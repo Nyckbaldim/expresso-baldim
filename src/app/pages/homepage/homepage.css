@@ -51,8 +51,6 @@
   padding-top: 49px;
 }
 
-.hero .tricolor { margin-bottom: 22px; }
-
 .hero__titulo {
   margin-top: 32px;
   font-size: 64px;
@@ -100,16 +98,10 @@
   color: var(--branco); cursor: pointer;
 }
 .hero__seta:hover { border-color: var(--verde); color: var(--verde); }
-.hero__legenda {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 15px 24px 17px;
-}
+.hero__legenda { padding: 15px 24px 17px; }
 .hero__legenda div { display: flex; flex-direction: column; gap: 4px; }
 .hero__legenda strong { font-size: 17px; font-weight: 500; }
-.hero__legenda span:not(.tricolor) { color: var(--cinza); font-size: 14px; }
+.hero__legenda span { color: var(--cinza); font-size: 14px; }
 
 .faixa {
   display: flex;
@@ -133,7 +125,6 @@
 .secao--inicial { padding-top: 64px; }
 .secao--compacta { padding-top: 64px; }
 
-.secao .tricolor { margin-bottom: 22px; }
 .secao .etiqueta { margin-bottom: 18px; }
 
 .secao__titulo {
@@ -259,7 +250,6 @@
   justify-content: space-between;
   gap: 24px;
 }
-.chamada .tricolor { margin-bottom: 26px; }
 .chamada__titulo { margin-bottom: 12px; }
 .chamada__texto { color: var(--cinza); font-size: 16px; }
 
