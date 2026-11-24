@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
+import { MovelPedido } from '../../../models/pedido';
 import { AdicionarPedido } from './adicionar-pedido';
 
 describe('AdicionarPedido', () => {
@@ -97,23 +98,28 @@ describe('AdicionarPedido', () => {
 
   it('cria uma mudança com móveis opcionais', async () => {
     componente.form.controls.tipo.setValue('mudanca');
-    componente.form.controls.mudanca.patchValue({
-      moveis: 'Sofá x2\nGeladeira x1',
-      volumeM3: 12,
-      extras: 'Embalagem,Montagem',
-    });
+    // Simula o preenchimento da lista de itens como na tela (nome, quantidade e volume de cada móvel).
+    const digitar = (indice: number, campo: 'nome' | 'quantidade' | 'volumeM3', valor: string) =>
+      componente.atualizarMudancaItem(indice, campo, { target: { value: valor } } as unknown as Event);
+    componente.adicionarMudancaItem();
+    componente.adicionarMudancaItem();
+    digitar(0, 'nome', 'Sofá');
+    digitar(0, 'quantidade', '2');
+    digitar(0, 'volumeM3', '1.5');
+    digitar(1, 'nome', 'Geladeira');
+    digitar(1, 'volumeM3', '1');
+    componente.form.controls.mudanca.patchValue({ extras: 'Embalagem,Montagem' });
 
     const promessa = componente.salvar();
     const requisicao = requisicoes.expectOne(`${environment.apiUrl}/pedidos`);
 
-    expect(requisicao.request.body.mudanca).toEqual({
-      moveis: [
-        { id: 'movel-1', nome: 'Sofá', quantidade: 2 },
-        { id: 'movel-2', nome: 'Geladeira', quantidade: 1 },
-      ],
-      volumeM3: 12,
-      extras: ['Embalagem', 'Montagem'],
-    });
+    const mudanca = requisicao.request.body.mudanca;
+    expect(mudanca.moveis.map(({ nome, quantidade, volumeM3 }: MovelPedido) => ({ nome, quantidade, volumeM3 }))).toEqual([
+      { nome: 'Sofá', quantidade: 2, volumeM3: 1.5 },
+      { nome: 'Geladeira', quantidade: 1, volumeM3: 1 },
+    ]);
+    expect(mudanca.volumeM3).toBe(4); // 2 × 1,5 + 1 × 1
+    expect(mudanca.extras).toEqual(['Embalagem', 'Montagem']);
 
     requisicao.flush({
       id: 'manual-2',
